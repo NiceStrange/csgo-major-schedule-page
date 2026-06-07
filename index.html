@@ -835,6 +835,29 @@ function getStatusText(status) {
   return "未开始";
 }
 
+function getFilteredMatches(eventId = state.eventId, date = state.date, teamId = state.teamId) {
+  return matches.filter((match) => {
+    const sameEvent = match.eventId === eventId;
+    const sameDate = match.date === date;
+    const sameTeam =
+      teamId === null ||
+      match.leftTeam === teamId ||
+      match.rightTeam === teamId;
+
+    return sameEvent && sameDate && sameTeam;
+  });
+}
+
+function getFirstAvailableDate(eventId = state.eventId, teamId = state.teamId) {
+  const preferred = getFilteredMatches(eventId, state.date, teamId);
+  if (preferred.length) {
+    return state.date;
+  }
+
+  const fallback = dates.find((date) => getFilteredMatches(eventId, date.key, teamId).length);
+  return fallback ? fallback.key : state.date;
+}
+
 function renderTeamLogo(team, className) {
   const logo = TEAM_LOGOS[team.id];
 
@@ -878,6 +901,7 @@ function renderEventFilter() {
   eventFilter.querySelectorAll("[data-event-id]").forEach((button) => {
     button.addEventListener("click", () => {
       state.eventId = button.dataset.eventId;
+      state.date = getFirstAvailableDate(state.eventId, state.teamId);
       render();
     });
   });
@@ -900,6 +924,7 @@ function renderTeamFilter() {
     button.addEventListener("click", () => {
       const nextId = button.dataset.teamId;
       state.teamId = state.teamId === nextId ? null : nextId;
+      state.date = getFirstAvailableDate(state.eventId, state.teamId);
       render();
     });
   });
@@ -927,16 +952,7 @@ function renderDateStrip() {
 }
 
 function filterMatches() {
-  return matches.filter((match) => {
-    const sameEvent = match.eventId === state.eventId;
-    const sameDate = match.date === state.date;
-    const sameTeam =
-      state.teamId === null ||
-      match.leftTeam === state.teamId ||
-      match.rightTeam === state.teamId;
-
-    return sameEvent && sameDate && sameTeam;
-  });
+  return getFilteredMatches();
 }
 
 function renderMatches() {
@@ -1015,6 +1031,7 @@ function render() {
 
 clearTeamButton.addEventListener("click", () => {
   state.teamId = null;
+  state.date = getFirstAvailableDate(state.eventId, state.teamId);
   render();
 });
 
