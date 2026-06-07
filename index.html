@@ -831,7 +831,7 @@ function renderEventLogo(event, className) {  const logo = EVENT_LOGOS[event.id]
     .map(
       (event) => `
         <button class="event-chip ${state.eventId === event.id ? "active" : ""}" data-event-id="${event.id}" type="button">
-          <span class="event-logo">${event.short}</span>
+          ${renderEventLogo(event, "event-logo")}
           <span class="event-name">${event.name}</span>
         </button>
       `
