@@ -826,7 +826,7 @@ function renderTeamLogo(team, className) {
   `;
 }
 
-function renderEventFilter() {
+function renderEventLogo(event, className) {  const logo = EVENT_LOGOS[event.id];
   eventFilter.innerHTML = events
     .map(
       (event) => `
