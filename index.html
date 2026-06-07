@@ -152,6 +152,20 @@ img {
   justify-items: center;
 }
 
+.event-chip:disabled,
+.event-chip.disabled {
+  cursor: not-allowed;
+  opacity: 0.64;
+  border-style: dashed;
+  background: #f5f8fc;
+  color: var(--muted);
+}
+
+.event-chip:disabled .event-logo,
+.event-chip.disabled .event-logo {
+  background: #ffffff;
+}
+
 .event-logo,
 .event-mini-logo {
   display: grid;
@@ -181,6 +195,12 @@ img {
 .event-name {
   font-size: 0.84rem;
   line-height: 1.35;
+  text-align: center;
+}
+
+.event-meta {
+  font-size: 0.7rem;
+  color: var(--muted);
   text-align: center;
 }
 
@@ -858,6 +878,10 @@ function getFirstAvailableDate(eventId = state.eventId, teamId = state.teamId) {
   return fallback ? fallback.key : state.date;
 }
 
+function eventHasMatches(eventId) {
+  return matches.some((match) => match.eventId === eventId);
+}
+
 function renderTeamLogo(team, className) {
   const logo = TEAM_LOGOS[team.id];
 
@@ -888,18 +912,27 @@ function renderEventLogo(event, className) {
 
 function renderEventFilter() {
   eventFilter.innerHTML = events
-    .map(
-      (event) => `
-        <button class="event-chip ${state.eventId === event.id ? "active" : ""}" data-event-id="${event.id}" type="button">
+    .map((event) => {
+      const hasMatches = eventHasMatches(event.id);
+      const active = state.eventId === event.id ? "active" : "";
+      const disabled = hasMatches ? "" : "disabled";
+      const meta = hasMatches ? "" : `<span class="event-meta">赛程待补充</span>`;
+
+      return `
+        <button class="event-chip ${active} ${disabled}" data-event-id="${event.id}" type="button" ${hasMatches ? "" : "disabled"}>
           ${renderEventLogo(event, "event-logo")}
           <span class="event-name">${event.name}</span>
+          ${meta}
         </button>
       `
-    )
+    })
     .join("");
 
   eventFilter.querySelectorAll("[data-event-id]").forEach((button) => {
     button.addEventListener("click", () => {
+      if (button.disabled) {
+        return;
+      }
       state.eventId = button.dataset.eventId;
       state.date = getFirstAvailableDate(state.eventId, state.teamId);
       render();
