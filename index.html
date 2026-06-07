@@ -826,8 +826,8 @@ function renderTeamLogo(team, className) {
   `;
 }
 
-function renderEventLogo(event, className) {  const logo = EVENT_LOGOS[event.id];
-  eventFilter.innerHTML = events
+function renderEventLogo(event, className) {  const logo = EVENT_LOGOS[event.id];  if (!logo) { return "<span class=\"" + className + "\">" + event.short + "</span>"; }  return "<span class=\"" + className + "\"><img src=\"" + logo + "\" alt=\"" + event.name + " logo\" style=\"width:100%;height:100%;object-fit:contain;display:block;\" /></span>";}  if (!logo) { return "<span class=\"" + className + "\">" + event.short + "</span>"; }
+function renderEventFilter() {  eventFilter.innerHTML = events
     .map(
       (event) => `
         <button class="event-chip ${state.eventId === event.id ? "active" : ""}" data-event-id="${event.id}" type="button">
