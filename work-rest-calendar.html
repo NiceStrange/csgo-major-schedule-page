@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>节假日与休息日日历</title>
+    <style>
+      :root {
+        --bg: #f4efe6;
+        --paper: #fffdf8;
+        --ink: #2f2419;
+        --muted: #7d6e61;
+        --line: #dfd1c1;
+        --accent: #c85c3f;
+        --accent-deep: #8f3c29;
+        --holiday: #ffdfcf;
+        --rest: #dff4ea;
+        --mix: #eddcff;
+        --today: #1d4e89;
+        --shadow: 0 18px 44px rgba(84, 51, 28, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(200, 92, 63, 0.14), transparent 22%),
+          radial-gradient(circle at top right, rgba(29, 78, 137, 0.08), transparent 18%),
+          var(--bg);
+      }
+
+      .shell {
+        width: min(1440px, calc(100% - 32px));
+        margin: 24px auto 40px;
+      }
+
+      .hero {
+        padding: 28px 30px 24px;
+        border: 1px solid rgba(200, 92, 63, 0.18);
+        border-radius: 28px;
+        background:
+          linear-gradient(135deg, rgba(255, 250, 241, 0.96), rgba(255, 247, 238, 0.92)),
+          var(--paper);
+        box-shadow: var(--shadow);
+      }
+
+      .hero h1 {
+        margin: 0;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.02;
+        letter-spacing: -0.04em;
+      }
+
+      .hero p {
+        margin: 14px 0 0;
+        max-width: 820px;
+        color: var(--muted);
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: 360px minmax(0, 1fr);
+        gap: 18px;
+        margin-top: 18px;
+      }
+
+      .panel,
+      .calendar-board {
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: rgba(255, 253, 248, 0.96);
+        box-shadow: var(--shadow);
+      }
+
+      .panel {
+        padding: 20px;
+        align-self: start;
+        position: sticky;
+        top: 16px;
+      }
+
+      .section + .section {
+        margin-top: 18px;
+        padding-top: 18px;
+        border-top: 1px dashed var(--line);
+      }
+
+      .section h2 {
+        margin: 0 0 12px;
+        font-size: 1rem;
+        letter-spacing: 0.01em;
+      }
+
+      .field-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .field.full {
+        grid-column: 1 / -1;
+      }
+
+      .field label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 0.84rem;
+        color: var(--muted);
+      }
+
+      .field input,
+      .field textarea,
+      .field button {
+        width: 100%;
+        border-radius: 14px;
+        border: 1px solid var(--line);
+        background: #fff;
+        color: var(--ink);
+        font: inherit;
+      }
+
+      .field input,
+      .field textarea {
+        padding: 11px 12px;
+      }
+
+      .field textarea {
+        min-height: 184px;
+        resize: vertical;
+        line-height: 1.55;
+      }
+
+      .button-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .button-row button {
+        flex: 1 1 140px;
+        cursor: pointer;
+        padding: 11px 14px;
+        transition: 180ms ease;
+      }
+
+      .primary {
+        border-color: var(--accent);
+        background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+        color: #fff;
+      }
+
+      .ghost {
+        background: #fff7f2;
+      }
+
+      .button-row button:hover {
+        transform: translateY(-1px);
+      }
+
+      .legend {
+        display: grid;
+        gap: 10px;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .swatch {
+        width: 16px;
+        height: 16px;
+        border-radius: 6px;
+        border: 1px solid rgba(47, 36, 25, 0.1);
+      }
+
+      .calendar-board {
+        padding: 18px;
+      }
+
+      .toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 16px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .toolbar h2 {
+        margin: 0;
+        font-size: 1.5rem;
+      }
+
+      .toolbar p {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .stats {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      .stat {
+        min-width: 118px;
+        padding: 12px 14px;
+        border-radius: 16px;
+        border: 1px solid var(--line);
+        background: #fff;
+      }
+
+      .stat strong {
+        display: block;
+        font-size: 1.2rem;
+      }
+
+      .stat span {
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+
+      .months {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .month {
+        border: 1px solid rgba(223, 209, 193, 0.92);
+        border-radius: 20px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(251,247,240,0.98));
+        overflow: hidden;
+      }
+
+      .month-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        padding: 14px 16px 10px;
+        border-bottom: 1px solid rgba(223, 209, 193, 0.8);
+      }
+
+      .month-head h3 {
+        margin: 0;
+        font-size: 1.05rem;
+      }
+
+      .month-head span {
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+
+      .weekdays,
+      .days {
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+      }
+
+      .weekdays {
+        padding: 8px 10px 0;
+      }
+
+      .weekdays div {
+        padding: 6px 0 8px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.76rem;
+      }
+
+      .days {
+        padding: 0 10px 10px;
+        gap: 6px;
+      }
+
+      .day {
+        min-height: 88px;
+        padding: 8px 7px;
+        border-radius: 14px;
+        border: 1px solid rgba(223, 209, 193, 0.7);
+        background: #fff;
+      }
+
+      .day.empty {
+        background: transparent;
+        border-color: transparent;
+      }
+
+      .day-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 4px;
+      }
+
+      .day-number {
+        font-weight: 700;
+        font-size: 0.95rem;
+      }
+
+      .flag {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 24px;
+        height: 22px;
+        border-radius: 999px;
+        padding: 0 8px;
+        font-size: 0.7rem;
+        font-weight: 700;
+      }
+
+      .flag.holiday {
+        color: var(--accent-deep);
+        background: rgba(200, 92, 63, 0.12);
+      }
+
+      .flag.rest {
+        color: #1f6f52;
+        background: rgba(53, 168, 114, 0.12);
+      }
+
+      .day-label {
+        color: var(--muted);
+        font-size: 0.74rem;
+        line-height: 1.35;
+        word-break: break-all;
+      }
+
+      .day-meta {
+        margin-top: 6px;
+        font-size: 0.72rem;
+        color: var(--muted);
+      }
+
+      .day.is-holiday {
+        background: var(--holiday);
+      }
+
+      .day.is-rest {
+        background: var(--rest);
+      }
+
+      .day.is-holiday.is-rest {
+        background: var(--mix);
+      }
+
+      .day.is-today {
+        border-color: rgba(29, 78, 137, 0.5);
+        box-shadow: inset 0 0 0 1px rgba(29, 78, 137, 0.16);
+      }
+
+      .hint {
+        margin-top: 10px;
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      @media (max-width: 1220px) {
+        .months {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 980px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+
+        .panel {
+          position: static;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .shell {
+          width: min(100% - 20px, 1440px);
+          margin-top: 12px;
+        }
+
+        .hero {
+          padding: 22px 18px;
+          border-radius: 22px;
+        }
+
+        .calendar-board {
+          padding: 14px;
+        }
+
+        .toolbar {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .stats {
+          justify-content: flex-start;
+        }
+
+        .months {
+          grid-template-columns: 1fr;
+        }
+
+        .field-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <section class="hero">
+        <h1>节假日与休息日日历</h1>
+        <p>
+          这个页面会同时高亮两类日期：你手工维护的节假日，以及按排班规则自动生成的休息日。
+          默认规则是“上3休1”，并且会记住你上次修改过的年份、节假日和休息周期设置。
+        </p>
+      </section>
+
+      <div class="layout">
+        <aside class="panel">
+          <div class="section">
+            <h2>日历设置</h2>
+            <div class="field-grid">
+              <div class="field">
+                <label for="year-input">显示年份</label>
+                <input id="year-input" type="number" min="2000" max="2100" />
+              </div>
+              <div class="field">
+                <label for="cycle-start">周期起点</label>
+                <input id="cycle-start" type="date" />
+              </div>
+              <div class="field">
+                <label for="work-days">连续上班天数</label>
+                <input id="work-days" type="number" min="1" max="30" />
+              </div>
+              <div class="field">
+                <label for="rest-days">连续休息天数</label>
+                <input id="rest-days" type="number" min="1" max="30" />
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>节假日列表</h2>
+            <div class="field full">
+              <label for="holiday-input">每行一个，格式：<code>YYYY-MM-DD 节日名称</code></label>
+              <textarea id="holiday-input"></textarea>
+            </div>
+            <div class="button-row">
+              <button class="primary" id="apply-button" type="button">应用设置</button>
+              <button class="ghost" id="reset-button" type="button">恢复默认示例</button>
+            </div>
+            <p class="hint">
+              默认节假日是示例清单，方便你马上开始用。如果你有自己的放假安排，直接改这里即可。
+            </p>
+          </div>
+
+          <div class="section">
+            <h2>高亮说明</h2>
+            <div class="legend">
+              <div class="legend-item">
+                <span class="swatch" style="background: var(--holiday)"></span>
+                <span>节假日</span>
+              </div>
+              <div class="legend-item">
+                <span class="swatch" style="background: var(--rest)"></span>
+                <span>自定义休息日</span>
+              </div>
+              <div class="legend-item">
+                <span class="swatch" style="background: var(--mix)"></span>
+                <span>节假日与休息日重叠</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <main class="calendar-board">
+          <div class="toolbar">
+            <div>
+              <h2 id="calendar-title">2026 年日历</h2>
+              <p id="calendar-subtitle">默认按上3休1生成用户自定义休息日。</p>
+            </div>
+            <div class="stats">
+              <div class="stat">
+                <strong id="holiday-count">0</strong>
+                <span>节假日</span>
+              </div>
+              <div class="stat">
+                <strong id="rest-count">0</strong>
+                <span>休息日</span>
+              </div>
+              <div class="stat">
+                <strong id="overlap-count">0</strong>
+                <span>重叠日</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="months" id="months"></div>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      const STORAGE_KEY = "work-rest-calendar-settings-v1";
+      const monthNames = ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"];
+      const weekdayNames = ["一", "二", "三", "四", "五", "六", "日"];
+
+      const yearInput = document.getElementById("year-input");
+      const cycleStartInput = document.getElementById("cycle-start");
+      const workDaysInput = document.getElementById("work-days");
+      const restDaysInput = document.getElementById("rest-days");
+      const holidayInput = document.getElementById("holiday-input");
+      const applyButton = document.getElementById("apply-button");
+      const resetButton = document.getElementById("reset-button");
+      const monthsNode = document.getElementById("months");
+      const calendarTitle = document.getElementById("calendar-title");
+      const calendarSubtitle = document.getElementById("calendar-subtitle");
+      const holidayCount = document.getElementById("holiday-count");
+      const restCount = document.getElementById("rest-count");
+      const overlapCount = document.getElementById("overlap-count");
+
+      function pad(value) {
+        return String(value).padStart(2, "0");
+      }
+
+      function toDateKey(date) {
+        return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+      }
+
+      function createSampleHolidayText(year) {
+        return [
+          `${year}-01-01 元旦`,
+          `${year}-02-14 情人节`,
+          `${year}-03-08 妇女节`,
+          `${year}-04-05 清明节（示例）`,
+          `${year}-05-01 劳动节`,
+          `${year}-06-01 儿童节`,
+          `${year}-10-01 国庆节`,
+          `${year}-10-02 国庆假期`,
+          `${year}-10-03 国庆假期`,
+          `${year}-12-25 圣诞节`
+        ].join("\n");
+      }
+
+      function getDefaultSettings() {
+        const now = new Date();
+        return {
+          year: now.getFullYear(),
+          cycleStart: `${now.getFullYear()}-01-01`,
+          workDays: 3,
+          restDays: 1,
+          holidayText: createSampleHolidayText(now.getFullYear())
+        };
+      }
+
+      function loadSettings() {
+        const defaults = getDefaultSettings();
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) {
+            return defaults;
+          }
+
+          const parsed = JSON.parse(raw);
+          return {
+            year: Number(parsed.year) || defaults.year,
+            cycleStart: parsed.cycleStart || defaults.cycleStart,
+            workDays: Number(parsed.workDays) || defaults.workDays,
+            restDays: Number(parsed.restDays) || defaults.restDays,
+            holidayText: parsed.holidayText || defaults.holidayText
+          };
+        } catch (error) {
+          return defaults;
+        }
+      }
+
+      function saveSettings(settings) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+      }
+
+      function parseHolidayText(text) {
+        const map = new Map();
+        const lines = text
+          .split("\n")
+          .map((line) => line.trim())
+          .filter(Boolean);
+
+        lines.forEach((line) => {
+          const match = line.match(/^(\d{4}-\d{2}-\d{2})(?:\s+(.+))?$/);
+          if (!match) {
+            return;
+          }
+
+          map.set(match[1], match[2] || "节假日");
+        });
+
+        return map;
+      }
+
+      function getDateDiffDays(baseDate, targetDate) {
+        const millisecondsPerDay = 24 * 60 * 60 * 1000;
+        const base = Date.UTC(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate());
+        const target = Date.UTC(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
+        return Math.floor((target - base) / millisecondsPerDay);
+      }
+
+      function isRestDay(targetDate, cycleStartText, workDays, restDays) {
+        const cycleStart = new Date(`${cycleStartText}T00:00:00`);
+        if (Number.isNaN(cycleStart.getTime())) {
+          return false;
+        }
+
+        const cycleLength = workDays + restDays;
+        const diff = getDateDiffDays(cycleStart, targetDate);
+        const position = ((diff % cycleLength) + cycleLength) % cycleLength;
+        return position >= workDays;
+      }
+
+      function getSettingsFromInputs() {
+        return {
+          year: Number(yearInput.value),
+          cycleStart: cycleStartInput.value,
+          workDays: Number(workDaysInput.value),
+          restDays: Number(restDaysInput.value),
+          holidayText: holidayInput.value.trim()
+        };
+      }
+
+      function fillInputs(settings) {
+        yearInput.value = settings.year;
+        cycleStartInput.value = settings.cycleStart;
+        workDaysInput.value = settings.workDays;
+        restDaysInput.value = settings.restDays;
+        holidayInput.value = settings.holidayText;
+      }
+
+      function renderCalendar() {
+        const settings = getSettingsFromInputs();
+        const holidayMap = parseHolidayText(settings.holidayText);
+        const todayKey = toDateKey(new Date());
+
+        let holidayTotal = 0;
+        let restTotal = 0;
+        let overlapTotal = 0;
+
+        calendarTitle.textContent = `${settings.year} 年日历`;
+        calendarSubtitle.textContent = `自定义休息日按“上${settings.workDays}休${settings.restDays}”循环生成，周期起点为 ${settings.cycleStart}。`;
+
+        monthsNode.innerHTML = "";
+
+        for (let month = 0; month < 12; month += 1) {
+          const firstDay = new Date(settings.year, month, 1);
+          const daysInMonth = new Date(settings.year, month + 1, 0).getDate();
+          const startWeekday = (firstDay.getDay() + 6) % 7;
+
+          const monthNode = document.createElement("section");
+          monthNode.className = "month";
+
+          const monthHead = document.createElement("div");
+          monthHead.className = "month-head";
+          monthHead.innerHTML = `<h3>${monthNames[month]}</h3><span>${settings.year}.${pad(month + 1)}</span>`;
+          monthNode.appendChild(monthHead);
+
+          const weekdayRow = document.createElement("div");
+          weekdayRow.className = "weekdays";
+          weekdayNames.forEach((weekday) => {
+            const node = document.createElement("div");
+            node.textContent = weekday;
+            weekdayRow.appendChild(node);
+          });
+          monthNode.appendChild(weekdayRow);
+
+          const daysGrid = document.createElement("div");
+          daysGrid.className = "days";
+
+          for (let i = 0; i < startWeekday; i += 1) {
+            const emptyNode = document.createElement("div");
+            emptyNode.className = "day empty";
+            daysGrid.appendChild(emptyNode);
+          }
+
+          for (let day = 1; day <= daysInMonth; day += 1) {
+            const currentDate = new Date(settings.year, month, day);
+            const dateKey = toDateKey(currentDate);
+            const holidayLabel = holidayMap.get(dateKey);
+            const rest = isRestDay(currentDate, settings.cycleStart, settings.workDays, settings.restDays);
+            const isToday = dateKey === todayKey;
+
+            if (holidayLabel) {
+              holidayTotal += 1;
+            }
+            if (rest) {
+              restTotal += 1;
+            }
+            if (holidayLabel && rest) {
+              overlapTotal += 1;
+            }
+
+            const dayNode = document.createElement("div");
+            dayNode.className = "day";
+            if (holidayLabel) {
+              dayNode.classList.add("is-holiday");
+            }
+            if (rest) {
+              dayNode.classList.add("is-rest");
+            }
+            if (isToday) {
+              dayNode.classList.add("is-today");
+            }
+
+            const flag = holidayLabel
+              ? `<span class="flag holiday">假</span>`
+              : rest
+                ? `<span class="flag rest">休</span>`
+                : "";
+
+            const meta = holidayLabel && rest
+              ? "节假日 + 自定义休息日"
+              : holidayLabel
+                ? "节假日"
+                : rest
+                  ? "自定义休息日"
+                  : `周期第 ${((getDateDiffDays(new Date(settings.cycleStart + "T00:00:00"), currentDate) % (settings.workDays + settings.restDays) + (settings.workDays + settings.restDays)) % (settings.workDays + settings.restDays)) + 1} 天`;
+
+            dayNode.innerHTML = `
+              <div class="day-header">
+                <span class="day-number">${day}</span>
+                ${flag}
+              </div>
+              <div class="day-label">${holidayLabel || ""}</div>
+              <div class="day-meta">${meta}</div>
+            `;
+
+            daysGrid.appendChild(dayNode);
+          }
+
+          while (daysGrid.children.length % 7 !== 0) {
+            const emptyNode = document.createElement("div");
+            emptyNode.className = "day empty";
+            daysGrid.appendChild(emptyNode);
+          }
+
+          monthNode.appendChild(daysGrid);
+          monthsNode.appendChild(monthNode);
+        }
+
+        holidayCount.textContent = String(holidayTotal);
+        restCount.textContent = String(restTotal);
+        overlapCount.textContent = String(overlapTotal);
+
+        saveSettings(settings);
+      }
+
+      const initialSettings = loadSettings();
+      fillInputs(initialSettings);
+      renderCalendar();
+
+      applyButton.addEventListener("click", () => {
+        renderCalendar();
+      });
+
+      resetButton.addEventListener("click", () => {
+        const defaults = getDefaultSettings();
+        defaults.year = Number(yearInput.value) || defaults.year;
+        defaults.holidayText = createSampleHolidayText(defaults.year);
+        defaults.cycleStart = `${defaults.year}-01-01`;
+        fillInputs(defaults);
+        renderCalendar();
+      });
+
+      yearInput.addEventListener("change", () => {
+        const nextYear = Number(yearInput.value) || new Date().getFullYear();
+        const currentSettings = getSettingsFromInputs();
+        currentSettings.year = nextYear;
+
+        if (!holidayInput.value.trim()) {
+          currentSettings.holidayText = createSampleHolidayText(nextYear);
+        }
+
+        if (!cycleStartInput.value) {
+          currentSettings.cycleStart = `${nextYear}-01-01`;
+        }
+
+        fillInputs(currentSettings);
+        renderCalendar();
+      });
+    </script>
+  </body>
+</html>
