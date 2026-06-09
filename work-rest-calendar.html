@@ -1116,41 +1116,6 @@
         line-height: 1.7;
       }
 
-      .holiday-entry {
-        display: grid;
-        gap: 10px;
-      }
-
-      .info-card {
-        position: relative;
-        padding: 14px 16px;
-        border-radius: 18px;
-        border: 1px solid rgba(60, 60, 67, 0.08);
-        background: rgba(255, 255, 255, 0.7);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
-        overflow: hidden;
-      }
-
-      .info-card::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(140deg, rgba(10, 132, 255, 0.07), transparent 58%);
-        pointer-events: none;
-      }
-
-      .info-card strong {
-        display: block;
-        font-size: 0.96rem;
-        margin-bottom: 4px;
-      }
-
-      .info-card span {
-        color: var(--muted);
-        font-size: 0.82rem;
-        line-height: 1.55;
-      }
-
       .inline-button {
         width: 100%;
         border: 0;
@@ -1273,7 +1238,6 @@
       body.dark-theme .month-switcher,
       body.dark-theme .stat,
       body.dark-theme .section,
-      body.dark-theme .info-card,
       body.dark-theme .day,
       body.dark-theme .field input,
       body.dark-theme .hero,
@@ -1308,7 +1272,6 @@
       body.dark-theme .theme-toggle,
       body.dark-theme .month-switcher,
       body.dark-theme .stat,
-      body.dark-theme .info-card,
       body.dark-theme .day {
         background: rgba(45, 45, 47, 0.9);
       }
@@ -1355,8 +1318,7 @@
       }
 
       body.dark-theme .section::after,
-      body.dark-theme .stat::after,
-      body.dark-theme .info-card::after {
+      body.dark-theme .stat::after {
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 52%);
       }
 
@@ -1372,7 +1334,6 @@
       body.dark-theme .legend-item,
       body.dark-theme .field label,
       body.dark-theme .hint,
-      body.dark-theme .info-card span,
       body.dark-theme .stat span,
       body.dark-theme .month-head span {
         color: var(--muted);
@@ -1431,7 +1392,6 @@
       body.dark-theme .toolbar h2,
       body.dark-theme .section h2,
       body.dark-theme .month-head h3,
-      body.dark-theme .info-card strong,
       body.dark-theme .hero h1 {
         color: var(--ink);
       }
@@ -1896,22 +1856,6 @@
 
           <div class="section reveal">
             <div class="section-head">
-              <span class="section-cap">Official</span>
-              <h2>官方节假日</h2>
-            </div>
-            <div class="holiday-entry">
-              <div class="info-card">
-                <strong id="official-summary-title">按国务院办公厅通知同步</strong>
-                <span id="official-summary-text">切换年份后会自动匹配对应年份的法定节假日与调休上班安排。</span>
-              </div>
-            </div>
-            <p class="hint">
-              节假日数据已直接内置到页面，不再显示节假日列表；你只需要维护自己的休息周期设置即可。
-            </p>
-          </div>
-
-          <div class="section reveal">
-            <div class="section-head">
               <span class="section-cap">Legend</span>
               <h2>高亮说明</h2>
             </div>
@@ -1937,6 +1881,7 @@
                 <span>节假日与休息日重叠</span>
               </div>
             </div>
+            <p class="hint">法定节假日与调休安排已按国务院办公厅通知内置同步，无需单独维护。</p>
           </div>
         </aside>
         </div>
@@ -1987,7 +1932,7 @@
     </div>
 
     <script>
-      const APP_VERSION = "2026-06-09T20-46-00";
+      const APP_VERSION = "2026-06-09T20-56-00";
       const STORAGE_KEY = "work-rest-calendar-settings-v2";
       const LEGACY_STORAGE_KEY = "work-rest-calendar-settings-v1";
       const THEME_STORAGE_KEY = "work-rest-calendar-theme-v1";
@@ -2051,8 +1996,6 @@
       const weatherBadge = document.getElementById("weather-badge");
       const themeToggle = document.getElementById("theme-toggle");
       const themeToggleText = document.getElementById("theme-toggle-text");
-      const officialSummaryTitle = document.getElementById("official-summary-title");
-      const officialSummaryText = document.getElementById("official-summary-text");
       const monthsNode = document.getElementById("months");
       const calendarTitle = document.getElementById("calendar-title");
       const calendarSubtitle = document.getElementById("calendar-subtitle");
@@ -2066,9 +2009,6 @@
       const prevMonthButton = document.getElementById("prev-month-button");
       const nextMonthButton = document.getElementById("next-month-button");
       const todayMonthButton = document.getElementById("today-month-button");
-      const supportedYears = Object.keys(OFFICIAL_SCHEDULES)
-        .map((year) => Number(year))
-        .sort((left, right) => left - right);
       let revealObserver = null;
       const weatherCodeMap = {
         0: "晴",
@@ -2422,19 +2362,6 @@
         renderCalendar();
       }
 
-      function renderOfficialSummary(settings, holidayMap, workdaySet) {
-        const schedule = getOfficialSchedule(settings.year);
-
-        if (!schedule) {
-          officialSummaryTitle.textContent = `${settings.year} 年暂未内置官方节假日`;
-          officialSummaryText.textContent = `当前版本已同步 ${supportedYears.join("、")} 年国务院办公厅通知；如果后续公布新的年度安排，再把该年份补进页面即可。`;
-          return;
-        }
-
-        officialSummaryTitle.textContent = `已同步 ${settings.year} 年官方安排`;
-        officialSummaryText.textContent = `依据${schedule.noticeNumber}（${schedule.publishedAt}）自动高亮 ${holidayMap.size} 个节假日日期和 ${workdaySet.size} 个调休上班日。`;
-      }
-
       function renderCalendar() {
         const settings = getSettingsFromInputs();
         const holidayMap = createOfficialHolidayMap(settings.year);
@@ -2576,7 +2503,6 @@
         overlapCount.textContent = String(overlapTotal);
 
         saveSettings(settings);
-        renderOfficialSummary(settings, holidayMap, workdaySet);
         requestAnimationFrame(setupRevealObserver);
       }
 
