@@ -591,6 +591,127 @@
         line-height: 1.7;
       }
 
+      .holiday-entry {
+        display: grid;
+        gap: 10px;
+      }
+
+      .info-card {
+        padding: 14px 16px;
+        border-radius: 18px;
+        border: 1px solid rgba(60, 60, 67, 0.08);
+        background: rgba(255, 255, 255, 0.7);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+      }
+
+      .info-card strong {
+        display: block;
+        font-size: 0.9rem;
+        margin-bottom: 4px;
+      }
+
+      .info-card span {
+        color: var(--muted);
+        font-size: 0.82rem;
+        line-height: 1.55;
+      }
+
+      .inline-button {
+        width: 100%;
+        border: 0;
+        border-radius: 16px;
+        padding: 14px 16px;
+        background: rgba(255, 255, 255, 0.88);
+        color: var(--ink);
+        font: inherit;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.72),
+          0 8px 18px rgba(29, 29, 31, 0.06);
+        transition: 180ms ease;
+      }
+
+      .inline-button:hover {
+        transform: translateY(-1px);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.8),
+          0 12px 24px rgba(29, 29, 31, 0.1);
+      }
+
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: rgba(20, 20, 24, 0.28);
+        backdrop-filter: blur(18px) saturate(150%);
+        -webkit-backdrop-filter: blur(18px) saturate(150%);
+        z-index: 20;
+      }
+
+      .modal-overlay.open {
+        display: flex;
+      }
+
+      .modal-card {
+        width: min(760px, 100%);
+        max-height: min(88vh, 920px);
+        overflow: auto;
+        border-radius: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.76);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(248, 249, 252, 0.88));
+        box-shadow: 0 30px 80px rgba(29, 29, 31, 0.18);
+      }
+
+      .modal-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 22px 22px 16px;
+        border-bottom: 1px solid rgba(60, 60, 67, 0.08);
+      }
+
+      .modal-head h3 {
+        margin: 0;
+        font-size: 1.25rem;
+        letter-spacing: -0.03em;
+      }
+
+      .modal-head p {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 0.88rem;
+        line-height: 1.6;
+      }
+
+      .close-button {
+        width: 36px;
+        height: 36px;
+        border: 0;
+        border-radius: 999px;
+        background: rgba(60, 60, 67, 0.08);
+        color: var(--muted);
+        font-size: 1.1rem;
+        cursor: pointer;
+      }
+
+      .modal-body {
+        padding: 18px 22px 22px;
+      }
+
+      .modal-body textarea {
+        min-height: 300px;
+      }
+
+      body.modal-open {
+        overflow: hidden;
+      }
+
       .day.is-weekend .day-number:not(.today-mark) {
         color: #8c8c91;
       }
@@ -650,6 +771,15 @@
         .field-grid {
           grid-template-columns: 1fr;
         }
+
+        .modal-overlay {
+          padding: 12px;
+        }
+
+        .modal-head,
+        .modal-body {
+          padding-inline: 16px;
+        }
       }
     </style>
   </head>
@@ -693,20 +823,22 @@
                 <input id="rest-days" type="number" min="1" max="30" />
               </div>
             </div>
+            <div class="button-row" style="margin-top: 12px;">
+              <button class="primary" id="apply-button" type="button">应用设置</button>
+            </div>
           </div>
 
           <div class="section">
-            <h2>节假日列表</h2>
-            <div class="field full">
-              <label for="holiday-input">每行一个，格式：<code>YYYY-MM-DD 节日名称</code></label>
-              <textarea id="holiday-input"></textarea>
-            </div>
-            <div class="button-row">
-              <button class="primary" id="apply-button" type="button">应用设置</button>
-              <button class="ghost" id="reset-button" type="button">恢复默认示例</button>
+            <h2>节假日配置</h2>
+            <div class="holiday-entry">
+              <div class="info-card">
+                <strong id="holiday-summary-title">节假日编辑</strong>
+                <span id="holiday-summary-text">点击按钮后在弹出界面里维护节假日列表，主界面保持简洁。</span>
+              </div>
+              <button class="inline-button" id="open-holiday-editor" type="button">编辑节假日</button>
             </div>
             <p class="hint">
-              默认节假日是示例清单，方便你马上开始用。如果你有自己的放假安排，直接改这里即可。
+              默认节假日仍然会保留为示例模板，你可以在弹出面板里随时修改并保存。
             </p>
           </div>
 
@@ -764,6 +896,29 @@
       </div>
     </div>
 
+    <div class="modal-overlay" id="holiday-modal">
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="holiday-modal-title">
+        <div class="modal-head">
+          <div>
+            <h3 id="holiday-modal-title">编辑节假日</h3>
+            <p>每行一个，格式：<code>YYYY-MM-DD 节日名称</code>。保存后会立即更新日历高亮。</p>
+          </div>
+          <button class="close-button" id="close-holiday-editor" type="button" aria-label="关闭">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="field full">
+            <label for="holiday-input">节假日列表</label>
+            <textarea id="holiday-input"></textarea>
+          </div>
+          <div class="button-row" style="margin-top: 14px;">
+            <button class="primary" id="save-holiday-button" type="button">保存节假日</button>
+            <button class="ghost" id="reset-button" type="button">恢复默认示例</button>
+            <button class="ghost" id="cancel-holiday-button" type="button">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script>
       const STORAGE_KEY = "work-rest-calendar-settings-v1";
       const monthNames = ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"];
@@ -776,6 +931,13 @@
       const holidayInput = document.getElementById("holiday-input");
       const applyButton = document.getElementById("apply-button");
       const resetButton = document.getElementById("reset-button");
+      const saveHolidayButton = document.getElementById("save-holiday-button");
+      const cancelHolidayButton = document.getElementById("cancel-holiday-button");
+      const openHolidayEditorButton = document.getElementById("open-holiday-editor");
+      const closeHolidayEditorButton = document.getElementById("close-holiday-editor");
+      const holidayModal = document.getElementById("holiday-modal");
+      const holidaySummaryTitle = document.getElementById("holiday-summary-title");
+      const holidaySummaryText = document.getElementById("holiday-summary-text");
       const monthsNode = document.getElementById("months");
       const calendarTitle = document.getElementById("calendar-title");
       const calendarSubtitle = document.getElementById("calendar-subtitle");
@@ -903,6 +1065,34 @@
         workDaysInput.value = settings.workDays;
         restDaysInput.value = settings.restDays;
         holidayInput.value = settings.holidayText;
+      }
+
+      function updateHolidaySummary() {
+        const holidayMap = parseHolidayText(holidayInput.value.trim());
+        const count = holidayMap.size;
+        holidaySummaryTitle.textContent = `已配置 ${count} 个节假日`;
+
+        if (!count) {
+          holidaySummaryText.textContent = "当前还没有节假日配置，点击按钮可以开始编辑。";
+          return;
+        }
+
+        const preview = Array.from(holidayMap.entries())
+          .slice(0, 3)
+          .map(([date, label]) => `${date} ${label}`)
+          .join(" · ");
+
+        holidaySummaryText.textContent = preview;
+      }
+
+      function openHolidayModal() {
+        holidayModal.classList.add("open");
+        document.body.classList.add("modal-open");
+      }
+
+      function closeHolidayModal() {
+        holidayModal.classList.remove("open");
+        document.body.classList.remove("modal-open");
       }
 
       function clampMonth(month) {
@@ -1050,6 +1240,7 @@
         overlapCount.textContent = String(overlapTotal);
 
         saveSettings(settings);
+        updateHolidaySummary();
       }
 
       const initialSettings = loadSettings();
@@ -1061,6 +1252,26 @@
 
       applyButton.addEventListener("click", () => {
         renderCalendar();
+      });
+
+      openHolidayEditorButton.addEventListener("click", () => {
+        openHolidayModal();
+      });
+
+      closeHolidayEditorButton.addEventListener("click", () => {
+        closeHolidayModal();
+      });
+
+      cancelHolidayButton.addEventListener("click", () => {
+        const stored = loadSettings();
+        holidayInput.value = stored.holidayText;
+        updateHolidaySummary();
+        closeHolidayModal();
+      });
+
+      saveHolidayButton.addEventListener("click", () => {
+        renderCalendar();
+        closeHolidayModal();
       });
 
       resetButton.addEventListener("click", () => {
@@ -1103,6 +1314,18 @@
         yearInput.value = now.getFullYear();
         viewState.month = now.getMonth();
         renderCalendar();
+      });
+
+      holidayModal.addEventListener("click", (event) => {
+        if (event.target === holidayModal) {
+          closeHolidayModal();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && holidayModal.classList.contains("open")) {
+          closeHolidayModal();
+        }
       });
     </script>
   </body>
