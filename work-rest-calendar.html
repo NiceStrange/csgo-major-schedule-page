@@ -127,15 +127,15 @@
       .shell {
         position: relative;
         z-index: 1;
-        width: min(1340px, calc(100% - 36px));
-        margin: 28px auto 44px;
+        width: min(1380px, calc(100% - 36px));
+        margin: 24px auto 44px;
       }
 
       .hero {
         position: relative;
-        padding: 18px 18px 22px;
-        border: 1px solid rgba(255, 255, 255, 0.7);
-        border-radius: 30px;
+        padding: 18px 18px 20px;
+        border: 1px solid rgba(255, 255, 255, 0.74);
+        border-radius: 34px;
         background:
           linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.56)),
           var(--paper);
@@ -159,10 +159,10 @@
         position: relative;
         z-index: 1;
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         justify-content: space-between;
         gap: 12px;
-        margin-bottom: 18px;
+        margin-bottom: 16px;
       }
 
       .hero-actions {
@@ -316,6 +316,115 @@
         letter-spacing: -0.06em;
       }
 
+      .hero-grid {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
+        gap: 18px;
+        align-items: end;
+      }
+
+      .hero-intro {
+        display: grid;
+        gap: 14px;
+      }
+
+      .hero-kicker {
+        display: inline-flex;
+        align-items: center;
+        align-self: start;
+        width: fit-content;
+        padding: 7px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(60, 60, 67, 0.08);
+        background: rgba(255, 255, 255, 0.58);
+        color: var(--muted);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .hero-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .hero-pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 36px;
+        padding: 0 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(60, 60, 67, 0.08);
+        background: rgba(255, 255, 255, 0.48);
+        color: color-mix(in srgb, var(--ink) 78%, transparent);
+        font-size: 0.84rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+
+      .hero-preview {
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .hero-preview-card {
+        width: min(100%, 320px);
+        padding: 18px 18px 16px;
+        border-radius: 26px;
+        border: 1px solid rgba(255, 255, 255, 0.72);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.4)),
+          rgba(255, 255, 255, 0.36);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.76),
+          0 14px 28px rgba(29, 29, 31, 0.08);
+        backdrop-filter: blur(22px) saturate(150%);
+        -webkit-backdrop-filter: blur(22px) saturate(150%);
+      }
+
+      .hero-preview-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .hero-preview-label {
+        color: var(--muted);
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .hero-preview-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: linear-gradient(180deg, #34c759, #29a649);
+        box-shadow: 0 0 0 6px rgba(52, 199, 89, 0.12);
+      }
+
+      .hero-preview-value {
+        display: block;
+        font-size: clamp(1.55rem, 3vw, 2.2rem);
+        font-weight: 700;
+        letter-spacing: -0.05em;
+      }
+
+      .hero-preview-meta {
+        display: block;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.5;
+      }
+
       .hero p {
         margin: 16px 0 0;
         max-width: 760px;
@@ -326,9 +435,10 @@
 
       .layout {
         display: grid;
-        grid-template-columns: 340px minmax(0, 1fr);
-        gap: 20px;
-        margin-top: 20px;
+        grid-template-columns: 320px minmax(0, 1fr);
+        gap: 18px;
+        margin-top: 18px;
+        align-items: start;
       }
 
       .panel,
@@ -344,6 +454,9 @@
       }
 
       .panel {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
         padding: 14px;
         align-self: start;
         position: sticky;
@@ -353,9 +466,9 @@
       .section {
         position: relative;
         padding: 16px;
-        border-radius: 22px;
+        border-radius: 24px;
         border: 1px solid rgba(255, 255, 255, 0.7);
-        background: rgba(255, 255, 255, 0.56);
+        background: rgba(255, 255, 255, 0.52);
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.62);
         transition:
           transform 220ms ease,
@@ -381,19 +494,33 @@
       }
 
       .section + .section {
-        margin-top: 12px;
+        margin-top: 0;
+      }
+
+      .section-head {
+        display: grid;
+        gap: 6px;
+        margin-bottom: 14px;
+      }
+
+      .section-cap {
+        color: var(--muted);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
       }
 
       .section h2 {
-        margin: 0 0 12px;
-        font-size: 1rem;
+        margin: 0;
+        font-size: 1.06rem;
         font-weight: 600;
-        letter-spacing: -0.01em;
+        letter-spacing: -0.03em;
       }
 
       .field-grid {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: 1fr;
         gap: 12px;
       }
 
@@ -404,8 +531,8 @@
       .field label {
         display: block;
         margin-bottom: 7px;
-        font-size: 0.83rem;
-        font-weight: 500;
+        font-size: 0.8rem;
+        font-weight: 600;
         color: var(--muted);
       }
 
@@ -504,22 +631,22 @@
       }
 
       .calendar-board {
-        padding: 16px;
+        padding: 18px;
       }
 
       .toolbar {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
+        flex-direction: column;
+        align-items: stretch;
         gap: 16px;
-        margin-bottom: 18px;
-        padding-bottom: 16px;
+        margin-bottom: 16px;
+        padding-bottom: 18px;
         border-bottom: 1px solid rgba(15, 23, 42, 0.06);
       }
 
       .toolbar-main {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         justify-content: space-between;
         gap: 16px;
         width: 100%;
@@ -527,16 +654,18 @@
 
       .toolbar-copy {
         flex: 1 1 auto;
+        display: grid;
+        gap: 8px;
       }
 
       .month-switcher {
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        padding: 6px;
+        padding: 5px;
         border-radius: 999px;
         border: 1px solid rgba(15, 23, 42, 0.06);
-        background: rgba(255, 255, 255, 0.84);
+        background: rgba(255, 255, 255, 0.74);
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.68);
       }
 
@@ -568,40 +697,49 @@
       }
 
       .month-chip {
-        min-width: 112px;
+        min-width: 124px;
         text-align: center;
         color: var(--ink);
-        font-size: 0.92rem;
-        font-weight: 600;
-        letter-spacing: -0.02em;
+        font-size: 0.88rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
         text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
       }
 
       .toolbar h2 {
         margin: 0;
-        font-size: 1.75rem;
-        letter-spacing: -0.03em;
+        font-size: 1.8rem;
+        letter-spacing: -0.05em;
       }
 
       .toolbar p {
-        margin: 6px 0 0;
+        margin: 0;
+        display: inline-flex;
+        align-items: center;
+        width: fit-content;
+        min-height: 34px;
+        padding: 0 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(60, 60, 67, 0.08);
+        background: rgba(255, 255, 255, 0.6);
         color: var(--muted);
-        font-size: 0.92rem;
-        line-height: 1.6;
+        font-size: 0.82rem;
+        line-height: 1;
       }
 
       .stats {
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 10px;
-        flex-wrap: wrap;
-        justify-content: flex-end;
+        width: 100%;
       }
 
       .stat {
         position: relative;
-        min-width: 126px;
-        padding: 13px 15px;
-        border-radius: 18px;
+        min-width: 0;
+        padding: 14px 15px;
+        border-radius: 20px;
         border: 1px solid rgba(15, 23, 42, 0.06);
         background: rgba(255, 255, 255, 0.88);
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.66);
@@ -641,7 +779,7 @@
         position: relative;
         z-index: 1;
         color: var(--muted);
-        font-size: 0.82rem;
+        font-size: 0.8rem;
       }
 
       .months {
@@ -651,7 +789,7 @@
       .month {
         max-width: 100%;
         border: 1px solid rgba(255, 255, 255, 0.78);
-        border-radius: 28px;
+        border-radius: 30px;
         background:
           linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(248, 249, 252, 0.84));
         overflow: hidden;
@@ -663,12 +801,12 @@
         display: flex;
         align-items: baseline;
         justify-content: center;
-        padding: 18px 20px 14px;
+        padding: 20px 20px 16px;
         border-bottom: 1px solid rgba(15, 23, 42, 0.06);
         background: linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.34));
         text-align: center;
         flex-direction: column;
-        gap: 4px;
+        gap: 6px;
       }
 
       .month-head h3 {
@@ -707,9 +845,9 @@
       }
 
       .day {
-        min-height: 104px;
-        padding: 10px 10px 12px;
-        border-radius: 18px;
+        min-height: 108px;
+        padding: 12px 10px 12px;
+        border-radius: 20px;
         border: 1px solid rgba(15, 23, 42, 0.06);
         background: rgba(255, 255, 255, 0.86);
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.58);
@@ -869,7 +1007,7 @@
 
       .info-card strong {
         display: block;
-        font-size: 0.9rem;
+        font-size: 0.96rem;
         margin-bottom: 4px;
       }
 
@@ -1080,6 +1218,34 @@
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
       }
 
+      body.dark-theme .hero-kicker,
+      body.dark-theme .hero-pill,
+      body.dark-theme .hero-preview-card,
+      body.dark-theme .toolbar p,
+      body.dark-theme .section-cap {
+        border-color: rgba(255, 255, 255, 0.08);
+      }
+
+      body.dark-theme .hero-kicker,
+      body.dark-theme .hero-pill,
+      body.dark-theme .toolbar p {
+        background: rgba(56, 56, 58, 0.74);
+      }
+
+      body.dark-theme .hero-preview-card {
+        background:
+          linear-gradient(180deg, rgba(58, 58, 60, 0.8), rgba(41, 41, 43, 0.8)),
+          rgba(45, 45, 47, 0.74);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.05),
+          0 14px 28px rgba(0, 0, 0, 0.18);
+      }
+
+      body.dark-theme .hero-preview-dot {
+        background: linear-gradient(180deg, #8f949b, #666a72);
+        box-shadow: 0 0 0 6px rgba(140, 140, 150, 0.08);
+      }
+
       body.dark-theme .section::after,
       body.dark-theme .stat::after,
       body.dark-theme .info-card::after {
@@ -1143,6 +1309,11 @@
 
       body.dark-theme .day-label {
         color: rgba(245, 245, 247, 0.82);
+      }
+
+      body.dark-theme .hero-preview-meta,
+      body.dark-theme .section-cap {
+        color: rgba(245, 245, 247, 0.56);
       }
 
       body.dark-theme .toolbar h2,
@@ -1290,6 +1461,18 @@
         .panel {
           position: static;
         }
+
+        .hero-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-preview {
+          justify-content: flex-start;
+        }
+
+        .stats {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
       }
 
       @media (max-width: 760px) {
@@ -1311,6 +1494,14 @@
 
         .hero-actions {
           align-items: stretch;
+        }
+
+        .hero-grid {
+          gap: 14px;
+        }
+
+        .hero-pills {
+          gap: 8px;
         }
 
         .calendar-board {
@@ -1354,6 +1545,19 @@
       @media (max-width: 640px) {
         .hero h1 {
           font-size: clamp(2.1rem, 12vw, 3rem);
+        }
+
+        .hero-kicker {
+          font-size: 0.68rem;
+        }
+
+        .hero-pill {
+          min-height: 34px;
+          font-size: 0.8rem;
+        }
+
+        .hero-preview-card {
+          width: 100%;
         }
 
         .panel,
@@ -1453,6 +1657,11 @@
           justify-content: center;
         }
 
+        .hero-pill {
+          width: 100%;
+          justify-content: center;
+        }
+
         .day {
           min-height: 88px;
           min-width: 50px;
@@ -1497,13 +1706,35 @@
             </button>
           </div>
         </div>
-        <h1>Eunice的日历</h1>
+        <div class="hero-grid">
+          <div class="hero-intro">
+            <span class="hero-kicker">Graphite Calendar</span>
+            <h1>Eunice的日历</h1>
+            <div class="hero-pills">
+              <span class="hero-pill">中国法定节假日同步</span>
+              <span class="hero-pill">默认周期 上3休1</span>
+            </div>
+          </div>
+          <div class="hero-preview">
+            <div class="hero-preview-card">
+              <div class="hero-preview-top">
+                <span class="hero-preview-label">当前视图</span>
+                <span class="hero-preview-dot" aria-hidden="true"></span>
+              </div>
+              <strong class="hero-preview-value" id="hero-month">当前月份</strong>
+              <span class="hero-preview-meta" id="hero-cycle">休息周期读取中</span>
+            </div>
+          </div>
+        </div>
       </section>
 
       <div class="layout">
         <aside class="panel">
           <div class="section">
-            <h2>日历设置</h2>
+            <div class="section-head">
+              <span class="section-cap">Cycle</span>
+              <h2>日历设置</h2>
+            </div>
             <div class="field-grid">
               <div class="field">
                 <label for="year-input">显示年份</label>
@@ -1528,7 +1759,10 @@
           </div>
 
           <div class="section">
-            <h2>官方节假日</h2>
+            <div class="section-head">
+              <span class="section-cap">Official</span>
+              <h2>官方节假日</h2>
+            </div>
             <div class="holiday-entry">
               <div class="info-card">
                 <strong id="official-summary-title">按国务院办公厅通知同步</strong>
@@ -1542,7 +1776,10 @@
           </div>
 
           <div class="section">
-            <h2>高亮说明</h2>
+            <div class="section-head">
+              <span class="section-cap">Legend</span>
+              <h2>高亮说明</h2>
+            </div>
             <div class="legend">
               <div class="legend-item">
                 <span class="swatch" style="background: var(--holiday)"></span>
@@ -1604,7 +1841,7 @@
     </div>
 
     <script>
-      const APP_VERSION = "2026-06-09T18-18-00";
+      const APP_VERSION = "2026-06-09T19-10-00";
       const STORAGE_KEY = "work-rest-calendar-settings-v2";
       const LEGACY_STORAGE_KEY = "work-rest-calendar-settings-v1";
       const THEME_STORAGE_KEY = "work-rest-calendar-theme-v1";
@@ -1675,6 +1912,8 @@
       const calendarTitle = document.getElementById("calendar-title");
       const calendarSubtitle = document.getElementById("calendar-subtitle");
       const monthChip = document.getElementById("month-chip");
+      const heroMonth = document.getElementById("hero-month");
+      const heroCycle = document.getElementById("hero-cycle");
       const holidayCount = document.getElementById("holiday-count");
       const restCount = document.getElementById("rest-count");
       const makeupCount = document.getElementById("makeup-count");
@@ -2035,9 +2274,11 @@
         let overlapTotal = 0;
 
         calendarTitle.textContent = `${settings.year} 年 ${monthNames[activeMonth]}`;
-        calendarSubtitle.textContent = "";
+        calendarSubtitle.textContent = `休息周期 上${settings.workDays}休${settings.restDays} · 法定节假日自动同步`;
 
         monthChip.textContent = `${settings.year}.${pad(activeMonth + 1)}`;
+        heroMonth.textContent = `${settings.year} 年 ${monthNames[activeMonth]}`;
+        heroCycle.textContent = `周期 上${settings.workDays}休${settings.restDays} · 周末与法定节假日重叠自动高亮`;
         monthsNode.innerHTML = "";
 
         const firstDay = new Date(settings.year, activeMonth, 1);
