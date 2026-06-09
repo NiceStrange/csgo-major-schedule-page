@@ -24,6 +24,8 @@
         --rest-ink: #1e8744;
         --mix: rgba(191, 90, 242, 0.16);
         --mix-ink: #8e3bd1;
+        --makeup: rgba(255, 69, 58, 0.16);
+        --makeup-ink: #c03221;
         --today: #0a84ff;
         --shadow: 0 28px 72px rgba(29, 29, 31, 0.12);
         --shadow-soft: 0 12px 30px rgba(29, 29, 31, 0.07);
@@ -551,6 +553,11 @@
         background: rgba(52, 199, 89, 0.14);
       }
 
+      .flag.makeup {
+        color: var(--makeup-ink);
+        background: rgba(255, 69, 58, 0.14);
+      }
+
       .day-label {
         color: #374151;
         font-size: 0.74rem;
@@ -559,10 +566,19 @@
         min-height: 2em;
       }
 
+      .day-label:empty {
+        display: none;
+      }
+
       .day-meta {
         margin-top: 8px;
         font-size: 0.7rem;
         color: var(--muted);
+      }
+
+      .day-meta:empty,
+      .toolbar p:empty {
+        display: none;
       }
 
       .day.is-holiday {
@@ -575,6 +591,10 @@
 
       .day.is-holiday.is-rest {
         background: linear-gradient(180deg, rgba(175, 82, 222, 0.18), rgba(175, 82, 222, 0.08));
+      }
+
+      .day.is-makeup {
+        background: linear-gradient(180deg, rgba(255, 69, 58, 0.14), rgba(255, 69, 58, 0.06));
       }
 
       .day.is-today {
@@ -614,6 +634,43 @@
         color: var(--muted);
         font-size: 0.82rem;
         line-height: 1.55;
+      }
+
+      .source-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .source-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: 10px 14px;
+        border-radius: 14px;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        background: rgba(255, 255, 255, 0.84);
+        color: var(--ink);
+        text-decoration: none;
+        font-size: 0.82rem;
+        font-weight: 600;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.72),
+          0 8px 18px rgba(29, 29, 31, 0.06);
+        transition: 180ms ease;
+      }
+
+      .source-link:hover {
+        transform: translateY(-1px);
+        color: var(--accent);
+        border-color: rgba(10, 132, 255, 0.2);
+      }
+
+      .source-link.is-active {
+        background: rgba(10, 132, 255, 0.12);
+        color: var(--accent-deep);
+        border-color: rgba(10, 132, 255, 0.22);
       }
 
       .inline-button {
@@ -781,6 +838,103 @@
           padding-inline: 16px;
         }
       }
+
+      @media (max-width: 640px) {
+        .hero h1 {
+          font-size: clamp(2.1rem, 12vw, 3rem);
+        }
+
+        .panel,
+        .calendar-board {
+          border-radius: 24px;
+        }
+
+        .section {
+          padding: 14px;
+        }
+
+        .month-switcher {
+          gap: 6px;
+          padding: 4px;
+        }
+
+        .month-switcher button {
+          padding: 9px 12px;
+        }
+
+        .month-chip {
+          width: 100%;
+          min-width: 0;
+          order: -1;
+          padding: 6px 0 2px;
+        }
+
+        .stats {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          width: 100%;
+        }
+
+        .stat {
+          min-width: 0;
+        }
+
+        .weekdays {
+          padding: 10px 10px 2px;
+        }
+
+        .days {
+          padding: 0 10px 10px;
+          gap: 6px;
+        }
+
+        .day {
+          min-height: 86px;
+          padding: 8px;
+          border-radius: 16px;
+        }
+
+        .day-label {
+          min-height: 0;
+          font-size: 0.68rem;
+        }
+
+        .day-meta {
+          margin-top: 6px;
+          font-size: 0.64rem;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .shell {
+          width: min(100% - 14px, 1440px);
+        }
+
+        .hero {
+          padding: 20px 16px;
+        }
+
+        .day {
+          min-height: 78px;
+          padding: 7px;
+        }
+
+        .day-number {
+          font-size: 0.9rem;
+        }
+
+        .day-number.today-mark {
+          width: 24px;
+          height: 24px;
+        }
+
+        .flag {
+          min-width: 20px;
+          height: 20px;
+          padding: 0 6px;
+          font-size: 0.62rem;
+        }
+      }
     </style>
   </head>
   <body>
@@ -794,11 +948,7 @@
           </div>
           <div class="hero-badge">Apple-style Calendar Experience</div>
         </div>
-        <h1>节假日与休息日日历</h1>
-        <p>
-          这个页面会同时高亮两类日期：你手工维护的节假日，以及按排班规则自动生成的休息日。
-          默认规则是“上3休1”，并且会记住你上次修改过的年份、节假日和休息周期设置。
-        </p>
+        <h1>Eunice的日历</h1>
       </section>
 
       <div class="layout">
@@ -829,16 +979,16 @@
           </div>
 
           <div class="section">
-            <h2>节假日配置</h2>
+            <h2>官方节假日</h2>
             <div class="holiday-entry">
               <div class="info-card">
-                <strong id="holiday-summary-title">节假日编辑</strong>
-                <span id="holiday-summary-text">点击按钮后在弹出界面里维护节假日列表，主界面保持简洁。</span>
+                <strong id="official-summary-title">按国务院办公厅通知同步</strong>
+                <span id="official-summary-text">切换年份后会自动匹配对应年份的法定节假日与调休上班安排。</span>
               </div>
-              <button class="inline-button" id="open-holiday-editor" type="button">编辑节假日</button>
+              <div class="source-list" id="official-source-links"></div>
             </div>
             <p class="hint">
-              默认节假日仍然会保留为示例模板，你可以在弹出面板里随时修改并保存。
+              节假日数据已直接内置到页面，不再显示节假日列表；你只需要维护自己的休息周期设置即可。
             </p>
           </div>
 
@@ -847,7 +997,11 @@
             <div class="legend">
               <div class="legend-item">
                 <span class="swatch" style="background: var(--holiday)"></span>
-                <span>节假日</span>
+                <span>法定节假日</span>
+              </div>
+              <div class="legend-item">
+                <span class="swatch" style="background: var(--makeup)"></span>
+                <span>官方调休上班</span>
               </div>
               <div class="legend-item">
                 <span class="swatch" style="background: var(--rest)"></span>
@@ -866,7 +1020,7 @@
             <div class="toolbar-main">
               <div class="toolbar-copy">
                 <h2 id="calendar-title">2026 年日历</h2>
-                <p id="calendar-subtitle">默认按上3休1生成用户自定义休息日。</p>
+                <p id="calendar-subtitle"></p>
               </div>
               <div class="month-switcher">
                 <button class="nav-icon" id="prev-month-button" type="button" aria-label="上个月">‹</button>
@@ -885,6 +1039,10 @@
                 <span>休息日</span>
               </div>
               <div class="stat">
+                <strong id="makeup-count">0</strong>
+                <span>调休上班</span>
+              </div>
+              <div class="stat">
                 <strong id="overlap-count">0</strong>
                 <span>重叠日</span>
               </div>
@@ -896,58 +1054,83 @@
       </div>
     </div>
 
-    <div class="modal-overlay" id="holiday-modal">
-      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="holiday-modal-title">
-        <div class="modal-head">
-          <div>
-            <h3 id="holiday-modal-title">编辑节假日</h3>
-            <p>每行一个，格式：<code>YYYY-MM-DD 节日名称</code>。保存后会立即更新日历高亮。</p>
-          </div>
-          <button class="close-button" id="close-holiday-editor" type="button" aria-label="关闭">×</button>
-        </div>
-        <div class="modal-body">
-          <div class="field full">
-            <label for="holiday-input">节假日列表</label>
-            <textarea id="holiday-input"></textarea>
-          </div>
-          <div class="button-row" style="margin-top: 14px;">
-            <button class="primary" id="save-holiday-button" type="button">保存节假日</button>
-            <button class="ghost" id="reset-button" type="button">恢复默认示例</button>
-            <button class="ghost" id="cancel-holiday-button" type="button">取消</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <script>
-      const STORAGE_KEY = "work-rest-calendar-settings-v1";
+      const STORAGE_KEY = "work-rest-calendar-settings-v2";
+      const LEGACY_STORAGE_KEY = "work-rest-calendar-settings-v1";
       const monthNames = ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"];
       const weekdayNames = ["一", "二", "三", "四", "五", "六", "日"];
+      const OFFICIAL_SCHEDULES = {
+        2024: {
+          title: "国务院办公厅关于2024年部分节假日安排的通知",
+          noticeNumber: "国办发明电〔2023〕7号",
+          publishedAt: "2023-10-25",
+          url: "https://www.gov.cn/zhengce/zhengceku/202310/content_6911528.htm",
+          holidays: [
+            { name: "元旦", dates: ["2024-01-01"] },
+            { name: "春节", dates: expandDateRange("2024-02-10", "2024-02-17") },
+            { name: "清明节", dates: expandDateRange("2024-04-04", "2024-04-06") },
+            { name: "劳动节", dates: expandDateRange("2024-05-01", "2024-05-05") },
+            { name: "端午节", dates: ["2024-06-10"] },
+            { name: "中秋节", dates: expandDateRange("2024-09-15", "2024-09-17") },
+            { name: "国庆节", dates: expandDateRange("2024-10-01", "2024-10-07") }
+          ],
+          workdays: ["2024-02-04", "2024-02-18", "2024-04-07", "2024-04-28", "2024-05-11", "2024-09-14", "2024-09-29", "2024-10-12"]
+        },
+        2025: {
+          title: "国务院办公厅关于2025年部分节假日安排的通知",
+          noticeNumber: "国办发明电〔2024〕12号",
+          publishedAt: "2024-11-12",
+          url: "https://www.gov.cn/zhengce/zhengceku/202411/content_6986383.htm",
+          holidays: [
+            { name: "元旦", dates: ["2025-01-01"] },
+            { name: "春节", dates: expandDateRange("2025-01-28", "2025-02-04") },
+            { name: "清明节", dates: expandDateRange("2025-04-04", "2025-04-06") },
+            { name: "劳动节", dates: expandDateRange("2025-05-01", "2025-05-05") },
+            { name: "端午节", dates: expandDateRange("2025-05-31", "2025-06-02") },
+            { name: "国庆节 / 中秋节", dates: expandDateRange("2025-10-01", "2025-10-08") }
+          ],
+          workdays: ["2025-01-26", "2025-02-08", "2025-04-27", "2025-09-28", "2025-10-11"]
+        },
+        2026: {
+          title: "国务院办公厅关于2026年部分节假日安排的通知",
+          noticeNumber: "国办发明电〔2025〕7号",
+          publishedAt: "2025-11-04",
+          url: "https://www.gov.cn/zhengce/zhengceku/202511/content_7047091.htm",
+          holidays: [
+            { name: "元旦", dates: expandDateRange("2026-01-01", "2026-01-03") },
+            { name: "春节", dates: expandDateRange("2026-02-15", "2026-02-23") },
+            { name: "清明节", dates: expandDateRange("2026-04-04", "2026-04-06") },
+            { name: "劳动节", dates: expandDateRange("2026-05-01", "2026-05-05") },
+            { name: "端午节", dates: expandDateRange("2026-06-19", "2026-06-21") },
+            { name: "中秋节", dates: expandDateRange("2026-09-25", "2026-09-27") },
+            { name: "国庆节", dates: expandDateRange("2026-10-01", "2026-10-07") }
+          ],
+          workdays: ["2026-01-04", "2026-02-14", "2026-02-28", "2026-05-09", "2026-09-20", "2026-10-10"]
+        }
+      };
 
       const yearInput = document.getElementById("year-input");
       const cycleStartInput = document.getElementById("cycle-start");
       const workDaysInput = document.getElementById("work-days");
       const restDaysInput = document.getElementById("rest-days");
-      const holidayInput = document.getElementById("holiday-input");
       const applyButton = document.getElementById("apply-button");
-      const resetButton = document.getElementById("reset-button");
-      const saveHolidayButton = document.getElementById("save-holiday-button");
-      const cancelHolidayButton = document.getElementById("cancel-holiday-button");
-      const openHolidayEditorButton = document.getElementById("open-holiday-editor");
-      const closeHolidayEditorButton = document.getElementById("close-holiday-editor");
-      const holidayModal = document.getElementById("holiday-modal");
-      const holidaySummaryTitle = document.getElementById("holiday-summary-title");
-      const holidaySummaryText = document.getElementById("holiday-summary-text");
+      const officialSummaryTitle = document.getElementById("official-summary-title");
+      const officialSummaryText = document.getElementById("official-summary-text");
+      const officialSourceLinks = document.getElementById("official-source-links");
       const monthsNode = document.getElementById("months");
       const calendarTitle = document.getElementById("calendar-title");
       const calendarSubtitle = document.getElementById("calendar-subtitle");
       const monthChip = document.getElementById("month-chip");
       const holidayCount = document.getElementById("holiday-count");
       const restCount = document.getElementById("rest-count");
+      const makeupCount = document.getElementById("makeup-count");
       const overlapCount = document.getElementById("overlap-count");
       const prevMonthButton = document.getElementById("prev-month-button");
       const nextMonthButton = document.getElementById("next-month-button");
       const todayMonthButton = document.getElementById("today-month-button");
+      const supportedYears = Object.keys(OFFICIAL_SCHEDULES)
+        .map((year) => Number(year))
+        .sort((left, right) => left - right);
 
       function pad(value) {
         return String(value).padStart(2, "0");
@@ -957,19 +1140,43 @@
         return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
       }
 
-      function createSampleHolidayText(year) {
-        return [
-          `${year}-01-01 元旦`,
-          `${year}-02-14 情人节`,
-          `${year}-03-08 妇女节`,
-          `${year}-04-05 清明节（示例）`,
-          `${year}-05-01 劳动节`,
-          `${year}-06-01 儿童节`,
-          `${year}-10-01 国庆节`,
-          `${year}-10-02 国庆假期`,
-          `${year}-10-03 国庆假期`,
-          `${year}-12-25 圣诞节`
-        ].join("\n");
+      function expandDateRange(startText, endText) {
+        const dates = [];
+        const cursor = new Date(`${startText}T00:00:00`);
+        const end = new Date(`${endText}T00:00:00`);
+
+        while (cursor <= end) {
+          dates.push(toDateKey(cursor));
+          cursor.setDate(cursor.getDate() + 1);
+        }
+
+        return dates;
+      }
+
+      function getOfficialSchedule(year) {
+        return OFFICIAL_SCHEDULES[year] || null;
+      }
+
+      function createOfficialHolidayMap(year) {
+        const schedule = getOfficialSchedule(year);
+        const map = new Map();
+
+        if (!schedule) {
+          return map;
+        }
+
+        schedule.holidays.forEach((holiday) => {
+          holiday.dates.forEach((date) => {
+            map.set(date, holiday.name);
+          });
+        });
+
+        return map;
+      }
+
+      function createOfficialWorkdaySet(year) {
+        const schedule = getOfficialSchedule(year);
+        return new Set(schedule ? schedule.workdays : []);
       }
 
       function getDefaultSettings() {
@@ -979,15 +1186,15 @@
           viewMonth: now.getMonth(),
           cycleStart: `${now.getFullYear()}-01-01`,
           workDays: 3,
-          restDays: 1,
-          holidayText: createSampleHolidayText(now.getFullYear())
+          restDays: 1
         };
       }
 
       function loadSettings() {
         const defaults = getDefaultSettings();
+
         try {
-          const raw = localStorage.getItem(STORAGE_KEY);
+          const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY);
           if (!raw) {
             return defaults;
           }
@@ -998,8 +1205,7 @@
             viewMonth: Number.isInteger(parsed.viewMonth) ? parsed.viewMonth : defaults.viewMonth,
             cycleStart: parsed.cycleStart || defaults.cycleStart,
             workDays: Number(parsed.workDays) || defaults.workDays,
-            restDays: Number(parsed.restDays) || defaults.restDays,
-            holidayText: parsed.holidayText || defaults.holidayText
+            restDays: Number(parsed.restDays) || defaults.restDays
           };
         } catch (error) {
           return defaults;
@@ -1010,25 +1216,6 @@
         localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
       }
 
-      function parseHolidayText(text) {
-        const map = new Map();
-        const lines = text
-          .split("\n")
-          .map((line) => line.trim())
-          .filter(Boolean);
-
-        lines.forEach((line) => {
-          const match = line.match(/^(\d{4}-\d{2}-\d{2})(?:\s+(.+))?$/);
-          if (!match) {
-            return;
-          }
-
-          map.set(match[1], match[2] || "节假日");
-        });
-
-        return map;
-      }
-
       function getDateDiffDays(baseDate, targetDate) {
         const millisecondsPerDay = 24 * 60 * 60 * 1000;
         const base = Date.UTC(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate());
@@ -1036,16 +1223,24 @@
         return Math.floor((target - base) / millisecondsPerDay);
       }
 
-      function isRestDay(targetDate, cycleStartText, workDays, restDays) {
+      function getCyclePosition(targetDate, cycleStartText, workDays, restDays) {
         const cycleStart = new Date(`${cycleStartText}T00:00:00`);
         if (Number.isNaN(cycleStart.getTime())) {
-          return false;
+          return null;
         }
 
         const cycleLength = workDays + restDays;
+        if (cycleLength <= 0) {
+          return null;
+        }
+
         const diff = getDateDiffDays(cycleStart, targetDate);
-        const position = ((diff % cycleLength) + cycleLength) % cycleLength;
-        return position >= workDays;
+        return ((diff % cycleLength) + cycleLength) % cycleLength;
+      }
+
+      function isRestDay(targetDate, cycleStartText, workDays, restDays) {
+        const position = getCyclePosition(targetDate, cycleStartText, workDays, restDays);
+        return position !== null && position >= workDays;
       }
 
       function getSettingsFromInputs() {
@@ -1054,8 +1249,7 @@
           viewMonth: viewState.month,
           cycleStart: cycleStartInput.value,
           workDays: Number(workDaysInput.value),
-          restDays: Number(restDaysInput.value),
-          holidayText: holidayInput.value.trim()
+          restDays: Number(restDaysInput.value)
         };
       }
 
@@ -1064,35 +1258,6 @@
         cycleStartInput.value = settings.cycleStart;
         workDaysInput.value = settings.workDays;
         restDaysInput.value = settings.restDays;
-        holidayInput.value = settings.holidayText;
-      }
-
-      function updateHolidaySummary() {
-        const holidayMap = parseHolidayText(holidayInput.value.trim());
-        const count = holidayMap.size;
-        holidaySummaryTitle.textContent = `已配置 ${count} 个节假日`;
-
-        if (!count) {
-          holidaySummaryText.textContent = "当前还没有节假日配置，点击按钮可以开始编辑。";
-          return;
-        }
-
-        const preview = Array.from(holidayMap.entries())
-          .slice(0, 3)
-          .map(([date, label]) => `${date} ${label}`)
-          .join(" · ");
-
-        holidaySummaryText.textContent = preview;
-      }
-
-      function openHolidayModal() {
-        holidayModal.classList.add("open");
-        document.body.classList.add("modal-open");
-      }
-
-      function closeHolidayModal() {
-        holidayModal.classList.remove("open");
-        document.body.classList.remove("modal-open");
       }
 
       function clampMonth(month) {
@@ -1120,25 +1285,46 @@
         renderCalendar();
       }
 
+      function renderOfficialSummary(settings, holidayMap, workdaySet) {
+        const schedule = getOfficialSchedule(settings.year);
+
+        officialSourceLinks.innerHTML = supportedYears
+          .map((year) => {
+            const activeClass = year === settings.year ? "source-link is-active" : "source-link";
+            return `<a class="${activeClass}" href="${OFFICIAL_SCHEDULES[year].url}" target="_blank" rel="noreferrer">${year} 官方通知</a>`;
+          })
+          .join("");
+
+        if (!schedule) {
+          officialSummaryTitle.textContent = `${settings.year} 年暂未内置官方节假日`;
+          officialSummaryText.textContent = `当前版本已同步 ${supportedYears.join("、")} 年国务院办公厅通知；如果后续公布新的年度安排，再把该年份补进页面即可。`;
+          return;
+        }
+
+        officialSummaryTitle.textContent = `已同步 ${settings.year} 年官方安排`;
+        officialSummaryText.textContent = `依据${schedule.noticeNumber}（${schedule.publishedAt}）自动高亮 ${holidayMap.size} 个节假日日期和 ${workdaySet.size} 个调休上班日。`;
+      }
+
       function renderCalendar() {
         const settings = getSettingsFromInputs();
-        const holidayMap = parseHolidayText(settings.holidayText);
+        const holidayMap = createOfficialHolidayMap(settings.year);
+        const workdaySet = createOfficialWorkdaySet(settings.year);
         const todayKey = toDateKey(new Date());
         const activeMonth = clampMonth(settings.viewMonth);
 
         let holidayTotal = 0;
         let restTotal = 0;
+        let makeupTotal = 0;
         let overlapTotal = 0;
 
         calendarTitle.textContent = `${settings.year} 年 ${monthNames[activeMonth]}`;
-        calendarSubtitle.textContent = `自定义休息日按“上${settings.workDays}休${settings.restDays}”循环生成，周期起点为 ${settings.cycleStart}。`;
-        monthChip.textContent = `${settings.year}.${pad(activeMonth + 1)}`;
+        calendarSubtitle.textContent = "";
 
+        monthChip.textContent = `${settings.year}.${pad(activeMonth + 1)}`;
         monthsNode.innerHTML = "";
 
-        const month = activeMonth;
-        const firstDay = new Date(settings.year, month, 1);
-        const daysInMonth = new Date(settings.year, month + 1, 0).getDate();
+        const firstDay = new Date(settings.year, activeMonth, 1);
+        const daysInMonth = new Date(settings.year, activeMonth + 1, 0).getDate();
         const startWeekday = (firstDay.getDay() + 6) % 7;
 
         const monthNode = document.createElement("section");
@@ -1146,7 +1332,7 @@
 
         const monthHead = document.createElement("div");
         monthHead.className = "month-head";
-        monthHead.innerHTML = `<h3>${monthNames[month]}</h3><span>${settings.year}.${pad(month + 1)}</span>`;
+        monthHead.innerHTML = `<h3>${monthNames[activeMonth]}</h3><span>${settings.year}.${pad(activeMonth + 1)}</span>`;
         monthNode.appendChild(monthHead);
 
         const weekdayRow = document.createElement("div");
@@ -1161,17 +1347,19 @@
         const daysGrid = document.createElement("div");
         daysGrid.className = "days";
 
-        for (let i = 0; i < startWeekday; i += 1) {
+        for (let index = 0; index < startWeekday; index += 1) {
           const emptyNode = document.createElement("div");
           emptyNode.className = "day empty";
           daysGrid.appendChild(emptyNode);
         }
 
         for (let day = 1; day <= daysInMonth; day += 1) {
-          const currentDate = new Date(settings.year, month, day);
+          const currentDate = new Date(settings.year, activeMonth, day);
           const dateKey = toDateKey(currentDate);
           const holidayLabel = holidayMap.get(dateKey);
-          const rest = isRestDay(currentDate, settings.cycleStart, settings.workDays, settings.restDays);
+          const isOfficialWorkday = workdaySet.has(dateKey);
+          const rawRest = isRestDay(currentDate, settings.cycleStart, settings.workDays, settings.restDays);
+          const rest = !isOfficialWorkday && rawRest;
           const isToday = dateKey === todayKey;
           const isWeekend = currentDate.getDay() === 0 || currentDate.getDay() === 6;
 
@@ -1181,17 +1369,24 @@
           if (rest) {
             restTotal += 1;
           }
+          if (isOfficialWorkday) {
+            makeupTotal += 1;
+          }
           if (holidayLabel && rest) {
             overlapTotal += 1;
           }
 
           const dayNode = document.createElement("div");
           dayNode.className = "day";
+
           if (holidayLabel) {
             dayNode.classList.add("is-holiday");
           }
           if (rest) {
             dayNode.classList.add("is-rest");
+          }
+          if (isOfficialWorkday) {
+            dayNode.classList.add("is-makeup");
           }
           if (isToday) {
             dayNode.classList.add("is-today");
@@ -1202,24 +1397,31 @@
 
           const flag = holidayLabel
             ? `<span class="flag holiday">假</span>`
-            : rest
-              ? `<span class="flag rest">休</span>`
-              : "";
-
-          const meta = holidayLabel && rest
-            ? "节假日 + 自定义休息日"
-            : holidayLabel
-              ? "节假日"
+            : isOfficialWorkday
+              ? `<span class="flag makeup">班</span>`
               : rest
-                ? "自定义休息日"
-                : `周期第 ${((getDateDiffDays(new Date(settings.cycleStart + "T00:00:00"), currentDate) % (settings.workDays + settings.restDays) + (settings.workDays + settings.restDays)) % (settings.workDays + settings.restDays)) + 1} 天`;
+                ? `<span class="flag rest">休</span>`
+                : "";
+
+          let meta = "";
+          if (holidayLabel && rest) {
+            meta = "官方节假日 + 自定义休息日";
+          } else if (holidayLabel) {
+            meta = "国务院办公厅节假日安排";
+          } else if (isOfficialWorkday) {
+            meta = rawRest ? "官方调休上班，已覆盖自定义休息日" : "国务院办公厅调休上班日";
+          } else if (rest) {
+            meta = "按排班周期生成的自定义休息日";
+          }
+
+          const label = holidayLabel || (isOfficialWorkday ? "调休上班" : "");
 
           dayNode.innerHTML = `
             <div class="day-header">
               <span class="day-number ${isToday ? "today-mark" : ""}">${day}</span>
               ${flag}
             </div>
-            <div class="day-label">${holidayLabel || ""}</div>
+            <div class="day-label">${label}</div>
             <div class="day-meta">${meta}</div>
           `;
 
@@ -1237,16 +1439,18 @@
 
         holidayCount.textContent = String(holidayTotal);
         restCount.textContent = String(restTotal);
+        makeupCount.textContent = String(makeupTotal);
         overlapCount.textContent = String(overlapTotal);
 
         saveSettings(settings);
-        updateHolidaySummary();
+        renderOfficialSummary(settings, holidayMap, workdaySet);
       }
 
       const initialSettings = loadSettings();
       const viewState = {
         month: clampMonth(Number.isInteger(initialSettings.viewMonth) ? initialSettings.viewMonth : new Date().getMonth())
       };
+
       fillInputs(initialSettings);
       renderCalendar();
 
@@ -1254,50 +1458,14 @@
         renderCalendar();
       });
 
-      openHolidayEditorButton.addEventListener("click", () => {
-        openHolidayModal();
-      });
-
-      closeHolidayEditorButton.addEventListener("click", () => {
-        closeHolidayModal();
-      });
-
-      cancelHolidayButton.addEventListener("click", () => {
-        const stored = loadSettings();
-        holidayInput.value = stored.holidayText;
-        updateHolidaySummary();
-        closeHolidayModal();
-      });
-
-      saveHolidayButton.addEventListener("click", () => {
-        renderCalendar();
-        closeHolidayModal();
-      });
-
-      resetButton.addEventListener("click", () => {
-        const defaults = getDefaultSettings();
-        defaults.year = Number(yearInput.value) || defaults.year;
-        defaults.holidayText = createSampleHolidayText(defaults.year);
-        defaults.cycleStart = `${defaults.year}-01-01`;
-        viewState.month = defaults.year === new Date().getFullYear() ? new Date().getMonth() : 0;
-        fillInputs(defaults);
-        renderCalendar();
-      });
-
       yearInput.addEventListener("change", () => {
         const nextYear = Number(yearInput.value) || new Date().getFullYear();
-        const currentSettings = getSettingsFromInputs();
-        currentSettings.year = nextYear;
-
-        if (!holidayInput.value.trim()) {
-          currentSettings.holidayText = createSampleHolidayText(nextYear);
-        }
+        yearInput.value = nextYear;
 
         if (!cycleStartInput.value) {
-          currentSettings.cycleStart = `${nextYear}-01-01`;
+          cycleStartInput.value = `${nextYear}-01-01`;
         }
 
-        fillInputs(currentSettings);
         renderCalendar();
       });
 
@@ -1314,18 +1482,6 @@
         yearInput.value = now.getFullYear();
         viewState.month = now.getMonth();
         renderCalendar();
-      });
-
-      holidayModal.addEventListener("click", (event) => {
-        if (event.target === holidayModal) {
-          closeHolidayModal();
-        }
-      });
-
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && holidayModal.classList.contains("open")) {
-          closeHolidayModal();
-        }
       });
     </script>
   </body>
