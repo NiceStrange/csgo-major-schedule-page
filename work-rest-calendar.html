@@ -43,30 +43,30 @@
       body.dark-theme {
         --bg: #08090c;
         --bg-strong: #020305;
-        --paper: rgba(11, 13, 17, 0.82);
-        --paper-strong: rgba(18, 20, 25, 0.96);
-        --paper-solid: #111318;
-        --ink: #f5f7fb;
-        --muted: #99a2b2;
-        --line: rgba(255, 255, 255, 0.07);
-        --line-strong: rgba(255, 255, 255, 0.12);
-        --accent: #9ec0ff;
-        --accent-deep: #dbe7ff;
-        --accent-soft: rgba(112, 137, 255, 0.14);
-        --weekend: rgba(96, 118, 255, 0.12);
-        --weekend-ink: #b7c3ff;
-        --holiday: rgba(255, 171, 74, 0.12);
-        --holiday-ink: #ffd4a4;
-        --rest: rgba(73, 204, 155, 0.12);
-        --rest-ink: #c8f0de;
-        --mix: rgba(192, 119, 255, 0.16);
-        --mix-ink: #e5c9ff;
-        --makeup: rgba(255, 112, 105, 0.12);
-        --makeup-ink: #ffc4bf;
-        --today: #9bb7ff;
-        --shadow: 0 30px 80px rgba(0, 0, 0, 0.46);
-        --shadow-soft: 0 16px 36px rgba(0, 0, 0, 0.28);
-        --hero-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 34%);
+        --paper: rgba(10, 12, 16, 0.86);
+        --paper-strong: rgba(16, 18, 23, 0.96);
+        --paper-solid: #101217;
+        --ink: #eef1f5;
+        --muted: #8c94a3;
+        --line: rgba(255, 255, 255, 0.055);
+        --line-strong: rgba(255, 255, 255, 0.085);
+        --accent: #aab8da;
+        --accent-deep: #edf1f8;
+        --accent-soft: rgba(122, 135, 171, 0.09);
+        --weekend: rgba(86, 96, 130, 0.14);
+        --weekend-ink: #aab3d3;
+        --holiday: rgba(124, 95, 48, 0.16);
+        --holiday-ink: #dbc59f;
+        --rest: rgba(53, 101, 83, 0.16);
+        --rest-ink: #bfd8ca;
+        --mix: rgba(102, 71, 132, 0.18);
+        --mix-ink: #d4c2e8;
+        --makeup: rgba(120, 66, 61, 0.16);
+        --makeup-ink: #debbb7;
+        --today: #bcc8e6;
+        --shadow: 0 26px 68px rgba(0, 0, 0, 0.42);
+        --shadow-soft: 0 12px 24px rgba(0, 0, 0, 0.22);
+        --hero-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.032), transparent 34%);
       }
 
       * {
@@ -90,10 +90,10 @@
       body.dark-theme {
         color-scheme: dark;
         background:
-          radial-gradient(circle at 12% 0%, rgba(88, 108, 255, 0.18), transparent 30%),
-          radial-gradient(circle at 100% 8%, rgba(48, 158, 137, 0.12), transparent 26%),
-          radial-gradient(circle at 50% 100%, rgba(139, 95, 255, 0.1), transparent 34%),
-          linear-gradient(180deg, #101116 0%, #090a0d 42%, var(--bg-strong) 100%);
+          radial-gradient(circle at 12% 0%, rgba(72, 82, 122, 0.12), transparent 28%),
+          radial-gradient(circle at 100% 8%, rgba(44, 84, 73, 0.08), transparent 24%),
+          radial-gradient(circle at 50% 100%, rgba(84, 64, 110, 0.06), transparent 30%),
+          linear-gradient(180deg, #0c0d11 0%, #08090c 42%, var(--bg-strong) 100%);
       }
 
       body::before,
@@ -125,13 +125,13 @@
       }
 
       body.dark-theme::before {
-        background: rgba(97, 119, 255, 0.22);
-        opacity: 0.18;
+        background: rgba(78, 87, 130, 0.14);
+        opacity: 0.08;
       }
 
       body.dark-theme::after {
-        background: rgba(74, 195, 168, 0.14);
-        opacity: 0.14;
+        background: rgba(70, 112, 96, 0.1);
+        opacity: 0.08;
       }
 
       .grain {
@@ -149,8 +149,8 @@
       }
 
       body.dark-theme .grain {
-        opacity: 0.034;
-        mix-blend-mode: screen;
+        opacity: 0.02;
+        mix-blend-mode: soft-light;
       }
 
       .shell {
@@ -178,12 +178,12 @@
 
       body.dark-theme .shell-rim {
         background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02)),
-          linear-gradient(180deg, rgba(18, 20, 25, 0.98), rgba(8, 10, 13, 0.98));
+          linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.015)),
+          linear-gradient(180deg, rgba(15, 17, 22, 0.98), rgba(8, 9, 12, 0.98));
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.06),
           inset 0 -1px 0 rgba(255, 255, 255, 0.02),
-          0 30px 80px rgba(0, 0, 0, 0.45);
+          0 24px 56px rgba(0, 0, 0, 0.4);
       }
 
       .hero {
@@ -1332,44 +1332,44 @@
       body.dark-theme .field textarea,
       body.dark-theme .field button {
         background:
-          linear-gradient(180deg, rgba(24, 26, 32, 0.96), rgba(14, 15, 19, 0.98)),
-          rgba(16, 18, 22, 0.94);
+          linear-gradient(180deg, rgba(21, 23, 28, 0.96), rgba(13, 14, 18, 0.98)),
+          rgba(14, 16, 20, 0.94);
         color: var(--ink);
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.05),
+          inset 0 1px 0 rgba(255, 255, 255, 0.035),
           inset 0 -1px 0 rgba(0, 0, 0, 0.42);
       }
 
       body.dark-theme .field input:focus,
       body.dark-theme .field textarea:focus {
-        border-color: rgba(139, 160, 255, 0.28);
+        border-color: rgba(155, 168, 204, 0.18);
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.06),
-          0 0 0 4px rgba(112, 137, 255, 0.14),
-          0 12px 24px rgba(56, 78, 160, 0.16);
+          inset 0 1px 0 rgba(255, 255, 255, 0.045),
+          0 0 0 3px rgba(135, 148, 184, 0.09),
+          0 10px 18px rgba(28, 34, 58, 0.1);
       }
 
       body.dark-theme .hero,
       body.dark-theme .panel,
       body.dark-theme .calendar-board {
         background:
-          linear-gradient(180deg, rgba(18, 20, 26, 0.96), rgba(10, 11, 15, 0.98)),
+          linear-gradient(180deg, rgba(16, 18, 23, 0.96), rgba(10, 11, 15, 0.98)),
           var(--paper);
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.05),
           inset 0 -1px 0 rgba(255, 255, 255, 0.02),
           var(--shadow);
       }
 
       body.dark-theme .hero {
         background:
-          radial-gradient(circle at 82% 18%, rgba(118, 138, 255, 0.14), transparent 26%),
-          linear-gradient(180deg, rgba(21, 23, 29, 0.96), rgba(11, 12, 16, 0.98) 74%),
+          radial-gradient(circle at 82% 18%, rgba(94, 106, 154, 0.08), transparent 22%),
+          linear-gradient(180deg, rgba(18, 20, 25, 0.96), rgba(11, 12, 16, 0.98) 74%),
           var(--paper);
       }
 
       body.dark-theme .hero::after {
-        opacity: 0.34;
+        opacity: 0.16;
       }
 
       body.dark-theme .hero-badge,
@@ -1378,8 +1378,8 @@
       body.dark-theme .stat,
       body.dark-theme .day {
         background:
-          linear-gradient(180deg, rgba(27, 29, 36, 0.96), rgba(16, 17, 22, 0.98)),
-          rgba(18, 20, 26, 0.92);
+          linear-gradient(180deg, rgba(24, 26, 32, 0.96), rgba(16, 17, 22, 0.98)),
+          rgba(17, 19, 24, 0.92);
       }
 
       body.dark-theme .month {
@@ -1390,16 +1390,16 @@
       body.dark-theme .month-head {
         border-bottom-color: rgba(255, 255, 255, 0.06);
         background:
-          radial-gradient(circle at 50% 0%, rgba(122, 140, 255, 0.08), transparent 42%),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.008));
+          radial-gradient(circle at 50% 0%, rgba(112, 122, 156, 0.045), transparent 40%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.006));
       }
 
       body.dark-theme .section {
         background:
-          linear-gradient(180deg, rgba(24, 26, 33, 0.92), rgba(15, 17, 21, 0.94));
+          linear-gradient(180deg, rgba(21, 23, 29, 0.92), rgba(14, 16, 20, 0.94));
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.06),
-          0 12px 24px rgba(0, 0, 0, 0.18);
+          inset 0 1px 0 rgba(255, 255, 255, 0.045),
+          0 8px 16px rgba(0, 0, 0, 0.14);
       }
 
       body.dark-theme .hero-kicker,
@@ -1414,38 +1414,38 @@
       body.dark-theme .hero-pill,
       body.dark-theme .toolbar p {
         background:
-          linear-gradient(180deg, rgba(31, 33, 40, 0.92), rgba(18, 20, 25, 0.92));
-        color: rgba(245, 247, 251, 0.78);
+          linear-gradient(180deg, rgba(28, 30, 36, 0.9), rgba(18, 20, 24, 0.9));
+        color: rgba(238, 241, 245, 0.68);
       }
 
       body.dark-theme .hero-preview-card {
         background:
-          radial-gradient(circle at 100% 0%, rgba(123, 140, 255, 0.16), transparent 34%),
-          linear-gradient(180deg, rgba(29, 32, 40, 0.92), rgba(18, 19, 24, 0.96)),
+          radial-gradient(circle at 100% 0%, rgba(95, 108, 154, 0.09), transparent 30%),
+          linear-gradient(180deg, rgba(25, 27, 33, 0.92), rgba(17, 18, 22, 0.96)),
           rgba(18, 20, 24, 0.82);
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.08),
-          0 18px 36px rgba(0, 0, 0, 0.24);
+          inset 0 1px 0 rgba(255, 255, 255, 0.05),
+          0 12px 22px rgba(0, 0, 0, 0.18);
       }
 
       body.dark-theme .hero-preview-dot {
-        background: linear-gradient(180deg, #48d98b, #2ca95f);
-        box-shadow: 0 0 0 6px rgba(72, 217, 139, 0.12);
+        background: linear-gradient(180deg, #4cc786, #2e8f5d);
+        box-shadow: 0 0 0 4px rgba(76, 199, 134, 0.08);
       }
 
       body.dark-theme .section::after,
       body.dark-theme .stat::after {
         background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 52%);
+          linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 50%);
       }
 
       body.dark-theme .section:hover,
       body.dark-theme .stat:hover,
       body.dark-theme .day:hover:not(.empty) {
-        border-color: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.085);
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.08),
-          0 18px 28px rgba(0, 0, 0, 0.26);
+          inset 0 1px 0 rgba(255, 255, 255, 0.05),
+          0 10px 18px rgba(0, 0, 0, 0.18);
       }
 
       body.dark-theme .weekdays div,
@@ -1468,8 +1468,8 @@
       body.dark-theme .nav-icon {
         background: rgba(255, 255, 255, 0.04);
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.08),
-          0 8px 16px rgba(0, 0, 0, 0.18);
+          inset 0 1px 0 rgba(255, 255, 255, 0.05),
+          0 6px 12px rgba(0, 0, 0, 0.14);
       }
 
       body.dark-theme .month-chip {
@@ -1483,35 +1483,35 @@
 
       body.dark-theme .day.is-weekend:not(.is-holiday):not(.is-overlap):not(.is-makeup) {
         background:
-          linear-gradient(180deg, rgba(69, 86, 178, 0.32), rgba(38, 44, 78, 0.32));
-        border-color: rgba(124, 144, 255, 0.2);
+          linear-gradient(180deg, rgba(50, 58, 88, 0.42), rgba(28, 32, 50, 0.4));
+        border-color: rgba(123, 134, 170, 0.12);
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.04),
-          inset 0 3px 0 rgba(124, 144, 255, 0.12);
+          inset 0 1px 0 rgba(255, 255, 255, 0.025),
+          inset 0 3px 0 rgba(123, 134, 170, 0.08);
       }
 
       body.dark-theme .hero-badge:hover,
       body.dark-theme .theme-toggle:hover,
       body.dark-theme .month-switcher button:hover {
-        background: rgba(124, 144, 255, 0.12);
-        color: var(--accent-deep);
+        background: rgba(122, 135, 171, 0.08);
+        color: rgba(238, 241, 245, 0.9);
       }
 
       body.dark-theme .hero-badge,
       body.dark-theme .theme-toggle,
       body.dark-theme .month-switcher {
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.06),
-          0 12px 24px rgba(0, 0, 0, 0.22);
+          inset 0 1px 0 rgba(255, 255, 255, 0.045),
+          0 8px 16px rgba(0, 0, 0, 0.14);
       }
 
       body.dark-theme .theme-toggle-track {
-        background: linear-gradient(180deg, rgba(110, 114, 124, 0.42), rgba(78, 81, 89, 0.28));
+        background: linear-gradient(180deg, rgba(95, 98, 108, 0.34), rgba(66, 68, 76, 0.24));
       }
 
       body.dark-theme .hero-badge::before {
-        background: linear-gradient(180deg, #48d98b, #2ca95f);
-        box-shadow: 0 0 0 4px rgba(72, 217, 139, 0.12);
+        background: linear-gradient(180deg, #4cc786, #2e8f5d);
+        box-shadow: 0 0 0 3px rgba(76, 199, 134, 0.08);
         animation-duration: 3.8s;
       }
 
@@ -1527,12 +1527,12 @@
       body.dark-theme .button-row button {
         border-color: rgba(255, 255, 255, 0.08);
         background:
-          linear-gradient(180deg, rgba(37, 40, 48, 0.98), rgba(20, 22, 28, 0.98)),
+          linear-gradient(180deg, rgba(33, 35, 41, 0.98), rgba(19, 21, 26, 0.98)),
           rgba(18, 20, 24, 0.94);
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.05),
           inset 0 -1px 0 rgba(255, 255, 255, 0.02),
-          0 18px 30px rgba(0, 0, 0, 0.26);
+          0 10px 18px rgba(0, 0, 0, 0.16);
       }
 
       body.dark-theme .button-row button::before {
@@ -1542,11 +1542,11 @@
 
       body.dark-theme .button-orb {
         border-color: rgba(255, 255, 255, 0.08);
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
-        color: #b7cfff;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03));
+        color: #b8c0d7;
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.14),
-          0 8px 16px rgba(0, 0, 0, 0.2);
+          inset 0 1px 0 rgba(255, 255, 255, 0.08),
+          0 6px 12px rgba(0, 0, 0, 0.14);
       }
 
       body.dark-theme .stat em {
@@ -1561,88 +1561,88 @@
       }
 
       body.dark-theme .primary {
-        border-color: rgba(124, 154, 212, 0.2);
+        border-color: rgba(140, 148, 171, 0.14);
         background:
-          linear-gradient(180deg, rgba(39, 42, 50, 0.98), rgba(22, 24, 31, 0.98)),
+          linear-gradient(180deg, rgba(34, 36, 42, 0.98), rgba(20, 22, 28, 0.98)),
           rgba(18, 20, 24, 0.94);
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.1),
-          inset 0 -1px 0 rgba(124, 144, 255, 0.18),
-          0 18px 30px rgba(0, 0, 0, 0.28);
+          inset 0 1px 0 rgba(255, 255, 255, 0.07),
+          inset 0 -1px 0 rgba(140, 148, 171, 0.08),
+          0 12px 20px rgba(0, 0, 0, 0.16);
       }
 
       body.dark-theme .button-row button:hover .button-orb {
-        background: linear-gradient(180deg, rgba(124, 144, 255, 0.28), rgba(124, 144, 255, 0.12));
+        background: linear-gradient(180deg, rgba(148, 156, 180, 0.18), rgba(148, 156, 180, 0.08));
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.12),
-          0 8px 18px rgba(124, 144, 255, 0.22);
+          inset 0 1px 0 rgba(255, 255, 255, 0.08),
+          0 6px 12px rgba(70, 76, 96, 0.14);
       }
 
       body.dark-theme .flag {
         border-color: rgba(255, 255, 255, 0.06);
         color: rgba(245, 247, 251, 0.86);
-        background: linear-gradient(180deg, rgba(58, 60, 70, 0.9), rgba(40, 42, 48, 0.92));
+        background: linear-gradient(180deg, rgba(50, 52, 60, 0.86), rgba(35, 37, 42, 0.9));
       }
 
       body.dark-theme .flag.holiday {
-        background: linear-gradient(180deg, rgba(102, 74, 32, 0.94), rgba(72, 53, 24, 0.96));
+        background: linear-gradient(180deg, rgba(86, 68, 38, 0.86), rgba(60, 47, 27, 0.9));
         color: var(--holiday-ink);
       }
 
       body.dark-theme .flag.rest {
-        background: linear-gradient(180deg, rgba(34, 84, 67, 0.94), rgba(24, 58, 46, 0.96));
+        background: linear-gradient(180deg, rgba(39, 74, 62, 0.86), rgba(28, 54, 45, 0.9));
         color: var(--rest-ink);
       }
 
       body.dark-theme .flag.makeup {
-        background: linear-gradient(180deg, rgba(91, 48, 45, 0.96), rgba(64, 34, 32, 0.98));
+        background: linear-gradient(180deg, rgba(82, 49, 47, 0.86), rgba(58, 35, 33, 0.9));
         color: var(--makeup-ink);
       }
 
       body.dark-theme .day.is-holiday {
-        background: linear-gradient(180deg, rgba(104, 72, 24, 0.98), rgba(62, 43, 17, 0.98));
-        border-color: rgba(255, 195, 111, 0.24);
+        background: linear-gradient(180deg, rgba(68, 54, 28, 0.96), rgba(42, 34, 18, 0.98));
+        border-color: rgba(177, 146, 95, 0.16);
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.05),
-          inset 0 3px 0 rgba(255, 195, 111, 0.24),
-          0 16px 28px rgba(124, 78, 14, 0.12);
+          inset 0 1px 0 rgba(255, 255, 255, 0.035),
+          inset 0 3px 0 rgba(177, 146, 95, 0.14),
+          0 10px 18px rgba(67, 48, 17, 0.08);
       }
 
       body.dark-theme .day.is-rest {
-        background: linear-gradient(180deg, rgba(25, 72, 59, 0.98), rgba(17, 48, 39, 0.98));
-        border-color: rgba(86, 218, 167, 0.18);
+        background: linear-gradient(180deg, rgba(22, 58, 49, 0.96), rgba(16, 40, 34, 0.98));
+        border-color: rgba(98, 156, 134, 0.14);
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.05),
-          inset 0 3px 0 rgba(86, 218, 167, 0.18),
-          0 16px 28px rgba(20, 104, 75, 0.12);
+          inset 0 1px 0 rgba(255, 255, 255, 0.035),
+          inset 0 3px 0 rgba(98, 156, 134, 0.12),
+          0 10px 18px rgba(18, 63, 50, 0.08);
       }
 
       body.dark-theme .day.is-overlap {
-        background: linear-gradient(180deg, rgba(92, 45, 130, 0.98), rgba(61, 31, 86, 0.98));
-        border-color: rgba(226, 158, 255, 0.24);
+        background: linear-gradient(180deg, rgba(60, 40, 82, 0.96), rgba(40, 27, 55, 0.98));
+        border-color: rgba(146, 113, 182, 0.16);
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.05),
-          inset 0 3px 0 rgba(226, 158, 255, 0.24),
-          0 18px 30px rgba(112, 55, 170, 0.24);
+          inset 0 1px 0 rgba(255, 255, 255, 0.035),
+          inset 0 3px 0 rgba(146, 113, 182, 0.14),
+          0 10px 18px rgba(55, 34, 82, 0.08);
       }
 
       body.dark-theme .day.is-makeup {
-        background: linear-gradient(180deg, rgba(98, 42, 40, 0.98), rgba(68, 30, 28, 0.98));
-        border-color: rgba(255, 138, 128, 0.2);
+        background: linear-gradient(180deg, rgba(70, 40, 39, 0.96), rgba(48, 28, 27, 0.98));
+        border-color: rgba(158, 110, 103, 0.14);
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.05),
-          inset 0 3px 0 rgba(255, 138, 128, 0.2),
-          0 16px 28px rgba(124, 48, 42, 0.12);
+          inset 0 1px 0 rgba(255, 255, 255, 0.035),
+          inset 0 3px 0 rgba(158, 110, 103, 0.12),
+          0 10px 18px rgba(70, 37, 35, 0.08);
       }
 
       body.dark-theme .day.is-today {
-        border-color: rgba(154, 178, 255, 0.32);
-        outline: 1px solid rgba(154, 178, 255, 0.22);
+        border-color: rgba(176, 188, 219, 0.18);
+        outline: 1px solid rgba(176, 188, 219, 0.12);
         outline-offset: -2px;
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.08),
-          0 0 0 4px rgba(154, 178, 255, 0.08),
-          0 18px 34px rgba(74, 104, 255, 0.18);
+          inset 0 1px 0 rgba(255, 255, 255, 0.05),
+          0 0 0 3px rgba(176, 188, 219, 0.05),
+          0 10px 18px rgba(34, 40, 58, 0.1);
       }
 
       body.dark-theme .day-number.today-mark {
@@ -2145,7 +2145,7 @@
     </div>
 
     <script>
-      const APP_VERSION = "2026-06-10T13-09-00";
+      const APP_VERSION = "2026-06-10T13-24-00";
       const STORAGE_KEY = "work-rest-calendar-settings-v2";
       const LEGACY_STORAGE_KEY = "work-rest-calendar-settings-v1";
       const THEME_STORAGE_KEY = "work-rest-calendar-theme-v1";
