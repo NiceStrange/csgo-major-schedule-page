@@ -590,7 +590,7 @@
         background: linear-gradient(180deg, rgba(52, 199, 89, 0.16), rgba(52, 199, 89, 0.08));
       }
 
-      .day.is-holiday.is-rest {
+      .day.is-overlap {
         background: linear-gradient(180deg, rgba(175, 82, 222, 0.18), rgba(175, 82, 222, 0.08));
       }
 
@@ -971,7 +971,7 @@
             <span></span>
             <span></span>
           </div>
-          <div class="hero-badge">Apple-style Calendar Experience</div>
+          <div class="hero-badge" id="weather-badge">天气读取中</div>
         </div>
         <h1>Eunice的日历</h1>
       </section>
@@ -1139,6 +1139,7 @@
       const workDaysInput = document.getElementById("work-days");
       const restDaysInput = document.getElementById("rest-days");
       const applyButton = document.getElementById("apply-button");
+      const weatherBadge = document.getElementById("weather-badge");
       const officialSummaryTitle = document.getElementById("official-summary-title");
       const officialSummaryText = document.getElementById("official-summary-text");
       const officialSourceLinks = document.getElementById("official-source-links");
@@ -1156,9 +1157,102 @@
       const supportedYears = Object.keys(OFFICIAL_SCHEDULES)
         .map((year) => Number(year))
         .sort((left, right) => left - right);
+      const weatherCodeMap = {
+        0: "晴",
+        1: "大部晴朗",
+        2: "局部多云",
+        3: "阴",
+        45: "有雾",
+        48: "冻雾",
+        51: "毛毛雨",
+        53: "小雨",
+        55: "细雨",
+        56: "冻毛毛雨",
+        57: "冻雨",
+        61: "小雨",
+        63: "中雨",
+        65: "大雨",
+        66: "冻雨",
+        67: "强冻雨",
+        71: "小雪",
+        73: "中雪",
+        75: "大雪",
+        77: "阵雪",
+        80: "阵雨",
+        81: "强阵雨",
+        82: "暴雨",
+        85: "阵雪",
+        86: "强阵雪",
+        95: "雷阵雨",
+        96: "雷雨夹冰雹",
+        99: "强雷雨夹冰雹"
+      };
 
       function pad(value) {
         return String(value).padStart(2, "0");
+      }
+
+      function setWeatherBadge(text) {
+        weatherBadge.textContent = text;
+      }
+
+      function formatWeather(city, current) {
+        const weatherText = weatherCodeMap[current.weather_code] || "天气正常";
+        const temperature = Math.round(current.temperature_2m);
+        return `${city} ${temperature}°C ${weatherText}`;
+      }
+
+      async function fetchWeather(latitude, longitude, city) {
+        const url = new URL("https://api.open-meteo.com/v1/forecast");
+        url.searchParams.set("latitude", String(latitude));
+        url.searchParams.set("longitude", String(longitude));
+        url.searchParams.set("current", "temperature_2m,weather_code");
+        url.searchParams.set("timezone", "auto");
+
+        const response = await fetch(url.toString());
+        if (!response.ok) {
+          throw new Error(`weather ${response.status}`);
+        }
+
+        const payload = await response.json();
+        if (!payload.current) {
+          throw new Error("missing current weather");
+        }
+
+        setWeatherBadge(formatWeather(city, payload.current));
+      }
+
+      function getCurrentPosition() {
+        return new Promise((resolve, reject) => {
+          if (!navigator.geolocation) {
+            reject(new Error("geolocation unavailable"));
+            return;
+          }
+
+          navigator.geolocation.getCurrentPosition(resolve, reject, {
+            enableHighAccuracy: false,
+            timeout: 5000,
+            maximumAge: 15 * 60 * 1000
+          });
+        });
+      }
+
+      async function updateWeatherBadge() {
+        setWeatherBadge("天气读取中");
+
+        try {
+          const position = await getCurrentPosition();
+          await fetchWeather(position.coords.latitude, position.coords.longitude, "当前位置");
+          return;
+        } catch (error) {
+          // Ignore and fall back to Shanghai so the badge always shows a weather status.
+        }
+
+        try {
+          await fetchWeather(31.2304, 121.4737, "上海");
+        } catch (error) {
+          setWeatherBadge("天气暂不可用");
+        }
       }
 
       function toDateKey(date) {
@@ -1396,7 +1490,9 @@
           if (isOfficialWorkday) {
             makeupTotal += 1;
           }
-          if (holidayLabel && rest) {
+          const isOverlap = rest && (Boolean(holidayLabel) || isWeekend);
+
+          if (isOverlap) {
             overlapTotal += 1;
           }
 
@@ -1408,6 +1504,9 @@
           }
           if (rest) {
             dayNode.classList.add("is-rest");
+          }
+          if (isOverlap) {
+            dayNode.classList.add("is-overlap");
           }
           if (isOfficialWorkday) {
             dayNode.classList.add("is-makeup");
@@ -1465,6 +1564,7 @@
 
       fillInputs(initialSettings);
       renderCalendar();
+      updateWeatherBadge();
 
       applyButton.addEventListener("click", () => {
         renderCalendar();
