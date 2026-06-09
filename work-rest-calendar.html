@@ -269,6 +269,55 @@
         border-bottom: 1px solid rgba(15, 23, 42, 0.06);
       }
 
+      .toolbar-main {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        width: 100%;
+      }
+
+      .toolbar-copy {
+        flex: 1 1 auto;
+      }
+
+      .month-switcher {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px;
+        border-radius: 999px;
+        border: 1px solid rgba(15, 23, 42, 0.06);
+        background: rgba(255, 255, 255, 0.72);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.68);
+      }
+
+      .month-switcher button {
+        border: 0;
+        background: transparent;
+        color: var(--ink);
+        font: inherit;
+        font-weight: 600;
+        border-radius: 999px;
+        padding: 10px 14px;
+        cursor: pointer;
+        transition: 180ms ease;
+      }
+
+      .month-switcher button:hover {
+        background: rgba(0, 113, 227, 0.1);
+        color: var(--accent);
+      }
+
+      .month-chip {
+        min-width: 128px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.92rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+
       .toolbar h2 {
         margin: 0;
         font-size: 1.75rem;
@@ -310,12 +359,11 @@
       }
 
       .months {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 16px;
+        display: block;
       }
 
       .month {
+        max-width: 100%;
         border: 1px solid rgba(255, 255, 255, 0.78);
         border-radius: 24px;
         background:
@@ -469,9 +517,6 @@
       }
 
       @media (max-width: 1220px) {
-        .months {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
       }
 
       @media (max-width: 980px) {
@@ -504,12 +549,13 @@
           align-items: flex-start;
         }
 
-        .stats {
-          justify-content: flex-start;
+        .toolbar-main {
+          flex-direction: column;
+          align-items: flex-start;
         }
 
-        .months {
-          grid-template-columns: 1fr;
+        .stats {
+          justify-content: flex-start;
         }
 
         .field-grid {
@@ -588,9 +634,17 @@
 
         <main class="calendar-board">
           <div class="toolbar">
-            <div>
-              <h2 id="calendar-title">2026 年日历</h2>
-              <p id="calendar-subtitle">默认按上3休1生成用户自定义休息日。</p>
+            <div class="toolbar-main">
+              <div class="toolbar-copy">
+                <h2 id="calendar-title">2026 年日历</h2>
+                <p id="calendar-subtitle">默认按上3休1生成用户自定义休息日。</p>
+              </div>
+              <div class="month-switcher">
+                <button id="prev-month-button" type="button">上个月</button>
+                <span class="month-chip" id="month-chip">当前月份</span>
+                <button id="next-month-button" type="button">下个月</button>
+                <button id="today-month-button" type="button">本月</button>
+              </div>
             </div>
             <div class="stats">
               <div class="stat">
@@ -628,9 +682,13 @@
       const monthsNode = document.getElementById("months");
       const calendarTitle = document.getElementById("calendar-title");
       const calendarSubtitle = document.getElementById("calendar-subtitle");
+      const monthChip = document.getElementById("month-chip");
       const holidayCount = document.getElementById("holiday-count");
       const restCount = document.getElementById("rest-count");
       const overlapCount = document.getElementById("overlap-count");
+      const prevMonthButton = document.getElementById("prev-month-button");
+      const nextMonthButton = document.getElementById("next-month-button");
+      const todayMonthButton = document.getElementById("today-month-button");
 
       function pad(value) {
         return String(value).padStart(2, "0");
@@ -659,6 +717,7 @@
         const now = new Date();
         return {
           year: now.getFullYear(),
+          viewMonth: now.getMonth(),
           cycleStart: `${now.getFullYear()}-01-01`,
           workDays: 3,
           restDays: 1,
@@ -677,6 +736,7 @@
           const parsed = JSON.parse(raw);
           return {
             year: Number(parsed.year) || defaults.year,
+            viewMonth: Number.isInteger(parsed.viewMonth) ? parsed.viewMonth : defaults.viewMonth,
             cycleStart: parsed.cycleStart || defaults.cycleStart,
             workDays: Number(parsed.workDays) || defaults.workDays,
             restDays: Number(parsed.restDays) || defaults.restDays,
@@ -732,6 +792,7 @@
       function getSettingsFromInputs() {
         return {
           year: Number(yearInput.value),
+          viewMonth: viewState.month,
           cycleStart: cycleStartInput.value,
           workDays: Number(workDaysInput.value),
           restDays: Number(restDaysInput.value),
@@ -747,115 +808,141 @@
         holidayInput.value = settings.holidayText;
       }
 
+      function clampMonth(month) {
+        return Math.min(11, Math.max(0, month));
+      }
+
+      function setViewMonth(month) {
+        viewState.month = clampMonth(month);
+      }
+
+      function shiftMonth(step) {
+        let year = Number(yearInput.value) || new Date().getFullYear();
+        let month = viewState.month + step;
+
+        if (month < 0) {
+          month = 11;
+          year -= 1;
+        } else if (month > 11) {
+          month = 0;
+          year += 1;
+        }
+
+        yearInput.value = year;
+        setViewMonth(month);
+        renderCalendar();
+      }
+
       function renderCalendar() {
         const settings = getSettingsFromInputs();
         const holidayMap = parseHolidayText(settings.holidayText);
         const todayKey = toDateKey(new Date());
+        const activeMonth = clampMonth(settings.viewMonth);
 
         let holidayTotal = 0;
         let restTotal = 0;
         let overlapTotal = 0;
 
-        calendarTitle.textContent = `${settings.year} 年日历`;
+        calendarTitle.textContent = `${settings.year} 年 ${monthNames[activeMonth]}`;
         calendarSubtitle.textContent = `自定义休息日按“上${settings.workDays}休${settings.restDays}”循环生成，周期起点为 ${settings.cycleStart}。`;
+        monthChip.textContent = `${settings.year}.${pad(activeMonth + 1)}`;
 
         monthsNode.innerHTML = "";
 
-        for (let month = 0; month < 12; month += 1) {
-          const firstDay = new Date(settings.year, month, 1);
-          const daysInMonth = new Date(settings.year, month + 1, 0).getDate();
-          const startWeekday = (firstDay.getDay() + 6) % 7;
+        const month = activeMonth;
+        const firstDay = new Date(settings.year, month, 1);
+        const daysInMonth = new Date(settings.year, month + 1, 0).getDate();
+        const startWeekday = (firstDay.getDay() + 6) % 7;
 
-          const monthNode = document.createElement("section");
-          monthNode.className = "month";
+        const monthNode = document.createElement("section");
+        monthNode.className = "month";
 
-          const monthHead = document.createElement("div");
-          monthHead.className = "month-head";
-          monthHead.innerHTML = `<h3>${monthNames[month]}</h3><span>${settings.year}.${pad(month + 1)}</span>`;
-          monthNode.appendChild(monthHead);
+        const monthHead = document.createElement("div");
+        monthHead.className = "month-head";
+        monthHead.innerHTML = `<h3>${monthNames[month]}</h3><span>${settings.year}.${pad(month + 1)}</span>`;
+        monthNode.appendChild(monthHead);
 
-          const weekdayRow = document.createElement("div");
-          weekdayRow.className = "weekdays";
-          weekdayNames.forEach((weekday) => {
-            const node = document.createElement("div");
-            node.textContent = weekday;
-            weekdayRow.appendChild(node);
-          });
-          monthNode.appendChild(weekdayRow);
+        const weekdayRow = document.createElement("div");
+        weekdayRow.className = "weekdays";
+        weekdayNames.forEach((weekday) => {
+          const node = document.createElement("div");
+          node.textContent = weekday;
+          weekdayRow.appendChild(node);
+        });
+        monthNode.appendChild(weekdayRow);
 
-          const daysGrid = document.createElement("div");
-          daysGrid.className = "days";
+        const daysGrid = document.createElement("div");
+        daysGrid.className = "days";
 
-          for (let i = 0; i < startWeekday; i += 1) {
-            const emptyNode = document.createElement("div");
-            emptyNode.className = "day empty";
-            daysGrid.appendChild(emptyNode);
-          }
-
-          for (let day = 1; day <= daysInMonth; day += 1) {
-            const currentDate = new Date(settings.year, month, day);
-            const dateKey = toDateKey(currentDate);
-            const holidayLabel = holidayMap.get(dateKey);
-            const rest = isRestDay(currentDate, settings.cycleStart, settings.workDays, settings.restDays);
-            const isToday = dateKey === todayKey;
-
-            if (holidayLabel) {
-              holidayTotal += 1;
-            }
-            if (rest) {
-              restTotal += 1;
-            }
-            if (holidayLabel && rest) {
-              overlapTotal += 1;
-            }
-
-            const dayNode = document.createElement("div");
-            dayNode.className = "day";
-            if (holidayLabel) {
-              dayNode.classList.add("is-holiday");
-            }
-            if (rest) {
-              dayNode.classList.add("is-rest");
-            }
-            if (isToday) {
-              dayNode.classList.add("is-today");
-            }
-
-            const flag = holidayLabel
-              ? `<span class="flag holiday">假</span>`
-              : rest
-                ? `<span class="flag rest">休</span>`
-                : "";
-
-            const meta = holidayLabel && rest
-              ? "节假日 + 自定义休息日"
-              : holidayLabel
-                ? "节假日"
-                : rest
-                  ? "自定义休息日"
-                  : `周期第 ${((getDateDiffDays(new Date(settings.cycleStart + "T00:00:00"), currentDate) % (settings.workDays + settings.restDays) + (settings.workDays + settings.restDays)) % (settings.workDays + settings.restDays)) + 1} 天`;
-
-            dayNode.innerHTML = `
-              <div class="day-header">
-                <span class="day-number">${day}</span>
-                ${flag}
-              </div>
-              <div class="day-label">${holidayLabel || ""}</div>
-              <div class="day-meta">${meta}</div>
-            `;
-
-            daysGrid.appendChild(dayNode);
-          }
-
-          while (daysGrid.children.length % 7 !== 0) {
-            const emptyNode = document.createElement("div");
-            emptyNode.className = "day empty";
-            daysGrid.appendChild(emptyNode);
-          }
-
-          monthNode.appendChild(daysGrid);
-          monthsNode.appendChild(monthNode);
+        for (let i = 0; i < startWeekday; i += 1) {
+          const emptyNode = document.createElement("div");
+          emptyNode.className = "day empty";
+          daysGrid.appendChild(emptyNode);
         }
+
+        for (let day = 1; day <= daysInMonth; day += 1) {
+          const currentDate = new Date(settings.year, month, day);
+          const dateKey = toDateKey(currentDate);
+          const holidayLabel = holidayMap.get(dateKey);
+          const rest = isRestDay(currentDate, settings.cycleStart, settings.workDays, settings.restDays);
+          const isToday = dateKey === todayKey;
+
+          if (holidayLabel) {
+            holidayTotal += 1;
+          }
+          if (rest) {
+            restTotal += 1;
+          }
+          if (holidayLabel && rest) {
+            overlapTotal += 1;
+          }
+
+          const dayNode = document.createElement("div");
+          dayNode.className = "day";
+          if (holidayLabel) {
+            dayNode.classList.add("is-holiday");
+          }
+          if (rest) {
+            dayNode.classList.add("is-rest");
+          }
+          if (isToday) {
+            dayNode.classList.add("is-today");
+          }
+
+          const flag = holidayLabel
+            ? `<span class="flag holiday">假</span>`
+            : rest
+              ? `<span class="flag rest">休</span>`
+              : "";
+
+          const meta = holidayLabel && rest
+            ? "节假日 + 自定义休息日"
+            : holidayLabel
+              ? "节假日"
+              : rest
+                ? "自定义休息日"
+                : `周期第 ${((getDateDiffDays(new Date(settings.cycleStart + "T00:00:00"), currentDate) % (settings.workDays + settings.restDays) + (settings.workDays + settings.restDays)) % (settings.workDays + settings.restDays)) + 1} 天`;
+
+          dayNode.innerHTML = `
+            <div class="day-header">
+              <span class="day-number">${day}</span>
+              ${flag}
+            </div>
+            <div class="day-label">${holidayLabel || ""}</div>
+            <div class="day-meta">${meta}</div>
+          `;
+
+          daysGrid.appendChild(dayNode);
+        }
+
+        while (daysGrid.children.length % 7 !== 0) {
+          const emptyNode = document.createElement("div");
+          emptyNode.className = "day empty";
+          daysGrid.appendChild(emptyNode);
+        }
+
+        monthNode.appendChild(daysGrid);
+        monthsNode.appendChild(monthNode);
 
         holidayCount.textContent = String(holidayTotal);
         restCount.textContent = String(restTotal);
@@ -865,6 +952,9 @@
       }
 
       const initialSettings = loadSettings();
+      const viewState = {
+        month: clampMonth(Number.isInteger(initialSettings.viewMonth) ? initialSettings.viewMonth : new Date().getMonth())
+      };
       fillInputs(initialSettings);
       renderCalendar();
 
@@ -877,6 +967,7 @@
         defaults.year = Number(yearInput.value) || defaults.year;
         defaults.holidayText = createSampleHolidayText(defaults.year);
         defaults.cycleStart = `${defaults.year}-01-01`;
+        viewState.month = defaults.year === new Date().getFullYear() ? new Date().getMonth() : 0;
         fillInputs(defaults);
         renderCalendar();
       });
@@ -895,6 +986,21 @@
         }
 
         fillInputs(currentSettings);
+        renderCalendar();
+      });
+
+      prevMonthButton.addEventListener("click", () => {
+        shiftMonth(-1);
+      });
+
+      nextMonthButton.addEventListener("click", () => {
+        shiftMonth(1);
+      });
+
+      todayMonthButton.addEventListener("click", () => {
+        const now = new Date();
+        yearInput.value = now.getFullYear();
+        viewState.month = now.getMonth();
         renderCalendar();
       });
     </script>
