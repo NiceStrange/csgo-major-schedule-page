@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>节假日与休息日日历</title>
     <style>
       :root {
@@ -29,6 +32,27 @@
         --today: #0a84ff;
         --shadow: 0 28px 72px rgba(29, 29, 31, 0.12);
         --shadow-soft: 0 12px 30px rgba(29, 29, 31, 0.07);
+        --hero-sheen: linear-gradient(120deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.16) 42%, rgba(255, 255, 255, 0.52) 100%);
+      }
+
+      body.dark-theme {
+        --bg: #12141a;
+        --bg-strong: #090b10;
+        --paper: rgba(28, 30, 36, 0.8);
+        --paper-strong: rgba(34, 36, 42, 0.92);
+        --paper-solid: #1d2027;
+        --ink: #f5f5f7;
+        --muted: #a1a1aa;
+        --line: rgba(255, 255, 255, 0.08);
+        --line-strong: rgba(255, 255, 255, 0.14);
+        --accent-soft: rgba(10, 132, 255, 0.18);
+        --holiday: rgba(255, 159, 10, 0.18);
+        --rest: rgba(48, 209, 88, 0.18);
+        --mix: rgba(191, 90, 242, 0.2);
+        --makeup: rgba(255, 69, 58, 0.18);
+        --shadow: 0 28px 72px rgba(0, 0, 0, 0.42);
+        --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.28);
+        --hero-sheen: linear-gradient(140deg, rgba(255, 255, 255, 0.12), transparent 42%, rgba(255, 255, 255, 0.06));
       }
 
       * {
@@ -52,6 +76,16 @@
           radial-gradient(circle at 100% 0%, rgba(175, 82, 222, 0.12), transparent 24%),
           radial-gradient(circle at 50% 100%, rgba(52, 199, 89, 0.1), transparent 28%),
           linear-gradient(180deg, #fbfbfd 0%, var(--bg) 38%, var(--bg-strong) 100%);
+        overflow-x: hidden;
+        transition: background 280ms ease, color 220ms ease;
+      }
+
+      body.dark-theme {
+        background:
+          radial-gradient(circle at 0% 0%, rgba(10, 132, 255, 0.16), transparent 28%),
+          radial-gradient(circle at 100% 0%, rgba(191, 90, 242, 0.16), transparent 24%),
+          radial-gradient(circle at 50% 100%, rgba(48, 209, 88, 0.12), transparent 24%),
+          linear-gradient(180deg, #1a1d24 0%, var(--bg) 34%, var(--bg-strong) 100%);
       }
 
       body::before,
@@ -72,12 +106,14 @@
         top: -80px;
         right: -90px;
         background: rgba(0, 113, 227, 0.18);
+        animation: floatBlobOne 18s ease-in-out infinite;
       }
 
       body::after {
         bottom: -120px;
         left: -80px;
         background: rgba(175, 82, 222, 0.14);
+        animation: floatBlobTwo 24s ease-in-out infinite;
       }
 
       .shell {
@@ -88,6 +124,7 @@
       }
 
       .hero {
+        position: relative;
         padding: 18px 18px 22px;
         border: 1px solid rgba(255, 255, 255, 0.7);
         border-radius: 30px;
@@ -97,14 +134,34 @@
         box-shadow: var(--shadow);
         backdrop-filter: blur(26px) saturate(165%);
         -webkit-backdrop-filter: blur(26px) saturate(165%);
+        overflow: hidden;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--hero-sheen);
+        opacity: 0.42;
+        pointer-events: none;
+        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 62%);
       }
 
       .hero-top {
+        position: relative;
+        z-index: 1;
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: space-between;
         gap: 12px;
         margin-bottom: 18px;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
       }
 
       .traffic-lights {
@@ -133,10 +190,11 @@
       }
 
       .hero-badge {
+        position: relative;
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        padding: 8px 12px;
+        padding: 8px 14px 8px 12px;
         border-radius: 999px;
         background: rgba(255, 255, 255, 0.68);
         border: 1px solid rgba(60, 60, 67, 0.08);
@@ -149,10 +207,92 @@
         transition: 180ms ease;
       }
 
+      .hero-badge::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: linear-gradient(180deg, #34c759, #1ea94b);
+        box-shadow: 0 0 0 4px rgba(52, 199, 89, 0.12);
+        animation: pulseDot 2.6s ease-in-out infinite;
+      }
+
       .hero-badge:hover {
         transform: translateY(-1px);
         color: var(--accent);
         border-color: rgba(10, 132, 255, 0.18);
+        background: rgba(255, 255, 255, 0.78);
+      }
+
+      .theme-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 7px 12px 7px 8px;
+        border-radius: 999px;
+        border: 1px solid rgba(60, 60, 67, 0.08);
+        background: rgba(255, 255, 255, 0.64);
+        color: var(--muted);
+        font: inherit;
+        font-size: 0.79rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease,
+          color 180ms ease,
+          border-color 180ms ease,
+          background 180ms ease;
+      }
+
+      .theme-toggle:hover {
+        transform: translateY(-1px);
+        color: var(--ink);
+        border-color: rgba(10, 132, 255, 0.16);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.78),
+          0 10px 20px rgba(29, 29, 31, 0.08);
+      }
+
+      .theme-toggle:focus-visible {
+        outline: none;
+        box-shadow:
+          0 0 0 4px rgba(10, 132, 255, 0.12),
+          inset 0 1px 0 rgba(255, 255, 255, 0.78);
+      }
+
+      .theme-toggle-track {
+        position: relative;
+        width: 34px;
+        height: 20px;
+        border-radius: 999px;
+        background: rgba(120, 120, 128, 0.28);
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+        transition: background 200ms ease;
+      }
+
+      .theme-toggle-thumb {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 16px;
+        height: 16px;
+        border-radius: 999px;
+        background: linear-gradient(180deg, #ffffff, #f2f2f7);
+        box-shadow:
+          0 1px 2px rgba(0, 0, 0, 0.14),
+          inset 0 1px 0 rgba(255, 255, 255, 0.82);
+        transition: transform 220ms ease, background 220ms ease;
+      }
+
+      body.dark-theme .theme-toggle-track {
+        background: rgba(10, 132, 255, 0.8);
+      }
+
+      body.dark-theme .theme-toggle-thumb {
+        transform: translateX(14px);
+        background: linear-gradient(180deg, #ffffff, #dfe6f7);
       }
 
       .hero-badge:focus-visible {
@@ -163,6 +303,8 @@
       }
 
       .hero h1 {
+        position: relative;
+        z-index: 1;
         margin: 0;
         font-size: clamp(2.4rem, 4.6vw, 4.2rem);
         font-weight: 700;
@@ -205,11 +347,33 @@
       }
 
       .section {
+        position: relative;
         padding: 16px;
         border-radius: 22px;
         border: 1px solid rgba(255, 255, 255, 0.7);
         background: rgba(255, 255, 255, 0.56);
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.62);
+        transition:
+          transform 220ms ease,
+          box-shadow 220ms ease,
+          border-color 220ms ease;
+      }
+
+      .section::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 48%);
+        pointer-events: none;
+      }
+
+      .section:hover {
+        transform: translateY(-1px);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.72),
+          0 10px 22px rgba(29, 29, 31, 0.05);
+        border-color: rgba(255, 255, 255, 0.82);
       }
 
       .section + .section {
@@ -285,12 +449,15 @@
         cursor: pointer;
         padding: 12px 16px;
         font-weight: 600;
-        transition: 180ms ease;
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease,
+          filter 180ms ease;
       }
 
       .primary {
         border-color: rgba(0, 113, 227, 0.24);
-        background: linear-gradient(180deg, #2490ff, var(--accent));
+        background: linear-gradient(180deg, #44a1ff 0%, #1488ff 45%, #0a84ff 100%);
         color: #fff;
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.24),
@@ -304,6 +471,11 @@
       .button-row button:hover {
         transform: translateY(-1px);
         box-shadow: var(--shadow-soft);
+        filter: saturate(1.03);
+      }
+
+      .button-row button:active {
+        transform: translateY(0);
       }
 
       .legend {
@@ -381,6 +553,10 @@
         color: var(--accent);
       }
 
+      .month-switcher button:active {
+        transform: scale(0.98);
+      }
+
       .nav-icon {
         min-width: 42px;
         padding-inline: 0;
@@ -394,6 +570,7 @@
         font-size: 0.92rem;
         font-weight: 600;
         letter-spacing: -0.02em;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
       }
 
       .toolbar h2 {
@@ -417,21 +594,48 @@
       }
 
       .stat {
+        position: relative;
         min-width: 126px;
         padding: 13px 15px;
         border-radius: 18px;
         border: 1px solid rgba(15, 23, 42, 0.06);
         background: rgba(255, 255, 255, 0.88);
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.66);
+        overflow: hidden;
+        transition:
+          transform 200ms ease,
+          box-shadow 200ms ease,
+          border-color 200ms ease;
+      }
+
+      .stat::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(10, 132, 255, 0.08), transparent 60%);
+        opacity: 0.8;
+        pointer-events: none;
+      }
+
+      .stat:hover {
+        transform: translateY(-1px);
+        border-color: rgba(10, 132, 255, 0.12);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.72),
+          0 10px 22px rgba(29, 29, 31, 0.06);
       }
 
       .stat strong {
+        position: relative;
+        z-index: 1;
         display: block;
         font-size: 1.32rem;
         letter-spacing: -0.03em;
       }
 
       .stat span {
+        position: relative;
+        z-index: 1;
         color: var(--muted);
         font-size: 0.82rem;
       }
@@ -448,6 +652,7 @@
           linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(248, 249, 252, 0.84));
         overflow: hidden;
         box-shadow: var(--shadow-soft);
+        animation: monthReveal 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
       }
 
       .month-head {
@@ -504,14 +709,20 @@
         border: 1px solid rgba(15, 23, 42, 0.06);
         background: rgba(255, 255, 255, 0.86);
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.58);
-        transition: 180ms ease;
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease,
+          border-color 180ms ease;
+        animation: dayReveal 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+        animation-delay: calc(var(--day-index, 0) * 16ms);
       }
 
       .day:hover:not(.empty) {
-        transform: translateY(-1px);
+        transform: translateY(-2px) scale(1.01);
+        border-color: rgba(15, 23, 42, 0.1);
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.72),
-          0 8px 18px rgba(15, 23, 42, 0.08);
+          0 14px 24px rgba(15, 23, 42, 0.09);
       }
 
       .day.empty {
@@ -575,7 +786,7 @@
       }
 
       .day-label {
-        color: #374151;
+        color: color-mix(in srgb, var(--ink) 72%, transparent);
         margin-top: 4px;
         font-size: 0.76rem;
         line-height: 1.32;
@@ -618,7 +829,8 @@
         border-color: rgba(10, 132, 255, 0.34);
         box-shadow:
           inset 0 0 0 1px rgba(10, 132, 255, 0.12),
-          0 0 0 3px rgba(10, 132, 255, 0.08);
+          0 0 0 3px rgba(10, 132, 255, 0.08),
+          0 16px 26px rgba(10, 132, 255, 0.1);
       }
 
       .hint {
@@ -634,11 +846,21 @@
       }
 
       .info-card {
+        position: relative;
         padding: 14px 16px;
         border-radius: 18px;
         border: 1px solid rgba(60, 60, 67, 0.08);
         background: rgba(255, 255, 255, 0.7);
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+        overflow: hidden;
+      }
+
+      .info-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(140deg, rgba(10, 132, 255, 0.07), transparent 58%);
+        pointer-events: none;
       }
 
       .info-card strong {
@@ -682,6 +904,10 @@
         transform: translateY(-1px);
         color: var(--accent);
         border-color: rgba(10, 132, 255, 0.2);
+      }
+
+      .source-link:active {
+        transform: translateY(0);
       }
 
       .source-link.is-active {
@@ -790,6 +1016,121 @@
         color: #8c8c91;
       }
 
+      body.dark-theme .hero-badge,
+      body.dark-theme .theme-toggle,
+      body.dark-theme .month-switcher,
+      body.dark-theme .stat,
+      body.dark-theme .section,
+      body.dark-theme .info-card,
+      body.dark-theme .source-link,
+      body.dark-theme .day,
+      body.dark-theme .field input {
+        border-color: rgba(255, 255, 255, 0.08);
+      }
+
+      body.dark-theme .field input,
+      body.dark-theme .field textarea,
+      body.dark-theme .field button {
+        background: rgba(34, 36, 42, 0.92);
+        color: var(--ink);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      }
+
+      body.dark-theme .hero-badge,
+      body.dark-theme .theme-toggle,
+      body.dark-theme .month-switcher,
+      body.dark-theme .source-link,
+      body.dark-theme .stat,
+      body.dark-theme .info-card,
+      body.dark-theme .day {
+        background: rgba(34, 36, 42, 0.72);
+      }
+
+      body.dark-theme .month {
+        background: linear-gradient(180deg, rgba(30, 32, 38, 0.94), rgba(22, 24, 30, 0.92));
+      }
+
+      body.dark-theme .month-head {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+      }
+
+      body.dark-theme .weekdays div,
+      body.dark-theme .legend-item,
+      body.dark-theme .field label,
+      body.dark-theme .hint,
+      body.dark-theme .info-card span,
+      body.dark-theme .stat span,
+      body.dark-theme .month-head span {
+        color: var(--muted);
+      }
+
+      body.dark-theme .day.is-weekend .day-number:not(.today-mark) {
+        color: #c3c6d1;
+      }
+
+      body.dark-theme .source-link.is-active {
+        background: rgba(10, 132, 255, 0.2);
+      }
+
+      @keyframes floatBlobOne {
+        0%,
+        100% {
+          transform: translate3d(0, 0, 0) scale(1);
+        }
+
+        50% {
+          transform: translate3d(-18px, 20px, 0) scale(1.06);
+        }
+      }
+
+      @keyframes floatBlobTwo {
+        0%,
+        100% {
+          transform: translate3d(0, 0, 0) scale(1);
+        }
+
+        50% {
+          transform: translate3d(22px, -16px, 0) scale(1.08);
+        }
+      }
+
+      @keyframes pulseDot {
+        0%,
+        100% {
+          transform: scale(1);
+          box-shadow: 0 0 0 4px rgba(52, 199, 89, 0.12);
+        }
+
+        50% {
+          transform: scale(1.08);
+          box-shadow: 0 0 0 7px rgba(52, 199, 89, 0.08);
+        }
+      }
+
+      @keyframes monthReveal {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes dayReveal {
+        from {
+          opacity: 0;
+          transform: translateY(10px) scale(0.98);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
       @media (max-width: 1220px) {
       }
 
@@ -815,7 +1156,13 @@
         }
 
         .hero-top {
+          flex-direction: column;
+          align-items: stretch;
           margin-bottom: 14px;
+        }
+
+        .hero-actions {
+          align-items: stretch;
         }
 
         .calendar-board {
@@ -953,6 +1300,11 @@
           padding: 20px 16px;
         }
 
+        .theme-toggle,
+        .hero-badge {
+          justify-content: center;
+        }
+
         .day {
           min-height: 88px;
           min-width: 50px;
@@ -987,7 +1339,15 @@
             <span></span>
             <span></span>
           </div>
-          <div class="hero-badge" id="weather-badge" role="button" tabindex="0" aria-label="刷新天气">天气读取中</div>
+          <div class="hero-actions">
+            <div class="hero-badge" id="weather-badge" role="button" tabindex="0" aria-label="刷新天气">天气读取中</div>
+            <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="切换深色模式">
+              <span class="theme-toggle-track" aria-hidden="true">
+                <span class="theme-toggle-thumb"></span>
+              </span>
+              <span id="theme-toggle-text">浅色模式</span>
+            </button>
+          </div>
         </div>
         <h1>Eunice的日历</h1>
       </section>
@@ -1096,8 +1456,10 @@
     </div>
 
     <script>
+      const APP_VERSION = "2026-06-09T17-10-00";
       const STORAGE_KEY = "work-rest-calendar-settings-v2";
       const LEGACY_STORAGE_KEY = "work-rest-calendar-settings-v1";
+      const THEME_STORAGE_KEY = "work-rest-calendar-theme-v1";
       const monthNames = ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"];
       const weekdayNames = ["一", "二", "三", "四", "五", "六", "日"];
       const OFFICIAL_SCHEDULES = {
@@ -1156,6 +1518,8 @@
       const restDaysInput = document.getElementById("rest-days");
       const applyButton = document.getElementById("apply-button");
       const weatherBadge = document.getElementById("weather-badge");
+      const themeToggle = document.getElementById("theme-toggle");
+      const themeToggleText = document.getElementById("theme-toggle-text");
       const officialSummaryTitle = document.getElementById("official-summary-title");
       const officialSummaryText = document.getElementById("official-summary-text");
       const officialSourceLinks = document.getElementById("official-source-links");
@@ -1210,6 +1574,59 @@
 
       function setWeatherBadge(text) {
         weatherBadge.textContent = text;
+      }
+
+      function applyTheme(theme) {
+        const isDark = theme === "dark";
+        document.body.classList.toggle("dark-theme", isDark);
+        themeToggle.setAttribute("aria-pressed", String(isDark));
+        themeToggleText.textContent = isDark ? "深色模式" : "浅色模式";
+      }
+
+      function loadThemePreference() {
+        const stored = localStorage.getItem(THEME_STORAGE_KEY);
+        if (stored === "light" || stored === "dark") {
+          return stored;
+        }
+
+        return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+      }
+
+      function toggleTheme() {
+        const nextTheme = document.body.classList.contains("dark-theme") ? "light" : "dark";
+        applyTheme(nextTheme);
+        localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+      }
+
+      async function ensureLatestBuild() {
+        try {
+          const response = await fetch(`./version.json?ts=${Date.now()}`, {
+            cache: "no-store"
+          });
+
+          if (!response.ok) {
+            return false;
+          }
+
+          const payload = await response.json();
+          const latestVersion = payload.version;
+          if (!latestVersion || latestVersion === APP_VERSION) {
+            return false;
+          }
+
+          const nextUrl = new URL(window.location.href);
+          if (nextUrl.searchParams.get("v") !== latestVersion) {
+            nextUrl.searchParams.set("v", latestVersion);
+            window.location.replace(nextUrl.toString());
+            return true;
+          }
+        } catch (error) {
+          // Ignore update-check failures so the calendar still loads offline or on flaky networks.
+        }
+
+        return false;
       }
 
       function formatWeather(city, current) {
@@ -1595,10 +2012,27 @@
         month: clampMonth(Number.isInteger(initialSettings.viewMonth) ? initialSettings.viewMonth : new Date().getMonth())
       };
 
-      fillInputs(initialSettings);
-      renderCalendar();
-      updateWeatherBadge();
-      watchLocationPermission();
+      async function initializePage() {
+        const redirected = await ensureLatestBuild();
+        if (redirected) {
+          return;
+        }
+
+        applyTheme(loadThemePreference());
+        fillInputs(initialSettings);
+        renderCalendar();
+        updateWeatherBadge();
+        watchLocationPermission();
+
+        if (window.matchMedia) {
+          const media = window.matchMedia("(prefers-color-scheme: dark)");
+          media.addEventListener?.("change", (event) => {
+            if (!localStorage.getItem(THEME_STORAGE_KEY)) {
+              applyTheme(event.matches ? "dark" : "light");
+            }
+          });
+        }
+      }
 
       weatherBadge.addEventListener("click", () => {
         updateWeatherBadge();
@@ -1609,6 +2043,10 @@
           event.preventDefault();
           updateWeatherBadge();
         }
+      });
+
+      themeToggle.addEventListener("click", () => {
+        toggleTheme();
       });
 
       applyButton.addEventListener("click", () => {
@@ -1640,6 +2078,8 @@
         viewState.month = now.getMonth();
         renderCalendar();
       });
+
+      initializePage();
     </script>
   </body>
 </html>
