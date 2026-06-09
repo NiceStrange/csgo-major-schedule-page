@@ -879,18 +879,36 @@
           min-width: 0;
         }
 
+        .month {
+          overflow-x: auto;
+          overflow-y: hidden;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        .month::-webkit-scrollbar {
+          height: 6px;
+        }
+
+        .month::-webkit-scrollbar-thumb {
+          border-radius: 999px;
+          background: rgba(60, 60, 67, 0.18);
+        }
+
         .weekdays {
           padding: 10px 10px 2px;
+          min-width: 388px;
         }
 
         .days {
           padding: 0 10px 10px;
           gap: 6px;
+          min-width: 388px;
         }
 
         .day {
-          min-height: 86px;
-          padding: 8px;
+          min-height: 88px;
+          min-width: 50px;
+          padding: 8px 8px 10px;
           border-radius: 16px;
         }
 
@@ -915,8 +933,10 @@
         }
 
         .day {
-          min-height: 78px;
-          padding: 7px;
+          min-height: 88px;
+          min-width: 50px;
+          padding: 8px;
+          border-radius: 16px;
         }
 
         .day-number {
