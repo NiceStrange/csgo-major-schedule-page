@@ -144,6 +144,22 @@
         font-size: 0.8rem;
         font-weight: 600;
         letter-spacing: 0.01em;
+        cursor: pointer;
+        user-select: none;
+        transition: 180ms ease;
+      }
+
+      .hero-badge:hover {
+        transform: translateY(-1px);
+        color: var(--accent);
+        border-color: rgba(10, 132, 255, 0.18);
+      }
+
+      .hero-badge:focus-visible {
+        outline: none;
+        box-shadow:
+          0 0 0 4px rgba(10, 132, 255, 0.12),
+          inset 0 1px 0 rgba(255, 255, 255, 0.72);
       }
 
       .hero h1 {
@@ -971,7 +987,7 @@
             <span></span>
             <span></span>
           </div>
-          <div class="hero-badge" id="weather-badge">天气读取中</div>
+          <div class="hero-badge" id="weather-badge" role="button" tabindex="0" aria-label="刷新天气">天气读取中</div>
         </div>
         <h1>Eunice的日历</h1>
       </section>
@@ -1252,6 +1268,23 @@
           await fetchWeather(31.2304, 121.4737, "上海");
         } catch (error) {
           setWeatherBadge("天气暂不可用");
+        }
+      }
+
+      async function watchLocationPermission() {
+        if (!navigator.permissions || !navigator.permissions.query) {
+          return;
+        }
+
+        try {
+          const permissionStatus = await navigator.permissions.query({ name: "geolocation" });
+          permissionStatus.onchange = () => {
+            if (permissionStatus.state === "granted") {
+              updateWeatherBadge();
+            }
+          };
+        } catch (error) {
+          // Some browsers do not support querying geolocation permissions.
         }
       }
 
@@ -1565,6 +1598,18 @@
       fillInputs(initialSettings);
       renderCalendar();
       updateWeatherBadge();
+      watchLocationPermission();
+
+      weatherBadge.addEventListener("click", () => {
+        updateWeatherBadge();
+      });
+
+      weatherBadge.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          updateWeatherBadge();
+        }
+      });
 
       applyButton.addEventListener("click", () => {
         renderCalendar();
