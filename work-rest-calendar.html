@@ -622,54 +622,91 @@
 
       .button-row {
         display: flex;
-        gap: 10px;
+        gap: 12px;
         flex-wrap: wrap;
+        margin-top: 16px;
       }
 
       .button-row button {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
         flex: 1 1 140px;
         cursor: pointer;
         display: inline-flex;
         align-items: center;
         justify-content: space-between;
-        gap: 14px;
+        gap: 12px;
+        min-height: 58px;
         padding: 12px 14px 12px 18px;
-        font-weight: 600;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        border-radius: 999px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 247, 252, 0.94)),
+          rgba(255, 255, 255, 0.9);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.92),
+          0 14px 28px rgba(24, 28, 34, 0.06);
         transition:
           transform 420ms var(--ease-fluid),
           box-shadow 420ms var(--ease-fluid),
           filter 260ms var(--ease-fluid),
-          background 260ms var(--ease-fluid);
+          background 260ms var(--ease-fluid),
+          border-color 260ms var(--ease-fluid),
+          color 260ms var(--ease-fluid);
+      }
+
+      .button-row button::before {
+        content: "";
+        position: absolute;
+        inset: 1px;
+        border-radius: inherit;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0));
+        opacity: 0.82;
+        pointer-events: none;
       }
 
       .primary {
-        border-color: rgba(0, 113, 227, 0.24);
-        background: linear-gradient(180deg, #3d9aff 0%, #157dff 48%, #0a84ff 100%);
-        color: #fff;
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.24),
-          0 14px 26px rgba(0, 113, 227, 0.22);
+        color: var(--ink);
+        border-color: rgba(86, 102, 130, 0.14);
       }
 
       .button-copy {
+        position: relative;
+        z-index: 1;
         display: inline-flex;
         align-items: center;
         gap: 10px;
+        color: inherit;
+        font-size: 0.94rem;
       }
 
       .button-orb {
+        position: relative;
+        z-index: 1;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 34px;
-        height: 34px;
+        width: 36px;
+        height: 36px;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.18);
+        border: 1px solid rgba(15, 23, 42, 0.06);
+        background: linear-gradient(180deg, rgba(32, 37, 45, 0.08), rgba(32, 37, 45, 0.03));
+        color: var(--accent-deep);
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.28),
-          0 4px 14px rgba(0, 0, 0, 0.12);
-        font-size: 0.92rem;
+          inset 0 1px 0 rgba(255, 255, 255, 0.78),
+          0 4px 14px rgba(22, 28, 36, 0.08);
         transition: transform 420ms var(--ease-fluid), background 260ms var(--ease-fluid), box-shadow 420ms var(--ease-fluid);
+      }
+
+      .button-orb svg {
+        width: 14px;
+        height: 14px;
+        stroke: currentColor;
+        stroke-width: 1.75;
+        fill: none;
       }
 
       .ghost {
@@ -677,18 +714,24 @@
       }
 
       .button-row button:hover {
-        transform: translateY(-1px);
-        box-shadow: var(--shadow-soft);
+        transform: translateY(-2px) scale(1.004);
+        border-color: rgba(118, 132, 163, 0.18);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.96),
+          0 20px 34px rgba(24, 28, 34, 0.08);
         filter: saturate(1.03);
       }
 
       .button-row button:active {
-        transform: scale(0.985);
+        transform: translateY(1px) scale(0.984);
       }
 
       .button-row button:hover .button-orb {
-        transform: translateX(2px) translateY(-1px) scale(1.04);
-        background: rgba(255, 255, 255, 0.24);
+        transform: translateX(3px) translateY(-1px) scale(1.05);
+        background: linear-gradient(180deg, rgba(10, 132, 255, 0.16), rgba(10, 132, 255, 0.08));
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.82),
+          0 8px 18px rgba(10, 132, 255, 0.16);
       }
 
       .legend {
@@ -956,12 +999,19 @@
       }
 
       .day {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         min-height: 108px;
-        padding: 12px 10px 12px;
+        padding: 16px 10px 14px;
         border-radius: 20px;
         border: 1px solid rgba(15, 23, 42, 0.06);
         background: rgba(255, 255, 255, 0.86);
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.58);
+        text-align: center;
+        overflow: hidden;
         transition:
           transform 420ms var(--ease-fluid),
           box-shadow 420ms var(--ease-fluid),
@@ -985,21 +1035,30 @@
       }
 
       .day-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 6px;
+        display: grid;
+        place-items: center;
+        width: 100%;
+        min-height: 40px;
+        margin: 4px 0 2px;
       }
 
       .day-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        min-width: 36px;
+        min-height: 36px;
         font-weight: 700;
         font-size: 1.18rem;
+        line-height: 1;
         letter-spacing: -0.04em;
+        text-align: center;
       }
 
       .day-number.today-mark {
-        width: 32px;
-        height: 32px;
+        width: 36px;
+        height: 36px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -1010,6 +1069,10 @@
       }
 
       .flag {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 2;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -1039,11 +1102,17 @@
 
       .day-label {
         color: color-mix(in srgb, var(--ink) 72%, transparent);
-        margin-top: 4px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        margin-top: 2px;
+        padding: 0 4px;
         font-size: 0.76rem;
         line-height: 1.32;
         word-break: break-all;
-        min-height: 1.4em;
+        min-height: 2em;
+        width: 100%;
+        text-align: center;
       }
 
       .day-label:empty {
@@ -1378,8 +1447,25 @@
         color: rgba(245, 245, 247, 0.56);
       }
 
+      body.dark-theme .button-row button {
+        border-color: rgba(255, 255, 255, 0.08);
+        background:
+          linear-gradient(180deg, rgba(41, 43, 50, 0.98), rgba(28, 29, 34, 0.96)),
+          rgba(27, 28, 32, 0.92);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.08),
+          0 18px 28px rgba(0, 0, 0, 0.22);
+      }
+
+      body.dark-theme .button-row button::before {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+        opacity: 0.5;
+      }
+
       body.dark-theme .button-orb {
-        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.08);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+        color: #9dc8ff;
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.14),
           0 4px 14px rgba(0, 0, 0, 0.18);
@@ -1397,10 +1483,21 @@
       }
 
       body.dark-theme .primary {
-        background: linear-gradient(180deg, #2f95ff 0%, #157dff 48%, #0a84ff 100%);
+        border-color: rgba(124, 154, 212, 0.18);
+        background:
+          linear-gradient(180deg, rgba(43, 45, 52, 0.98), rgba(30, 31, 37, 0.96)),
+          rgba(27, 28, 32, 0.92);
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.16),
-          0 10px 24px rgba(10, 132, 255, 0.18);
+          inset 0 1px 0 rgba(255, 255, 255, 0.1),
+          inset 0 -1px 0 rgba(10, 132, 255, 0.14),
+          0 16px 26px rgba(0, 0, 0, 0.24);
+      }
+
+      body.dark-theme .button-row button:hover .button-orb {
+        background: linear-gradient(180deg, rgba(10, 132, 255, 0.28), rgba(10, 132, 255, 0.12));
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.12),
+          0 8px 18px rgba(10, 132, 255, 0.22);
       }
 
       body.dark-theme .flag {
@@ -1707,23 +1804,31 @@
         }
 
         .day {
-          min-height: 88px;
+          min-height: 92px;
           min-width: 50px;
-          padding: 8px 8px 10px;
+          padding: 10px 8px 12px;
           border-radius: 16px;
         }
 
+        .day-header {
+          min-height: 36px;
+          margin: 2px 0;
+        }
+
         .day-number {
+          width: 34px;
+          min-width: 34px;
+          min-height: 34px;
           font-size: 1.08rem;
         }
 
         .day-number.today-mark {
-          width: 30px;
-          height: 30px;
+          width: 34px;
+          height: 34px;
         }
 
         .day-label {
-          min-height: 0;
+          min-height: 1.9em;
           font-size: 0.7rem;
         }
       }
@@ -1752,22 +1857,32 @@
         }
 
         .day {
-          min-height: 88px;
+          min-height: 92px;
           min-width: 50px;
-          padding: 8px;
+          padding: 10px 8px 12px;
           border-radius: 16px;
         }
 
+        .day-header {
+          min-height: 34px;
+          margin: 2px 0;
+        }
+
         .day-number {
-          font-size: 1rem;
+          width: 32px;
+          min-width: 32px;
+          min-height: 32px;
+          font-size: 1.02rem;
         }
 
         .day-number.today-mark {
-          width: 28px;
-          height: 28px;
+          width: 32px;
+          height: 32px;
         }
 
         .flag {
+          top: 8px;
+          right: 8px;
           min-width: 20px;
           height: 20px;
           padding: 0 6px;
@@ -1846,10 +1961,15 @@
                 <input id="rest-days" type="number" min="1" max="30" />
               </div>
             </div>
-            <div class="button-row" style="margin-top: 12px;">
+            <div class="button-row">
               <button class="primary" id="apply-button" type="button">
                 <span class="button-copy">应用设置</span>
-                <span class="button-orb" aria-hidden="true">↗</span>
+                <span class="button-orb" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M8 16L16 8"></path>
+                    <path d="M10 8h6v6"></path>
+                  </svg>
+                </span>
               </button>
             </div>
           </div>
@@ -1932,7 +2052,7 @@
     </div>
 
     <script>
-      const APP_VERSION = "2026-06-09T20-56-00";
+      const APP_VERSION = "2026-06-10T12-26-00";
       const STORAGE_KEY = "work-rest-calendar-settings-v2";
       const LEGACY_STORAGE_KEY = "work-rest-calendar-settings-v1";
       const THEME_STORAGE_KEY = "work-rest-calendar-theme-v1";
