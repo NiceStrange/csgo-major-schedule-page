@@ -513,13 +513,13 @@
 
       .day-number {
         font-weight: 700;
-        font-size: 0.98rem;
-        letter-spacing: -0.02em;
+        font-size: 1.18rem;
+        letter-spacing: -0.04em;
       }
 
       .day-number.today-mark {
-        width: 28px;
-        height: 28px;
+        width: 32px;
+        height: 32px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -560,10 +560,11 @@
 
       .day-label {
         color: #374151;
-        font-size: 0.74rem;
-        line-height: 1.38;
+        margin-top: 4px;
+        font-size: 0.76rem;
+        line-height: 1.32;
         word-break: break-all;
-        min-height: 2em;
+        min-height: 1.4em;
       }
 
       .day-label:empty {
@@ -912,14 +913,18 @@
           border-radius: 16px;
         }
 
-        .day-label {
-          min-height: 0;
-          font-size: 0.68rem;
+        .day-number {
+          font-size: 1.08rem;
         }
 
-        .day-meta {
-          margin-top: 6px;
-          font-size: 0.64rem;
+        .day-number.today-mark {
+          width: 30px;
+          height: 30px;
+        }
+
+        .day-label {
+          min-height: 0;
+          font-size: 0.7rem;
         }
       }
 
@@ -940,12 +945,12 @@
         }
 
         .day-number {
-          font-size: 0.9rem;
+          font-size: 1rem;
         }
 
         .day-number.today-mark {
-          width: 24px;
-          height: 24px;
+          width: 28px;
+          height: 28px;
         }
 
         .flag {
@@ -1378,8 +1383,7 @@
           const dateKey = toDateKey(currentDate);
           const holidayLabel = holidayMap.get(dateKey);
           const isOfficialWorkday = workdaySet.has(dateKey);
-          const rawRest = isRestDay(currentDate, settings.cycleStart, settings.workDays, settings.restDays);
-          const rest = !isOfficialWorkday && rawRest;
+          const rest = !isOfficialWorkday && isRestDay(currentDate, settings.cycleStart, settings.workDays, settings.restDays);
           const isToday = dateKey === todayKey;
           const isWeekend = currentDate.getDay() === 0 || currentDate.getDay() === 6;
 
@@ -1423,17 +1427,6 @@
                 ? `<span class="flag rest">休</span>`
                 : "";
 
-          let meta = "";
-          if (holidayLabel && rest) {
-            meta = "官方节假日 + 自定义休息日";
-          } else if (holidayLabel) {
-            meta = "国务院办公厅节假日安排";
-          } else if (isOfficialWorkday) {
-            meta = rawRest ? "官方调休上班，已覆盖自定义休息日" : "国务院办公厅调休上班日";
-          } else if (rest) {
-            meta = "按排班周期生成的自定义休息日";
-          }
-
           const label = holidayLabel || (isOfficialWorkday ? "调休上班" : "");
 
           dayNode.innerHTML = `
@@ -1442,7 +1435,6 @@
               ${flag}
             </div>
             <div class="day-label">${label}</div>
-            <div class="day-meta">${meta}</div>
           `;
 
           daysGrid.appendChild(dayNode);
