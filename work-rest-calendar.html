@@ -149,8 +149,6 @@
       body.theme-transitioning .theme-toggle-thumb,
       body.theme-transitioning .style-toggle-orb,
       body.theme-transitioning .hero-kicker,
-      body.theme-transitioning .hero-pill,
-      body.theme-transitioning .hero-preview-card,
       body.theme-transitioning .panel,
       body.theme-transitioning .calendar-board,
       body.theme-transitioning .section,
@@ -352,9 +350,9 @@
 
       .hero {
         position: relative;
-        padding: 14px 16px 16px;
+        padding: 12px 15px 13px;
         border: 1px solid rgba(255, 255, 255, 0.78);
-        border-radius: 26px;
+        border-radius: 24px;
         background:
           radial-gradient(circle at 85% 20%, rgba(255, 255, 255, 0.68), transparent 24%),
           linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(252, 253, 255, 0.78) 52%, rgba(244, 246, 251, 0.72)),
@@ -381,15 +379,15 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 10px;
-        margin-bottom: 10px;
+        gap: 9px;
+        margin-bottom: 8px;
       }
 
       .hero-actions {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-        gap: 6px;
+        gap: 5px;
       }
 
       .traffic-lights {
@@ -422,12 +420,12 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        padding: 7px 12px 7px 11px;
+        padding: 6px 11px 6px 10px;
         border-radius: 999px;
         background: rgba(255, 255, 255, 0.68);
         border: 1px solid rgba(60, 60, 67, 0.08);
         color: var(--muted);
-        font-size: 0.76rem;
+        font-size: 0.72rem;
         font-weight: 600;
         letter-spacing: 0.01em;
         cursor: pointer;
@@ -456,13 +454,13 @@
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        padding: 6px 11px 6px 8px;
+        padding: 5px 10px 5px 7px;
         border-radius: 999px;
         border: 1px solid rgba(60, 60, 67, 0.08);
         background: rgba(255, 255, 255, 0.64);
         color: var(--muted);
         font: inherit;
-        font-size: 0.75rem;
+        font-size: 0.72rem;
         font-weight: 600;
         cursor: pointer;
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
@@ -525,9 +523,9 @@
         display: inline-flex;
         align-items: center;
         justify-content: space-between;
-        gap: 12px;
-        min-width: 164px;
-        padding: 6px 7px 6px 12px;
+        gap: 10px;
+        min-width: 152px;
+        padding: 5px 7px 5px 11px;
         border-radius: 999px;
         border: 1px solid rgba(60, 60, 67, 0.08);
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(248, 250, 255, 0.6));
@@ -570,14 +568,14 @@
 
       .style-toggle-label {
         color: color-mix(in srgb, var(--muted) 84%, transparent);
-        font-size: 0.54rem;
+        font-size: 0.5rem;
         font-weight: 700;
         letter-spacing: 0.18em;
         text-transform: uppercase;
       }
 
       .style-toggle-text {
-        font-size: 0.76rem;
+        font-size: 0.72rem;
         font-weight: 700;
         letter-spacing: -0.02em;
       }
@@ -680,9 +678,9 @@
         position: relative;
         z-index: 1;
         margin: 0;
-        font-size: clamp(2.1rem, 3.7vw, 3.56rem);
+        font-size: clamp(1.9rem, 3.2vw, 3rem);
         font-weight: 800;
-        line-height: 0.9;
+        line-height: 0.92;
         letter-spacing: -0.06em;
         text-wrap: balance;
       }
@@ -690,15 +688,12 @@
       .hero-grid {
         position: relative;
         z-index: 1;
-        display: grid;
-        grid-template-columns: minmax(0, 1.18fr) minmax(232px, 0.72fr);
-        gap: 14px;
-        align-items: end;
+        display: block;
       }
 
       .hero-intro {
         display: grid;
-        gap: 8px;
+        gap: 6px;
       }
 
       .hero-kicker {
@@ -706,98 +701,15 @@
         align-items: center;
         align-self: start;
         width: fit-content;
-        padding: 6px 10px;
+        padding: 5px 9px;
         border-radius: 999px;
         border: 1px solid rgba(60, 60, 67, 0.08);
         background: rgba(255, 255, 255, 0.78);
         color: var(--muted);
-        font-size: 0.62rem;
-        font-weight: 700;
-        letter-spacing: 0.19em;
-        text-transform: uppercase;
-      }
-
-      .hero-pills {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 9px;
-      }
-
-      .hero-pill {
-        display: inline-flex;
-        align-items: center;
-        min-height: 34px;
-        padding: 0 14px;
-        border-radius: 999px;
-        border: 1px solid rgba(60, 60, 67, 0.08);
-        background: rgba(255, 255, 255, 0.76);
-        color: color-mix(in srgb, var(--ink) 78%, transparent);
-        font-size: 0.76rem;
-        font-weight: 600;
-        letter-spacing: -0.01em;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
-      }
-
-      .hero-preview {
-        display: flex;
-        justify-content: flex-end;
-      }
-
-      .hero-preview-card {
-        width: min(100%, 286px);
-        padding: 13px 14px 12px;
-        border-radius: 22px;
-        border: 1px solid rgba(255, 255, 255, 0.82);
-        background:
-          radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.66), transparent 34%),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(250, 251, 254, 0.68)),
-          rgba(255, 255, 255, 0.44);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.88),
-          0 18px 34px rgba(29, 29, 31, 0.08);
-      }
-
-      .hero-preview-top {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-        margin-bottom: 8px;
-      }
-
-      .hero-preview-label {
-        color: var(--muted);
-        font-size: 0.62rem;
+        font-size: 0.58rem;
         font-weight: 700;
         letter-spacing: 0.16em;
         text-transform: uppercase;
-      }
-
-      .hero-preview-dot {
-        width: 9px;
-        height: 9px;
-        border-radius: 999px;
-        background: linear-gradient(180deg, #34c759, #29a649);
-        box-shadow: 0 0 0 5px rgba(52, 199, 89, 0.12);
-      }
-
-      .hero-preview-value {
-        display: block;
-        font-size: clamp(1.28rem, 2.08vw, 1.72rem);
-        font-weight: 800;
-        letter-spacing: -0.06em;
-      }
-
-      .hero-preview-meta {
-        display: block;
-        margin-top: 5px;
-        color: var(--muted);
-        font-size: 0.74rem;
-        line-height: 1.34;
-      }
-
-      .hero-preview-meta:empty {
-        display: none;
       }
 
       .hero p {
@@ -1786,34 +1698,16 @@
       }
 
       body.dark-theme .hero-kicker,
-      body.dark-theme .hero-pill,
-      body.dark-theme .hero-preview-card,
       body.dark-theme .toolbar p,
       body.dark-theme .section-cap {
         border-color: rgba(255, 255, 255, 0.08);
       }
 
       body.dark-theme .hero-kicker,
-      body.dark-theme .hero-pill,
       body.dark-theme .toolbar p {
         background:
           linear-gradient(180deg, rgba(28, 30, 36, 0.9), rgba(18, 20, 24, 0.9));
         color: rgba(238, 241, 245, 0.68);
-      }
-
-      body.dark-theme .hero-preview-card {
-        background:
-          radial-gradient(circle at 100% 0%, rgba(95, 108, 154, 0.09), transparent 30%),
-          linear-gradient(180deg, rgba(25, 27, 33, 0.92), rgba(17, 18, 22, 0.96)),
-          rgba(18, 20, 24, 0.82);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.04),
-          0 6px 14px rgba(0, 0, 0, 0.12);
-      }
-
-      body.dark-theme .hero-preview-dot {
-        background: linear-gradient(180deg, #4cc786, #2e8f5d);
-        box-shadow: none;
       }
 
       body.dark-theme .section::after,
@@ -1951,7 +1845,6 @@
         color: rgba(232, 236, 241, 0.7);
       }
 
-      body.dark-theme .hero-preview-meta,
       body.dark-theme .section-cap {
         color: rgba(232, 236, 241, 0.46);
       }
@@ -2132,8 +2025,6 @@
       body.glass-style .month-switcher,
       body.glass-style .toolbar p,
       body.glass-style .hero-kicker,
-      body.glass-style .hero-pill,
-      body.glass-style .hero-preview-card,
       body.glass-style .field input,
       body.glass-style .field textarea,
       body.glass-style .button-row button {
@@ -2158,13 +2049,6 @@
         opacity: 0.58;
       }
 
-      body.glass-style .hero-preview-card {
-        background:
-          radial-gradient(circle at 100% 0%, rgba(181, 217, 255, 0.32), transparent 34%),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.66), rgba(255, 255, 255, 0.18));
-      }
-
-      body.glass-style .hero-preview-dot,
       body.glass-style .hero-badge::before {
         box-shadow: 0 0 0 4px rgba(52, 199, 89, 0.06);
       }
@@ -2181,7 +2065,6 @@
       body.glass-style .hero,
       body.glass-style .panel,
       body.glass-style .calendar-board,
-      body.glass-style .hero-preview-card,
       body.glass-style .hero-badge,
       body.glass-style .theme-toggle,
       body.glass-style .style-toggle,
@@ -2346,8 +2229,6 @@
       body.dark-theme.glass-style .month-switcher,
       body.dark-theme.glass-style .toolbar p,
       body.dark-theme.glass-style .hero-kicker,
-      body.dark-theme.glass-style .hero-pill,
-      body.dark-theme.glass-style .hero-preview-card,
       body.dark-theme.glass-style .field input,
       body.dark-theme.glass-style .field textarea,
       body.dark-theme.glass-style .button-row button {
@@ -2368,12 +2249,6 @@
           rgba(9, 13, 21, 0.38);
       }
 
-      body.dark-theme.glass-style .hero-preview-card {
-        background:
-          radial-gradient(circle at 100% 0%, rgba(155, 186, 255, 0.09), transparent 34%),
-          linear-gradient(180deg, rgba(28, 36, 52, 0.72), rgba(12, 17, 26, 0.4));
-      }
-
       body.dark-theme.glass-style .hero-badge,
       body.dark-theme.glass-style .theme-toggle,
       body.dark-theme.glass-style .style-toggle,
@@ -2386,7 +2261,6 @@
       body.dark-theme.glass-style .hero,
       body.dark-theme.glass-style .panel,
       body.dark-theme.glass-style .calendar-board,
-      body.dark-theme.glass-style .hero-preview-card,
       body.dark-theme.glass-style .hero-badge,
       body.dark-theme.glass-style .theme-toggle,
       body.dark-theme.glass-style .style-toggle,
@@ -2606,10 +2480,6 @@
           grid-template-columns: 1fr;
         }
 
-        .hero-preview {
-          justify-content: flex-start;
-        }
-
         .stats {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
@@ -2626,7 +2496,7 @@
         }
 
         .hero {
-          padding: 24px 18px;
+          padding: 18px 16px;
           border-radius: 24px;
         }
 
@@ -2637,23 +2507,16 @@
         .hero-top {
           flex-direction: column;
           align-items: stretch;
-          margin-bottom: 14px;
+          margin-bottom: 10px;
         }
 
         .hero-actions {
           align-items: stretch;
+          gap: 4px;
         }
 
         .style-toggle {
           min-width: 0;
-        }
-
-        .hero-grid {
-          gap: 14px;
-        }
-
-        .hero-pills {
-          gap: 8px;
         }
 
         .calendar-board {
@@ -2696,20 +2559,12 @@
 
       @media (max-width: 640px) {
         .hero h1 {
-          font-size: clamp(2.1rem, 12vw, 3rem);
+          font-size: clamp(1.72rem, 10.4vw, 2.42rem);
         }
 
         .hero-kicker {
-          font-size: 0.68rem;
-        }
-
-        .hero-pill {
-          min-height: 34px;
-          font-size: 0.8rem;
-        }
-
-        .hero-preview-card {
-          width: 100%;
+          padding: 4px 8px;
+          font-size: 0.54rem;
         }
 
         .theme-toggle,
@@ -2826,7 +2681,7 @@
         }
 
         .hero {
-          padding: 20px 16px;
+          padding: 14px 12px;
         }
 
         .shell-rim {
@@ -2835,11 +2690,6 @@
 
         .theme-toggle,
         .hero-badge {
-          justify-content: center;
-        }
-
-        .hero-pill {
-          width: 100%;
           justify-content: center;
         }
 
@@ -2913,16 +2763,6 @@
           <div class="hero-intro">
             <span class="hero-kicker">Graphite Calendar</span>
             <h1>Eunice的日历</h1>
-          </div>
-          <div class="hero-preview">
-            <div class="hero-preview-card">
-              <div class="hero-preview-top">
-                <span class="hero-preview-label">当前视图</span>
-                <span class="hero-preview-dot" aria-hidden="true"></span>
-              </div>
-              <strong class="hero-preview-value" id="hero-month">当前月份</strong>
-              <span class="hero-preview-meta" id="hero-cycle">休息周期读取中</span>
-            </div>
           </div>
         </div>
       </section>
@@ -3044,7 +2884,7 @@
     </div>
 
     <script>
-      const APP_VERSION = "2026-06-11T20-31-00";
+      const APP_VERSION = "2026-06-11T21-40-56";
       const STORAGE_KEY = "work-rest-calendar-settings-v2";
       const LEGACY_STORAGE_KEY = "work-rest-calendar-settings-v1";
       const THEME_STORAGE_KEY = "work-rest-calendar-theme-v1";
@@ -3115,8 +2955,6 @@
       const calendarTitle = document.getElementById("calendar-title");
       const calendarSubtitle = document.getElementById("calendar-subtitle");
       const monthChip = document.getElementById("month-chip");
-      const heroMonth = document.getElementById("hero-month");
-      const heroCycle = document.getElementById("hero-cycle");
       const holidayCount = document.getElementById("holiday-count");
       const restCount = document.getElementById("rest-count");
       const makeupCount = document.getElementById("makeup-count");
@@ -3650,8 +3488,6 @@
         calendarSubtitle.textContent = "";
 
         monthChip.textContent = `${settings.year}.${pad(activeMonth + 1)}`;
-        heroMonth.textContent = `${settings.year} 年 ${monthNames[activeMonth]}`;
-        heroCycle.textContent = "";
         monthsNode.innerHTML = "";
 
         const firstDay = new Date(settings.year, activeMonth, 1);
