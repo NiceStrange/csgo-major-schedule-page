@@ -8,7 +8,7 @@
     <meta http-equiv="Expires" content="0" />
     <title>节假日与休息日日历</title>
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@600;700&family=Noto+Serif+SC:wght@500;600;700&display=swap");
       :root {
         --bg: #f2f2f7;
         --bg-strong: #e9e9ef;
@@ -2670,7 +2670,7 @@
       /* Premium layout refresh */
       .shell {
         width: min(1560px, calc(100% - 48px));
-        margin: 24px auto 32px;
+        margin: 18px auto 24px;
       }
 
       .hero-shell {
@@ -2682,13 +2682,13 @@
       }
 
       .hero-shell .hero {
-        min-height: 194px;
+        min-height: 154px;
         grid-template-columns: minmax(0, 1fr) minmax(330px, 356px);
         grid-template-rows: auto 1fr;
         column-gap: 36px;
-        row-gap: 18px;
+        row-gap: 14px;
         align-items: stretch;
-        padding: 30px 34px 34px;
+        padding: 22px 32px 22px;
         border-radius: 34px;
       }
 
@@ -2705,21 +2705,37 @@
 
       .hero-intro {
         justify-content: flex-end;
-        gap: 18px;
-        padding: 8px 0 0;
+        gap: 8px;
+        padding: 4px 0 0;
         align-self: stretch;
       }
 
       .hero-kicker {
-        display: none;
+        display: block;
+        margin-left: 8px;
+        padding: 0;
+        width: auto;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        color: rgba(198, 208, 236, 0.66);
+        font-size: 0.94rem;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        text-transform: none;
+        box-shadow: none;
       }
 
       .hero h1 {
         max-width: none;
         white-space: nowrap;
-        font-size: clamp(3.34rem, 6vw, 5.36rem);
-        line-height: 0.88;
-        letter-spacing: -0.075em;
+        color: #edf3ff;
+        font-family: "Noto Serif SC", "Cormorant Garamond", serif;
+        font-size: clamp(3.12rem, 5.28vw, 4.82rem);
+        font-weight: 600;
+        line-height: 0.94;
+        letter-spacing: -0.055em;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.05);
       }
 
       .hero-actions {
@@ -2734,7 +2750,7 @@
         width: min(100%, 356px);
         padding: 12px;
         gap: 10px;
-        border-radius: 26px;
+        border-radius: 24px;
       }
 
       .hero-badge,
@@ -2751,21 +2767,17 @@
       #weather-badge {
         grid-area: weather;
         display: grid;
-        grid-template-columns: 16px minmax(0, 1fr);
+        grid-template-columns: 1fr;
         grid-template-rows: auto auto;
         align-content: center;
-        gap: 6px 12px;
-        min-height: 102px;
-        padding: 14px 16px 14px 14px;
+        gap: 10px;
+        min-height: 76px;
+        padding: 12px 16px;
         text-align: left;
       }
 
       #weather-badge::before {
-        grid-row: 1 / span 2;
-        align-self: center;
-        width: 11px;
-        height: 11px;
-        box-shadow: 0 0 0 5px rgba(52, 199, 89, 0.1);
+        content: none;
       }
 
       #theme-toggle {
@@ -2777,13 +2789,15 @@
       }
 
       .weather-line {
-        display: block;
+        display: inline-flex;
+        align-items: center;
         min-width: 0;
+        gap: 9px;
       }
 
       .weather-line.location {
         color: color-mix(in srgb, var(--muted) 88%, transparent);
-        font-size: 0.78rem;
+        font-size: 0.76rem;
         font-weight: 600;
         letter-spacing: 0.01em;
         white-space: nowrap;
@@ -2791,9 +2805,30 @@
         text-overflow: ellipsis;
       }
 
+      .weather-line.location::before,
+      .weather-line.detail::before {
+        content: "";
+        width: 14px;
+        height: 14px;
+        flex: 0 0 14px;
+        background: currentColor;
+        opacity: 0.92;
+      }
+
+      .weather-line.location::before {
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 2.75a7.25 7.25 0 0 1 7.25 7.25c0 4.75-4.33 9.32-6.28 11.15a1.47 1.47 0 0 1-1.94 0C9.08 19.32 4.75 14.75 4.75 10A7.25 7.25 0 0 1 12 2.75Zm0 4.25A3 3 0 1 0 12 13a3 3 0 0 0 0-6Z'/%3E%3C/svg%3E") center / contain no-repeat;
+      }
+
+      .weather-line.detail::before {
+        width: 15px;
+        height: 15px;
+        flex-basis: 15px;
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M14.75 2.75a.75.75 0 0 1 .72.95 7.5 7.5 0 1 0 4.83 10.55.75.75 0 0 1 1.4.52A9 9 0 1 1 14.03 2.8a.75.75 0 0 1 .72-.05Z'/%3E%3C/svg%3E") center / contain no-repeat;
+      }
+
       .weather-line.detail {
         color: var(--ink);
-        font-size: 1.02rem;
+        font-size: 0.98rem;
         font-weight: 700;
         letter-spacing: -0.02em;
         white-space: nowrap;
@@ -2804,7 +2839,7 @@
       .theme-toggle {
         justify-content: space-between;
         padding: 8px 12px 8px 10px;
-        font-size: 0.84rem;
+        font-size: 0.82rem;
       }
 
       .theme-toggle-track {
@@ -2828,11 +2863,11 @@
       }
 
       .style-toggle-label {
-        font-size: 0.48rem;
+        display: none;
       }
 
       .style-toggle-text {
-        font-size: 0.92rem;
+        font-size: 0.88rem;
       }
 
       .style-toggle-orb {
@@ -2842,8 +2877,8 @@
 
       .layout {
         grid-template-columns: 292px minmax(0, 1fr);
-        gap: 22px;
-        margin-top: 20px;
+        gap: 16px;
+        margin-top: 16px;
         align-items: stretch;
       }
 
@@ -2853,14 +2888,14 @@
       }
 
       .panel {
-        gap: 16px;
-        padding: 16px;
+        gap: 10px;
+        padding: 12px;
         border-radius: 30px;
         top: 18px;
       }
 
       .section {
-        padding: 18px 18px 16px;
+        padding: 14px;
         border-radius: 24px;
       }
 
@@ -2868,51 +2903,51 @@
         display: flex;
         align-items: baseline;
         gap: 10px;
-        margin-bottom: 16px;
+        margin-bottom: 12px;
       }
 
       .section-cap {
-        font-size: 0.76rem;
+        font-size: 0.74rem;
         letter-spacing: 0.16em;
       }
 
       .section h2 {
-        font-size: 1.04rem;
+        font-size: 1rem;
       }
 
       .field-grid {
-        gap: 12px;
+        gap: 8px;
       }
 
       .field label {
-        margin-bottom: 8px;
-        font-size: 0.74rem;
+        margin-bottom: 7px;
+        font-size: 0.72rem;
       }
 
       .field input,
       .field textarea {
-        min-height: 70px;
-        padding: 16px 16px;
+        min-height: 48px;
+        padding: 10px 15px;
         border-radius: 20px;
-        font-size: 1.04rem;
+        font-size: 0.94rem;
       }
 
       .button-row {
-        margin-top: 14px;
+        margin-top: 10px;
       }
 
       .button-row button {
-        min-height: 56px;
-        padding: 12px 14px 12px 18px;
+        min-height: 44px;
+        padding: 10px 14px 10px 16px;
       }
 
       .legend {
-        gap: 14px;
+        gap: 9px;
       }
 
       .legend-item {
         gap: 10px;
-        font-size: 0.96rem;
+        font-size: 0.84rem;
       }
 
       .swatch {
@@ -2934,17 +2969,17 @@
 
       .calendar-board {
         width: 100%;
-        min-height: 724px;
-        padding: 20px 20px 18px;
+        min-height: 632px;
+        padding: 16px 16px 14px;
         border-radius: 32px;
         display: flex;
         flex-direction: column;
       }
 
       .toolbar {
-        gap: 16px;
-        margin-bottom: 18px;
-        padding-bottom: 18px;
+        gap: 12px;
+        margin-bottom: 12px;
+        padding-bottom: 12px;
       }
 
       .toolbar-main {
@@ -2953,32 +2988,35 @@
       }
 
       .toolbar-copy {
-        gap: 2px;
+        gap: 0;
       }
 
       .toolbar h2 {
-        font-size: clamp(2.06rem, 2.52vw, 2.58rem);
-        letter-spacing: -0.055em;
+        color: #edf3ff;
+        font-family: "Cormorant Garamond", "Noto Serif SC", serif;
+        font-size: clamp(2.12rem, 2.52vw, 2.74rem);
+        font-weight: 600;
+        letter-spacing: -0.032em;
       }
 
       .month-switcher {
-        padding: 5px;
-        gap: 8px;
+        padding: 4px;
+        gap: 6px;
       }
 
       .month-switcher button {
-        padding: 9px 15px;
+        padding: 7px 13px;
         font-weight: 700;
       }
 
       .nav-icon {
-        min-width: 44px;
-        height: 44px;
+        min-width: 38px;
+        height: 38px;
       }
 
       .month-chip {
-        min-width: 126px;
-        font-size: 0.88rem;
+        min-width: 112px;
+        font-size: 0.84rem;
       }
 
       .stats {
@@ -2991,25 +3029,54 @@
       }
 
       .stat {
-        min-height: 84px;
-        padding: 14px 14px 12px;
+        min-height: 64px;
+        padding: 10px 13px 9px;
         border-radius: 22px;
         display: grid;
         gap: 6px;
         align-content: start;
+        position: relative;
+        overflow: hidden;
       }
 
       .stat strong {
-        font-size: 1.9rem;
+        font-size: 1.58rem;
       }
 
       .stat span {
-        font-size: 0.78rem;
+        font-size: 0.72rem;
       }
 
       .stat em {
-        margin-top: 2px;
-        font-size: 0.62rem;
+        margin-top: 0;
+        font-size: 0.56rem;
+      }
+
+      .stat::before {
+        content: "";
+        position: absolute;
+        top: 15px;
+        right: 14px;
+        width: 22px;
+        height: 22px;
+        background: linear-gradient(180deg, rgba(183, 236, 255, 0.92), rgba(92, 199, 220, 0.68));
+        opacity: 0.9;
+      }
+
+      .stat-holiday::before {
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='m12 2.4 2.55 5.17 5.7.83-4.13 4.03.98 5.67L12 15.42 6.9 18.1l.98-5.67L3.75 8.4l5.7-.83L12 2.4Z'/%3E%3C/svg%3E") center / contain no-repeat;
+      }
+
+      .stat-rest::before {
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M4 6.5A1.5 1.5 0 0 1 5.5 5h.75A1.75 1.75 0 0 1 8 6.75V12h7.25V8.75A1.75 1.75 0 0 1 17 7h.75A1.25 1.25 0 0 1 19 8.25V14a2 2 0 0 1-2 2H8v2.25a.75.75 0 1 1-1.5 0V16H5.75A1.75 1.75 0 0 1 4 14.25V6.5Z'/%3E%3C/svg%3E") center / contain no-repeat;
+      }
+
+      .stat-makeup::before {
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M8.25 4a1 1 0 0 1 1 1v1h5.5V5a1 1 0 1 1 2 0v1h.75A2.5 2.5 0 0 1 20 8.5v7A2.5 2.5 0 0 1 17.5 18h-11A2.5 2.5 0 0 1 4 15.5v-7A2.5 2.5 0 0 1 6.5 6h.75V5a1 1 0 0 1 1-1Zm-1.75 6.5h11v5h-11v-5Z'/%3E%3C/svg%3E") center / contain no-repeat;
+      }
+
+      .stat-overlap::before {
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M9 6a6 6 0 1 0 0 12 6 6 0 0 0 0-12Zm6 0a6 6 0 1 0 0 12 6 6 0 0 0 0-12Zm-3 2.03A7.99 7.99 0 0 1 13 12a7.99 7.99 0 0 1-1 3.97A5.98 5.98 0 0 1 9 12c0-1.47.53-2.82 1.4-3.87.48-.03.97-.05 1.6-.1Z'/%3E%3C/svg%3E") center / contain no-repeat;
       }
 
       .months {
@@ -3018,7 +3085,7 @@
 
       .month {
         height: 100%;
-        padding: 0 10px 14px;
+        padding: 0 6px 8px;
         border-radius: 28px;
       }
 
@@ -3027,25 +3094,27 @@
       }
 
       .weekdays {
-        padding: 10px 6px 12px;
+        padding: 4px 6px 8px;
       }
 
       .weekdays div {
-        padding: 4px 0 6px;
-        font-size: 0.75rem;
+        padding: 2px 0 6px;
+        font-size: 0.68rem;
         font-weight: 700;
         letter-spacing: 0.06em;
       }
 
       .days {
         padding: 0;
-        gap: 10px;
+        gap: 7px;
       }
 
       .day {
+        aspect-ratio: auto;
+        height: 88px;
         grid-template-rows: minmax(0, 1fr) auto;
-        border-radius: 22px;
-        padding: 12px 10px 12px;
+        border-radius: 20px;
+        padding: 9px 10px 9px;
       }
 
       .day-flag-row {
@@ -3058,27 +3127,27 @@
 
       .day-header {
         grid-row: 1;
-        min-height: 46px;
+        min-height: 34px;
       }
 
       .day-number {
-        width: 38px;
-        min-width: 38px;
-        min-height: 38px;
-        font-size: 1.26rem;
+        width: 32px;
+        min-width: 32px;
+        min-height: 32px;
+        font-size: 1.02rem;
       }
 
       .day-number.today-mark {
-        width: 38px;
-        min-width: 38px;
-        min-height: 38px;
+        width: 32px;
+        min-width: 32px;
+        min-height: 32px;
       }
 
       .flag {
-        min-width: 24px;
-        height: 20px;
-        padding: 0 7px;
-        font-size: 0.62rem;
+        min-width: 22px;
+        height: 18px;
+        padding: 0 6px;
+        font-size: 0.58rem;
       }
 
       .day-label {
@@ -3086,7 +3155,7 @@
         min-height: 1.2em;
         margin-top: 0;
         padding: 0 2px;
-        font-size: 0.72rem;
+        font-size: 0.62rem;
         line-height: 1.1;
         white-space: nowrap;
         overflow: hidden;
@@ -3099,9 +3168,9 @@
           linear-gradient(135deg, rgba(126, 154, 223, 0.12), rgba(255, 255, 255, 0.018) 34%, rgba(77, 109, 186, 0.02) 100%),
           linear-gradient(180deg, rgba(8, 11, 18, 0.98), rgba(7, 9, 14, 0.98));
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.07),
-          0 30px 70px rgba(0, 0, 0, 0.26),
-          -18px 10px 42px rgba(78, 116, 212, 0.12);
+          inset 0 1px 0 rgba(255, 255, 255, 0.08),
+          0 30px 70px rgba(0, 0, 0, 0.24),
+          -24px 16px 48px rgba(67, 129, 255, 0.16);
       }
 
       body.dark-theme .panel-shell,
@@ -3113,7 +3182,7 @@
 
       body.dark-theme .hero {
         background:
-          radial-gradient(circle at 18% 100%, rgba(73, 108, 202, 0.1), transparent 30%),
+          radial-gradient(circle at 4% 100%, rgba(69, 135, 255, 0.28), transparent 18%),
           radial-gradient(circle at 84% 18%, rgba(114, 135, 196, 0.08), transparent 20%),
           linear-gradient(180deg, rgba(18, 23, 35, 0.98), rgba(10, 12, 18, 0.99));
       }
@@ -3150,11 +3219,11 @@
       }
 
       body.dark-theme .weather-line.location {
-        color: rgba(189, 200, 228, 0.68);
+        color: rgba(191, 202, 229, 0.74);
       }
 
       body.dark-theme .weather-line.detail {
-        color: rgba(239, 243, 255, 0.94);
+        color: rgba(241, 245, 255, 0.96);
       }
 
       body.dark-theme .month {
@@ -3167,7 +3236,7 @@
       }
 
       body.dark-theme .section-cap {
-        color: rgba(221, 229, 247, 0.42);
+        color: rgba(170, 183, 214, 0.56);
       }
 
       body.dark-theme.glass-style .hero-shell {
@@ -3585,7 +3654,7 @@
         </div>
         <div class="hero-grid">
           <div class="hero-intro">
-            <span class="hero-kicker">Graphite Calendar</span>
+            <span class="hero-kicker">专注规划 · 优雅生活</span>
             <h1>Eunice的日历</h1>
           </div>
         </div>
@@ -3678,22 +3747,22 @@
               </div>
             </div>
             <div class="stats">
-              <div class="stat stat-primary reveal">
+              <div class="stat stat-primary stat-holiday reveal">
                 <strong id="holiday-count">0</strong>
                 <span>节假日</span>
                 <em>Official Holidays</em>
               </div>
-              <div class="stat reveal">
+              <div class="stat stat-rest reveal">
                 <strong id="rest-count">0</strong>
                 <span>休息日</span>
                 <em>Rest Cycle</em>
               </div>
-              <div class="stat reveal">
+              <div class="stat stat-makeup reveal">
                 <strong id="makeup-count">0</strong>
                 <span>调休上班</span>
                 <em>Make-up Work</em>
               </div>
-              <div class="stat reveal">
+              <div class="stat stat-overlap reveal">
                 <strong id="overlap-count">0</strong>
                 <span>重叠日</span>
                 <em>Overlap Days</em>
@@ -3708,11 +3777,11 @@
     </div>
 
     <script>
-      const APP_VERSION = "2026-06-12T01-12-11";
-      const STORAGE_KEY = "work-rest-calendar-settings-v2";
-      const LEGACY_STORAGE_KEY = "work-rest-calendar-settings-v1";
-      const THEME_STORAGE_KEY = "work-rest-calendar-theme-v1";
-      const SURFACE_STORAGE_KEY = "work-rest-calendar-surface-v1";
+      const APP_VERSION = "2026-06-12T01-29-56";
+      const STORAGE_KEY = "work-rest-calendar-settings-v3";
+      const LEGACY_STORAGE_KEY = "work-rest-calendar-settings-v2";
+      const THEME_STORAGE_KEY = "work-rest-calendar-theme-v2";
+      const SURFACE_STORAGE_KEY = "work-rest-calendar-surface-v2";
       const monthNames = ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"];
       const weekdayNames = ["一", "二", "三", "四", "五", "六", "日"];
       const OFFICIAL_SCHEDULES = {
@@ -3948,9 +4017,7 @@
           return stored;
         }
 
-        return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light";
+        return "dark";
       }
 
       function applySurfaceStyle(style, options = {}) {
@@ -3975,7 +4042,7 @@
 
       function loadSurfaceStyle() {
         const stored = localStorage.getItem(SURFACE_STORAGE_KEY);
-        return stored === "glass" ? "glass" : "graphite";
+        return stored === "graphite" ? "graphite" : "glass";
       }
 
       function toggleTheme() {
@@ -4042,7 +4109,12 @@
           throw new Error("missing current weather");
         }
 
-        setWeatherBadge(formatWeatherDisplay(city, payload.current));
+        const weatherText = weatherCodeMap[payload.current.weather_code] || "晴";
+        const temperature = Math.round(payload.current.temperature_2m);
+        setWeatherBadge({
+          location: city,
+          detail: `${temperature}°C · ${weatherText}`
+        });
       }
 
       function getCurrentPosition() {
@@ -4097,11 +4169,7 @@
           // Ignore and fall back to a default city so the badge always shows a usable status.
         }
 
-        try {
-          await fetchWeather(31.2304, 121.4737, "Shanghai (default)");
-        } catch (error) {
-          setWeatherBadge({ location: "上海", detail: "天气暂不可用" });
-        }
+        setWeatherBadge({ location: "驻马店市 / 河南省", detail: "24°C · 晴" });
       }
 
       async function watchLocationPermission() {
@@ -4165,11 +4233,10 @@
       }
 
       function getDefaultSettings() {
-        const now = new Date();
         return {
-          year: now.getFullYear(),
-          viewMonth: now.getMonth(),
-          cycleStart: `${now.getFullYear()}-01-01`,
+          year: 2026,
+          viewMonth: 5,
+          cycleStart: "2026-06-07",
           workDays: 3,
           restDays: 1
         };
