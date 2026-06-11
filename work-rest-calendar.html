@@ -366,6 +366,11 @@
         z-index: 0;
       }
 
+      .calendar-stage {
+        width: min(100%, 864px);
+        justify-self: start;
+      }
+
       .calendar-stage::before {
         top: 20px;
         bottom: -18px;
@@ -3115,7 +3120,7 @@
     </div>
 
     <script>
-      const APP_VERSION = "2026-06-12T00-11-40";
+      const APP_VERSION = "2026-06-12T00-25-13";
       const STORAGE_KEY = "work-rest-calendar-settings-v2";
       const LEGACY_STORAGE_KEY = "work-rest-calendar-settings-v1";
       const THEME_STORAGE_KEY = "work-rest-calendar-theme-v1";
