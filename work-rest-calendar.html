@@ -138,10 +138,14 @@
       body.theme-transitioning .glass-scene,
       body.theme-transitioning .glass-scene::before,
       body.theme-transitioning .glass-scene::after,
+      body.theme-transitioning .calendar-stage::before,
+      body.theme-transitioning .calendar-stage::after,
       body.theme-transitioning .grain,
       body.theme-transitioning .shell-rim,
       body.theme-transitioning .hero,
       body.theme-transitioning .hero::after,
+      body.theme-transitioning .hero-actions,
+      body.theme-transitioning .hero-actions::before,
       body.theme-transitioning .hero-badge,
       body.theme-transitioning .theme-toggle,
       body.theme-transitioning .style-toggle,
@@ -311,8 +315,8 @@
       }
 
       body.glass-style .glass-scene {
-        opacity: 1;
-        transform: scale(1);
+        opacity: 0.56;
+        transform: scale(1.01);
       }
 
       .shell {
@@ -324,6 +328,7 @@
 
       .shell-rim {
         position: relative;
+        isolation: isolate;
         padding: 2px;
         border-radius: 38px;
         background:
@@ -335,7 +340,46 @@
       }
 
       .shell-rim > * {
+        position: relative;
+        z-index: 1;
         border-radius: inherit;
+      }
+
+      .calendar-stage::before,
+      .calendar-stage::after {
+        content: "";
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        pointer-events: none;
+        opacity: 0;
+        transition:
+          opacity 520ms var(--ease-fluid),
+          transform 720ms var(--ease-fluid),
+          filter 720ms var(--ease-fluid);
+        z-index: 0;
+      }
+
+      .calendar-stage::before {
+        top: 20px;
+        bottom: -16px;
+        border-radius: 34px;
+        background:
+          linear-gradient(160deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.02) 42%, rgba(137, 188, 255, 0.12) 76%, rgba(255, 255, 255, 0.18) 100%);
+        filter: blur(14px);
+        transform: translate3d(0, 12px, 0) scale(0.985);
+      }
+
+      .calendar-stage::after {
+        top: 32px;
+        bottom: -28px;
+        border-radius: 38px;
+        background:
+          radial-gradient(circle at 16% 20%, rgba(255, 255, 255, 0.24), transparent 18%),
+          radial-gradient(circle at 84% 24%, rgba(128, 196, 255, 0.2), transparent 20%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0) 48%, rgba(125, 170, 255, 0.12) 100%);
+        filter: blur(26px);
+        transform: translate3d(0, 18px, 0) scale(0.975);
       }
 
       body.dark-theme .shell-rim {
@@ -350,16 +394,16 @@
 
       .hero {
         position: relative;
-        padding: 12px 15px 13px;
-        border: 1px solid rgba(255, 255, 255, 0.78);
-        border-radius: 24px;
+        padding: 18px 18px 19px;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        border-radius: 28px;
         background:
-          radial-gradient(circle at 85% 20%, rgba(255, 255, 255, 0.68), transparent 24%),
+          radial-gradient(circle at 88% 16%, rgba(255, 255, 255, 0.72), transparent 26%),
           linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(252, 253, 255, 0.78) 52%, rgba(244, 246, 251, 0.72)),
           var(--paper);
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.86),
-          0 18px 38px rgba(38, 44, 53, 0.08);
+          0 22px 42px rgba(38, 44, 53, 0.08);
         overflow: hidden;
       }
 
@@ -377,17 +421,17 @@
         position: relative;
         z-index: 1;
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: space-between;
-        gap: 9px;
-        margin-bottom: 8px;
+        gap: 14px;
+        margin-bottom: 16px;
       }
 
-      .hero-actions {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 5px;
+      .hero-signature {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 0;
       }
 
       .traffic-lights {
@@ -420,12 +464,12 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        padding: 6px 11px 6px 10px;
+        padding: 7px 13px 7px 11px;
         border-radius: 999px;
         background: rgba(255, 255, 255, 0.68);
         border: 1px solid rgba(60, 60, 67, 0.08);
         color: var(--muted);
-        font-size: 0.72rem;
+        font-size: 0.74rem;
         font-weight: 600;
         letter-spacing: 0.01em;
         cursor: pointer;
@@ -678,9 +722,10 @@
         position: relative;
         z-index: 1;
         margin: 0;
-        font-size: clamp(1.9rem, 3.2vw, 3rem);
+        max-width: 8ch;
+        font-size: clamp(2.08rem, 3.4vw, 3.16rem);
         font-weight: 800;
-        line-height: 0.92;
+        line-height: 0.94;
         letter-spacing: -0.06em;
         text-wrap: balance;
       }
@@ -693,7 +738,9 @@
 
       .hero-intro {
         display: grid;
-        gap: 6px;
+        gap: 10px;
+        min-width: 0;
+        padding-left: 2px;
       }
 
       .hero-kicker {
@@ -701,15 +748,63 @@
         align-items: center;
         align-self: start;
         width: fit-content;
-        padding: 5px 9px;
+        padding: 6px 11px;
         border-radius: 999px;
         border: 1px solid rgba(60, 60, 67, 0.08);
         background: rgba(255, 255, 255, 0.78);
         color: var(--muted);
-        font-size: 0.58rem;
+        font-size: 0.6rem;
         font-weight: 700;
-        letter-spacing: 0.16em;
+        letter-spacing: 0.18em;
         text-transform: uppercase;
+      }
+
+      .hero-actions {
+        position: relative;
+        isolation: isolate;
+        display: grid;
+        gap: 8px;
+        align-self: stretch;
+        justify-self: end;
+        width: min(100%, 224px);
+        padding: 9px;
+        border-radius: 22px;
+        border: 1px solid rgba(255, 255, 255, 0.84);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(247, 249, 254, 0.62)),
+          rgba(255, 255, 255, 0.44);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.88),
+          0 14px 28px rgba(37, 44, 56, 0.06);
+        transition:
+          border-color 260ms var(--ease-fluid),
+          box-shadow 420ms var(--ease-fluid),
+          transform 420ms var(--ease-fluid),
+          background 260ms var(--ease-fluid);
+      }
+
+      .hero-actions::before {
+        content: "";
+        position: absolute;
+        inset: 1px;
+        z-index: 0;
+        border-radius: inherit;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0) 58%);
+        opacity: 0.86;
+        pointer-events: none;
+      }
+
+      .hero-actions > * {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+      }
+
+      .hero-actions:hover {
+        border-color: rgba(122, 150, 211, 0.16);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.9),
+          0 16px 30px rgba(37, 44, 56, 0.08);
       }
 
       .hero p {
@@ -1703,6 +1798,20 @@
         border-color: rgba(255, 255, 255, 0.08);
       }
 
+      body.dark-theme .hero-actions {
+        border-color: rgba(255, 255, 255, 0.08);
+        background:
+          linear-gradient(180deg, rgba(24, 27, 33, 0.9), rgba(15, 17, 22, 0.94)),
+          rgba(16, 18, 24, 0.88);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.04),
+          0 10px 22px rgba(0, 0, 0, 0.12);
+      }
+
+      body.dark-theme .hero-actions::before {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0) 56%);
+      }
+
       body.dark-theme .hero-kicker,
       body.dark-theme .toolbar p {
         background:
@@ -1805,6 +1914,13 @@
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.035),
           0 2px 6px rgba(0, 0, 0, 0.06);
+      }
+
+      body.dark-theme .hero-actions:hover {
+        border-color: rgba(176, 189, 222, 0.12);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.05),
+          0 12px 24px rgba(0, 0, 0, 0.14);
       }
 
       body.dark-theme .style-toggle-orb {
@@ -2062,6 +2178,30 @@
           rgba(255, 255, 255, 0.44);
       }
 
+      body.glass-style .hero-actions {
+        border-color: rgba(255, 255, 255, 0.52);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.66), rgba(255, 255, 255, 0.22)),
+          rgba(255, 255, 255, 0.32);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.88),
+          0 16px 30px rgba(66, 89, 132, 0.08);
+      }
+
+      body.glass-style .hero-actions::before {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.52), rgba(255, 255, 255, 0) 60%);
+      }
+
+      body.glass-style .calendar-stage::before {
+        opacity: 0.82;
+        transform: translate3d(0, 8px, 0) scale(1);
+      }
+
+      body.glass-style .calendar-stage::after {
+        opacity: 0.7;
+        transform: translate3d(0, 12px, 0) scale(1);
+      }
+
       body.glass-style .hero,
       body.glass-style .panel,
       body.glass-style .calendar-board,
@@ -2256,6 +2396,34 @@
         background:
           linear-gradient(180deg, rgba(28, 35, 50, 0.74), rgba(12, 16, 24, 0.34)),
           rgba(11, 15, 24, 0.42);
+      }
+
+      body.dark-theme.glass-style .hero-actions {
+        border-color: rgba(255, 255, 255, 0.1);
+        background:
+          linear-gradient(180deg, rgba(28, 35, 50, 0.7), rgba(12, 16, 24, 0.32)),
+          rgba(11, 15, 24, 0.4);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.09),
+          0 16px 28px rgba(0, 0, 0, 0.16);
+      }
+
+      body.dark-theme.glass-style .hero-actions::before {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 58%);
+      }
+
+      body.dark-theme.glass-style .calendar-stage::before {
+        opacity: 0.56;
+        background:
+          linear-gradient(160deg, rgba(179, 204, 255, 0.08), rgba(255, 255, 255, 0.01) 40%, rgba(88, 124, 210, 0.12) 100%);
+      }
+
+      body.dark-theme.glass-style .calendar-stage::after {
+        opacity: 0.48;
+        background:
+          radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.08), transparent 18%),
+          radial-gradient(circle at 84% 24%, rgba(110, 156, 255, 0.12), transparent 20%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0) 46%, rgba(88, 124, 210, 0.08) 100%);
       }
 
       body.dark-theme.glass-style .hero,
@@ -2507,14 +2675,16 @@
         .hero-top {
           flex-direction: column;
           align-items: stretch;
-          margin-bottom: 10px;
+          margin-bottom: 12px;
         }
 
         .hero-actions {
-          align-items: stretch;
-          gap: 4px;
+          width: 100%;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          padding: 8px;
         }
 
+        .theme-toggle,
         .style-toggle {
           min-width: 0;
         }
@@ -2565,6 +2735,10 @@
         .hero-kicker {
           padding: 4px 8px;
           font-size: 0.54rem;
+        }
+
+        .hero-actions {
+          grid-template-columns: 1fr;
         }
 
         .theme-toggle,
@@ -2681,16 +2855,32 @@
         }
 
         .hero {
-          padding: 14px 12px;
+          padding: 15px 12px 16px;
         }
 
         .shell-rim {
           border-radius: 24px;
         }
 
+        .hero-signature {
+          display: grid;
+          gap: 8px;
+          justify-items: start;
+        }
+
+        .hero-actions {
+          padding: 7px;
+        }
+
         .theme-toggle,
         .hero-badge {
           justify-content: center;
+        }
+
+        .calendar-stage::before,
+        .calendar-stage::after {
+          left: 10px;
+          right: 10px;
         }
 
         .day {
@@ -2838,7 +3028,7 @@
         </aside>
         </div>
 
-        <div class="shell-rim reveal">
+        <div class="shell-rim reveal calendar-stage">
         <main class="calendar-board">
           <div class="toolbar">
             <div class="toolbar-main">
@@ -2884,7 +3074,7 @@
     </div>
 
     <script>
-      const APP_VERSION = "2026-06-11T21-40-56";
+      const APP_VERSION = "2026-06-11T23-45-09";
       const STORAGE_KEY = "work-rest-calendar-settings-v2";
       const LEGACY_STORAGE_KEY = "work-rest-calendar-settings-v1";
       const THEME_STORAGE_KEY = "work-rest-calendar-theme-v1";
