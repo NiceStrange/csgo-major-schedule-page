@@ -1090,16 +1090,18 @@
       }
 
       .calendar-board {
-        padding: 16px;
+        width: min(100%, 920px);
+        justify-self: start;
+        padding: 14px 14px 15px;
       }
 
       .toolbar {
         display: flex;
         flex-direction: column;
         align-items: stretch;
-        gap: 12px;
-        margin-bottom: 12px;
-        padding-bottom: 12px;
+        gap: 10px;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
         border-bottom: 1px solid rgba(15, 23, 42, 0.06);
       }
 
@@ -1107,21 +1109,21 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 12px;
+        gap: 10px;
         width: 100%;
       }
 
       .toolbar-copy {
         flex: 1 1 auto;
         display: grid;
-        gap: 6px;
+        gap: 4px;
       }
 
       .month-switcher {
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        padding: 5px;
+        padding: 4px;
         border-radius: 999px;
         border: 1px solid rgba(15, 23, 42, 0.08);
         background: rgba(255, 255, 255, 0.8);
@@ -1142,7 +1144,7 @@
         font: inherit;
         font-weight: 600;
         border-radius: 999px;
-        padding: 8px 12px;
+        padding: 7px 11px;
         cursor: pointer;
         transition: transform 380ms var(--ease-fluid), color 260ms var(--ease-fluid), background 260ms var(--ease-fluid), box-shadow 380ms var(--ease-fluid);
       }
@@ -1165,19 +1167,19 @@
       }
 
       .nav-icon {
-        min-width: 44px;
-        height: 44px;
+        min-width: 40px;
+        height: 40px;
         padding-inline: 0;
-        font-size: 1.06rem;
+        font-size: 0.98rem;
         background: rgba(255, 255, 255, 0.74);
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.84);
       }
 
       .month-chip {
-        min-width: 112px;
+        min-width: 104px;
         text-align: center;
         color: var(--ink);
-        font-size: 0.82rem;
+        font-size: 0.78rem;
         font-weight: 700;
         letter-spacing: 0.04em;
         text-transform: uppercase;
@@ -1186,7 +1188,7 @@
 
       .toolbar h2 {
         margin: 0;
-        font-size: 1.5rem;
+        font-size: 1.34rem;
         letter-spacing: -0.05em;
       }
 
@@ -1195,20 +1197,20 @@
         display: inline-flex;
         align-items: center;
         width: fit-content;
-        min-height: 30px;
-        padding: 0 10px;
+        min-height: 28px;
+        padding: 0 9px;
         border-radius: 999px;
         border: 1px solid rgba(60, 60, 67, 0.08);
         background: rgba(255, 255, 255, 0.6);
         color: var(--muted);
-        font-size: 0.76rem;
+        font-size: 0.72rem;
         line-height: 1;
       }
 
       .stats {
         display: grid;
         grid-template-columns: repeat(6, minmax(0, 1fr));
-        gap: 8px;
+        gap: 7px;
         width: 100%;
       }
 
@@ -1216,8 +1218,8 @@
         position: relative;
         grid-column: span 1;
         min-width: 0;
-        padding: 12px 12px 10px;
-        border-radius: 20px;
+        padding: 10px 11px 9px;
+        border-radius: 18px;
         border: 1px solid rgba(15, 23, 42, 0.08);
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(246, 248, 252, 0.86));
         box-shadow:
@@ -1257,7 +1259,7 @@
         position: relative;
         z-index: 1;
         display: block;
-        font-size: 1.24rem;
+        font-size: 1.1rem;
         letter-spacing: -0.05em;
       }
 
@@ -1265,16 +1267,16 @@
         position: relative;
         z-index: 1;
         color: var(--muted);
-        font-size: 0.74rem;
+        font-size: 0.7rem;
       }
 
       .stat em {
         position: relative;
         z-index: 1;
         display: block;
-        margin-top: 6px;
+        margin-top: 5px;
         color: var(--muted);
-        font-size: 0.62rem;
+        font-size: 0.58rem;
         font-style: normal;
         font-weight: 700;
         letter-spacing: 0.12em;
@@ -1288,7 +1290,7 @@
       .month {
         max-width: 100%;
         border: 1px solid rgba(255, 255, 255, 0.84);
-        border-radius: 28px;
+        border-radius: 24px;
         background:
           linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(247, 249, 253, 0.88));
         overflow: hidden;
@@ -1313,23 +1315,23 @@
         display: flex;
         align-items: baseline;
         justify-content: center;
-        padding: 14px 16px 12px;
+        padding: 11px 14px 10px;
         border-bottom: 1px solid rgba(15, 23, 42, 0.06);
         background: linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.34));
         text-align: center;
         flex-direction: column;
-        gap: 4px;
+        gap: 3px;
       }
 
       .month-head h3 {
         margin: 0;
-        font-size: 1.08rem;
+        font-size: 0.98rem;
         letter-spacing: -0.04em;
       }
 
       .month-head span {
         color: var(--muted);
-        font-size: 0.72rem;
+        font-size: 0.66rem;
       }
 
       .weekdays,
@@ -1339,14 +1341,14 @@
       }
 
       .weekdays {
-        padding: 8px 12px 2px;
+        padding: 7px 11px 1px;
       }
 
       .weekdays div {
-        padding: 4px 0 6px;
+        padding: 3px 0 5px;
         text-align: center;
         color: var(--muted);
-        font-size: 0.68rem;
+        font-size: 0.63rem;
         font-weight: 600;
         letter-spacing: 0.04em;
       }
@@ -1356,22 +1358,22 @@
       }
 
       .days {
-        padding: 0 12px 12px;
-        gap: 6px;
+        padding: 0 11px 11px;
+        gap: 5px;
         align-items: stretch;
       }
 
       .day {
         position: relative;
         display: grid;
-        grid-template-rows: minmax(20px, auto) minmax(32px, 1fr) auto;
+        grid-template-rows: minmax(18px, auto) minmax(28px, 1fr) auto;
         align-items: center;
         justify-items: center;
         aspect-ratio: 1 / 1;
         min-height: 0;
         width: 100%;
-        padding: 8px 8px 10px;
-        border-radius: 16px;
+        padding: 7px 7px 8px;
+        border-radius: 14px;
         border: 1px solid rgba(15, 23, 42, 0.08);
         background: rgba(255, 255, 255, 0.86);
         box-shadow:
@@ -1408,7 +1410,7 @@
         align-items: flex-start;
         justify-content: flex-end;
         width: 100%;
-        min-height: 18px;
+        min-height: 16px;
         margin: 0;
       }
 
@@ -1417,7 +1419,7 @@
         place-items: center;
         align-self: center;
         width: 100%;
-        min-height: 30px;
+        min-height: 28px;
         margin: 0;
       }
 
@@ -1425,11 +1427,11 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 30px;
-        min-width: 30px;
-        min-height: 30px;
+        width: 28px;
+        min-width: 28px;
+        min-height: 28px;
         font-weight: 700;
-        font-size: 1rem;
+        font-size: 0.94rem;
         line-height: 1;
         letter-spacing: -0.04em;
         text-align: center;
@@ -3042,7 +3044,7 @@
     </div>
 
     <script>
-      const APP_VERSION = "2026-06-11T06-52-00";
+      const APP_VERSION = "2026-06-11T20-22-00";
       const STORAGE_KEY = "work-rest-calendar-settings-v2";
       const LEGACY_STORAGE_KEY = "work-rest-calendar-settings-v1";
       const THEME_STORAGE_KEY = "work-rest-calendar-theme-v1";
