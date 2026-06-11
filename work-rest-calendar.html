@@ -135,6 +135,9 @@
 
       body.theme-transitioning::before,
       body.theme-transitioning::after,
+      body.theme-transitioning .glass-scene,
+      body.theme-transitioning .glass-scene::before,
+      body.theme-transitioning .glass-scene::after,
       body.theme-transitioning .grain,
       body.theme-transitioning .shell-rim,
       body.theme-transitioning .hero,
@@ -235,6 +238,83 @@
       body.dark-theme .grain {
         opacity: 0.02;
         mix-blend-mode: soft-light;
+      }
+
+      .glass-scene {
+        position: fixed;
+        inset: -12%;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0;
+        transform: scale(1.04);
+        background:
+          radial-gradient(circle at 14% 22%, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.42) 10%, transparent 24%),
+          radial-gradient(circle at 82% 16%, rgba(98, 178, 255, 0.5), transparent 28%),
+          radial-gradient(circle at 76% 72%, rgba(88, 214, 238, 0.32), transparent 22%),
+          radial-gradient(circle at 26% 80%, rgba(168, 142, 255, 0.24), transparent 22%),
+          linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0) 30%, rgba(129, 180, 255, 0.18) 60%, rgba(255, 255, 255, 0.42) 100%);
+        filter: saturate(112%);
+        transition:
+          opacity 720ms var(--ease-fluid),
+          transform 720ms var(--ease-fluid),
+          filter 720ms var(--ease-fluid);
+      }
+
+      .glass-scene::before,
+      .glass-scene::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+      }
+
+      .glass-scene::before {
+        background:
+          radial-gradient(circle at 34% 18%, rgba(255, 255, 255, 0.62), transparent 16%),
+          linear-gradient(118deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0) 28%, rgba(96, 160, 255, 0.16) 58%, rgba(255, 255, 255, 0.18) 86%);
+        filter: blur(34px);
+        opacity: 0.78;
+      }
+
+      .glass-scene::after {
+        inset: 6% 4% 10%;
+        border-radius: 48px;
+        background:
+          radial-gradient(circle at 20% 28%, rgba(255, 255, 255, 0.28), transparent 20%),
+          radial-gradient(circle at 84% 30%, rgba(120, 196, 255, 0.26), transparent 18%),
+          linear-gradient(152deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0) 42%, rgba(149, 199, 255, 0.14) 70%, rgba(255, 255, 255, 0.08) 100%);
+        filter: blur(72px);
+        opacity: 0.72;
+      }
+
+      body.dark-theme .glass-scene {
+        background:
+          radial-gradient(circle at 18% 24%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05) 10%, transparent 22%),
+          radial-gradient(circle at 82% 18%, rgba(95, 132, 226, 0.36), transparent 28%),
+          radial-gradient(circle at 74% 74%, rgba(72, 140, 218, 0.22), transparent 22%),
+          radial-gradient(circle at 28% 80%, rgba(86, 92, 184, 0.18), transparent 20%),
+          linear-gradient(142deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 34%, rgba(86, 126, 220, 0.14) 64%, rgba(255, 255, 255, 0.04) 100%);
+        filter: saturate(104%);
+      }
+
+      body.dark-theme .glass-scene::before {
+        background:
+          radial-gradient(circle at 32% 18%, rgba(255, 255, 255, 0.14), transparent 14%),
+          linear-gradient(118deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 30%, rgba(100, 132, 208, 0.12) 60%, rgba(255, 255, 255, 0.04) 88%);
+        opacity: 0.58;
+      }
+
+      body.dark-theme .glass-scene::after {
+        background:
+          radial-gradient(circle at 20% 26%, rgba(255, 255, 255, 0.08), transparent 18%),
+          radial-gradient(circle at 84% 30%, rgba(84, 132, 220, 0.18), transparent 18%),
+          linear-gradient(152deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0) 44%, rgba(92, 124, 204, 0.12) 72%, rgba(255, 255, 255, 0.02) 100%);
+        opacity: 0.56;
+      }
+
+      body.glass-style .glass-scene {
+        opacity: 1;
+        transform: scale(1);
       }
 
       .shell {
@@ -2093,6 +2173,18 @@
           rgba(255, 255, 255, 0.44);
       }
 
+      body.glass-style .hero,
+      body.glass-style .panel,
+      body.glass-style .calendar-board,
+      body.glass-style .hero-preview-card,
+      body.glass-style .hero-badge,
+      body.glass-style .theme-toggle,
+      body.glass-style .style-toggle,
+      body.glass-style .month-switcher {
+        backdrop-filter: blur(28px) saturate(168%);
+        -webkit-backdrop-filter: blur(28px) saturate(168%);
+      }
+
       body.glass-style .theme-toggle-track {
         background: rgba(123, 142, 188, 0.22);
       }
@@ -2284,6 +2376,18 @@
         background:
           linear-gradient(180deg, rgba(28, 35, 50, 0.74), rgba(12, 16, 24, 0.34)),
           rgba(11, 15, 24, 0.42);
+      }
+
+      body.dark-theme.glass-style .hero,
+      body.dark-theme.glass-style .panel,
+      body.dark-theme.glass-style .calendar-board,
+      body.dark-theme.glass-style .hero-preview-card,
+      body.dark-theme.glass-style .hero-badge,
+      body.dark-theme.glass-style .theme-toggle,
+      body.dark-theme.glass-style .style-toggle,
+      body.dark-theme.glass-style .month-switcher {
+        backdrop-filter: blur(26px) saturate(138%);
+        -webkit-backdrop-filter: blur(26px) saturate(138%);
       }
 
       body.dark-theme.glass-style .theme-toggle-track {
@@ -2768,6 +2872,7 @@
   </head>
   <body>
     <div class="grain" aria-hidden="true"></div>
+    <div class="glass-scene" aria-hidden="true"></div>
     <div class="shell">
       <div class="shell-rim reveal">
       <section class="hero">
@@ -2929,7 +3034,7 @@
     </div>
 
     <script>
-      const APP_VERSION = "2026-06-11T05-49-00";
+      const APP_VERSION = "2026-06-11T06-25-00";
       const STORAGE_KEY = "work-rest-calendar-settings-v2";
       const LEGACY_STORAGE_KEY = "work-rest-calendar-settings-v1";
       const THEME_STORAGE_KEY = "work-rest-calendar-theme-v1";
@@ -3047,6 +3152,69 @@
 
       function setWeatherBadge(text) {
         weatherBadge.textContent = text;
+      }
+
+      function formatLocationLabel(location) {
+        const city = location.city || location.locality || "";
+        const subdivision = location.principalSubdivision || "";
+        const country = location.countryName || "";
+        const parts = [];
+
+        if (city) {
+          parts.push(city);
+        }
+
+        if (subdivision && subdivision !== city) {
+          parts.push(subdivision);
+        }
+
+        if (!parts.length && country) {
+          parts.push(country);
+        }
+
+        return parts.length ? parts.join(" / ") : "Current location";
+      }
+
+      function formatWeatherDisplay(city, current) {
+        const weatherText = weatherCodeMap[current.weather_code] || "Weather";
+        const temperature = Math.round(current.temperature_2m);
+        return `${city} / ${temperature}°C / ${weatherText}`;
+      }
+
+      async function fetchLocationContext(latitude, longitude) {
+        const url = new URL("https://api.bigdatacloud.net/data/reverse-geocode-client");
+        url.searchParams.set("latitude", String(latitude));
+        url.searchParams.set("longitude", String(longitude));
+        url.searchParams.set("localityLanguage", "zh");
+
+        const response = await fetch(url.toString());
+        if (!response.ok) {
+          throw new Error(`location ${response.status}`);
+        }
+
+        const payload = await response.json();
+        return formatLocationLabel(payload);
+      }
+
+      function formatWeatherDisplay(city, current) {
+        const weatherText = weatherCodeMap[current.weather_code] || "Weather";
+        const temperature = Math.round(current.temperature_2m);
+        return `${city} / ${temperature}°C / ${weatherText}`;
+      }
+
+      async function fetchLocationContext(latitude, longitude) {
+        const url = new URL("https://api.bigdatacloud.net/data/reverse-geocode-client");
+        url.searchParams.set("latitude", String(latitude));
+        url.searchParams.set("longitude", String(longitude));
+        url.searchParams.set("localityLanguage", "zh");
+
+        const response = await fetch(url.toString());
+        if (!response.ok) {
+          throw new Error(`location ${response.status}`);
+        }
+
+        const payload = await response.json();
+        return formatLocationLabel(payload);
       }
 
       let themeTransitionTimer = null;
@@ -3170,7 +3338,7 @@
           throw new Error("missing current weather");
         }
 
-        setWeatherBadge(formatWeather(city, payload.current));
+        setWeatherBadge(formatWeatherDisplay(city, payload.current));
       }
 
       function getCurrentPosition() {
@@ -3206,6 +3374,32 @@
         }
       }
 
+      async function refreshWeatherBadge() {
+        setWeatherBadge("Loading weather");
+
+        try {
+          const position = await getCurrentPosition();
+          let locationLabel = "Current location";
+
+          try {
+            locationLabel = await fetchLocationContext(position.coords.latitude, position.coords.longitude);
+          } catch (error) {
+            // Keep live weather visible even if reverse geocoding fails.
+          }
+
+          await fetchWeather(position.coords.latitude, position.coords.longitude, locationLabel);
+          return;
+        } catch (error) {
+          // Ignore and fall back to a default city so the badge always shows a usable status.
+        }
+
+        try {
+          await fetchWeather(31.2304, 121.4737, "Shanghai (default)");
+        } catch (error) {
+          setWeatherBadge("Weather unavailable");
+        }
+      }
+
       async function watchLocationPermission() {
         if (!navigator.permissions || !navigator.permissions.query) {
           return;
@@ -3215,7 +3409,7 @@
           const permissionStatus = await navigator.permissions.query({ name: "geolocation" });
           permissionStatus.onchange = () => {
             if (permissionStatus.state === "granted") {
-              updateWeatherBadge();
+              refreshWeatherBadge();
             }
           };
         } catch (error) {
@@ -3477,12 +3671,6 @@
         const daysGrid = document.createElement("div");
         daysGrid.className = "days";
 
-        for (let index = 0; index < startWeekday; index += 1) {
-          const emptyNode = document.createElement("div");
-          emptyNode.className = "day empty";
-          daysGrid.appendChild(emptyNode);
-        }
-
         for (let day = 1; day <= daysInMonth; day += 1) {
           const currentDate = new Date(settings.year, activeMonth, day);
           const dateKey = toDateKey(currentDate);
@@ -3509,6 +3697,10 @@
 
           const dayNode = document.createElement("div");
           dayNode.className = "day";
+
+          if (day === 1 && startWeekday > 0) {
+            dayNode.style.gridColumnStart = String(startWeekday + 1);
+          }
 
           if (holidayLabel) {
             dayNode.classList.add("is-holiday");
@@ -3558,12 +3750,6 @@
           daysGrid.appendChild(dayNode);
         }
 
-        while (daysGrid.children.length % 7 !== 0) {
-          const emptyNode = document.createElement("div");
-          emptyNode.className = "day empty";
-          daysGrid.appendChild(emptyNode);
-        }
-
         monthNode.appendChild(daysGrid);
         monthsNode.appendChild(monthNode);
 
@@ -3592,7 +3778,7 @@
         applySurfaceStyle(loadSurfaceStyle());
         fillInputs(initialSettings);
         renderCalendar();
-        updateWeatherBadge();
+        refreshWeatherBadge();
         watchLocationPermission();
         bindHoverBounce(document);
 
@@ -3607,13 +3793,13 @@
       }
 
       weatherBadge.addEventListener("click", () => {
-        updateWeatherBadge();
+        refreshWeatherBadge();
       });
 
       weatherBadge.addEventListener("keydown", (event) => {
         if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
-          updateWeatherBadge();
+          refreshWeatherBadge();
         }
       });
 
