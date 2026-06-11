@@ -39,7 +39,7 @@
         --ease-fluid: cubic-bezier(0.32, 0.72, 0, 1);
         --ease-lift: cubic-bezier(0.22, 1, 0.36, 1);
         --control-column: 224px;
-        --glass-rail: 238px;
+        --glass-rail: 148px;
       }
 
       body.dark-theme {
@@ -341,6 +341,10 @@
           0 26px 54px rgba(27, 31, 38, 0.08);
       }
 
+      .shell > .shell-rim:first-of-type {
+        z-index: 4;
+      }
+
       .shell-rim > * {
         position: relative;
         z-index: 1;
@@ -351,7 +355,7 @@
       .calendar-stage::after {
         content: "";
         position: absolute;
-        right: 14px;
+        right: 22px;
         width: var(--glass-rail);
         pointer-events: none;
         opacity: 0;
@@ -363,17 +367,17 @@
       }
 
       .calendar-stage::before {
-        top: 14px;
-        bottom: -16px;
+        top: 20px;
+        bottom: -18px;
         border-radius: 34px;
         background:
           linear-gradient(160deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.02) 42%, rgba(137, 188, 255, 0.12) 76%, rgba(255, 255, 255, 0.18) 100%);
         filter: blur(14px);
-        transform: translate3d(0, 12px, 0) scale(0.985);
+        transform: translate3d(0, 8px, 0) scale(0.972);
       }
 
       .calendar-stage::after {
-        top: 22px;
+        top: 30px;
         bottom: -28px;
         border-radius: 38px;
         background:
@@ -381,7 +385,7 @@
           radial-gradient(circle at 84% 24%, rgba(128, 196, 255, 0.2), transparent 20%),
           linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0) 48%, rgba(125, 170, 255, 0.12) 100%);
         filter: blur(26px);
-        transform: translate3d(0, 18px, 0) scale(0.975);
+        transform: translate3d(0, 12px, 0) scale(0.962);
       }
 
       body.dark-theme .shell-rim {
@@ -739,7 +743,7 @@
       .hero-grid {
         position: relative;
         z-index: 1;
-        grid-column: 1 / -1;
+        grid-column: 1 / 2;
         grid-row: 2;
         display: grid;
         grid-template-columns: minmax(0, 1fr) var(--control-column);
@@ -773,6 +777,7 @@
       .hero-actions {
         position: relative;
         isolation: isolate;
+        z-index: 3;
         grid-column: 2;
         grid-row: 2;
         display: grid;
@@ -794,6 +799,7 @@
           box-shadow 420ms var(--ease-fluid),
           transform 420ms var(--ease-fluid),
           background 260ms var(--ease-fluid);
+        pointer-events: auto;
       }
 
       .hero-actions::before {
@@ -829,11 +835,19 @@
       }
 
       .layout {
+        position: relative;
+        z-index: 1;
         display: grid;
         grid-template-columns: 286px minmax(0, 1fr);
         gap: 14px;
         margin-top: 10px;
         align-items: start;
+      }
+
+      .hero-badge,
+      .theme-toggle,
+      .style-toggle {
+        pointer-events: auto;
       }
 
       .panel,
@@ -2207,12 +2221,12 @@
 
       body.glass-style .calendar-stage::before {
         opacity: 0.82;
-        transform: translate3d(0, 8px, 0) scale(1);
+        transform: translate3d(0, 6px, 0) scale(0.992);
       }
 
       body.glass-style .calendar-stage::after {
-        opacity: 0.7;
-        transform: translate3d(0, 12px, 0) scale(1);
+        opacity: 0.66;
+        transform: translate3d(0, 9px, 0) scale(0.988);
       }
 
       body.glass-style .hero,
@@ -2426,13 +2440,13 @@
       }
 
       body.dark-theme.glass-style .calendar-stage::before {
-        opacity: 0.56;
+        opacity: 0.52;
         background:
           linear-gradient(160deg, rgba(179, 204, 255, 0.08), rgba(255, 255, 255, 0.01) 40%, rgba(88, 124, 210, 0.12) 100%);
       }
 
       body.dark-theme.glass-style .calendar-stage::after {
-        opacity: 0.48;
+        opacity: 0.42;
         background:
           radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.08), transparent 18%),
           radial-gradient(circle at 84% 24%, rgba(110, 156, 255, 0.12), transparent 20%),
@@ -2703,8 +2717,8 @@
 
         .calendar-stage::before,
         .calendar-stage::after {
-          right: 10px;
-          width: clamp(160px, 24vw, 220px);
+          right: 14px;
+          width: clamp(104px, 16vw, 132px);
         }
 
         .theme-toggle,
@@ -2907,7 +2921,7 @@
         .calendar-stage::before,
         .calendar-stage::after {
           right: 10px;
-          width: 132px;
+          width: 88px;
         }
 
         .day {
@@ -3101,7 +3115,7 @@
     </div>
 
     <script>
-      const APP_VERSION = "2026-06-11T23-59-08";
+      const APP_VERSION = "2026-06-12T00-11-40";
       const STORAGE_KEY = "work-rest-calendar-settings-v2";
       const LEGACY_STORAGE_KEY = "work-rest-calendar-settings-v1";
       const THEME_STORAGE_KEY = "work-rest-calendar-theme-v1";
