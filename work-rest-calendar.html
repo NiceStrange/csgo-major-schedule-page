@@ -1358,6 +1358,7 @@
       .days {
         padding: 0 12px 12px;
         gap: 6px;
+        align-items: stretch;
       }
 
       .day {
@@ -1366,7 +1367,9 @@
         grid-template-rows: minmax(20px, auto) minmax(32px, 1fr) auto;
         align-items: center;
         justify-items: center;
-        min-height: 80px;
+        aspect-ratio: 1 / 1;
+        min-height: 0;
+        width: 100%;
         padding: 8px 8px 10px;
         border-radius: 16px;
         border: 1px solid rgba(15, 23, 42, 0.08);
@@ -2776,11 +2779,13 @@
           padding: 0 10px 10px;
           gap: 6px;
           min-width: 388px;
+          align-items: stretch;
         }
 
         .day {
-          min-height: 92px;
           min-width: 50px;
+          aspect-ratio: 1 / 1;
+          min-height: 0;
           padding: 10px 8px 12px;
           border-radius: 16px;
         }
@@ -2802,8 +2807,9 @@
         }
 
         .day-number.today-mark {
-          width: 36px;
-          height: 36px;
+          width: 34px;
+          min-width: 34px;
+          min-height: 34px;
         }
 
         .day-label {
@@ -2836,8 +2842,9 @@
         }
 
         .day {
-          min-height: 92px;
           min-width: 50px;
+          aspect-ratio: 1 / 1;
+          min-height: 0;
           padding: 10px 8px 12px;
           border-radius: 16px;
         }
@@ -2855,8 +2862,9 @@
         }
 
         .day-number.today-mark {
-          width: 34px;
-          height: 34px;
+          width: 32px;
+          min-width: 32px;
+          min-height: 32px;
         }
 
         .flag {
@@ -3034,7 +3042,7 @@
     </div>
 
     <script>
-      const APP_VERSION = "2026-06-11T06-43-00";
+      const APP_VERSION = "2026-06-11T06-52-00";
       const STORAGE_KEY = "work-rest-calendar-settings-v2";
       const LEGACY_STORAGE_KEY = "work-rest-calendar-settings-v1";
       const THEME_STORAGE_KEY = "work-rest-calendar-theme-v1";
