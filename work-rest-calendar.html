@@ -2473,6 +2473,31 @@
         background: rgba(132, 149, 197, 0.2);
       }
 
+      body.dark-theme.glass-style .month {
+        background:
+          linear-gradient(180deg, rgba(18, 24, 38, 0.74), rgba(8, 12, 20, 0.42)),
+          rgba(10, 14, 23, 0.38);
+      }
+
+      body.dark-theme.glass-style .month-head {
+        border-bottom-color: rgba(145, 171, 232, 0.16);
+        background:
+          radial-gradient(circle at 50% -18%, rgba(196, 214, 255, 0.16), transparent 46%),
+          linear-gradient(180deg, rgba(98, 116, 158, 0.34), rgba(40, 50, 74, 0.2) 38%, rgba(12, 17, 28, 0.18) 100%),
+          rgba(16, 22, 35, 0.34);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.18),
+          inset 0 -1px 0 rgba(92, 116, 168, 0.12);
+      }
+
+      body.dark-theme.glass-style .month-head h3 {
+        color: rgba(240, 245, 255, 0.94);
+      }
+
+      body.dark-theme.glass-style .month-head span {
+        color: rgba(185, 199, 232, 0.74);
+      }
+
       body.dark-theme.glass-style .month-switcher:hover,
       body.dark-theme.glass-style .stat:hover,
       body.dark-theme.glass-style .month:hover,
@@ -3120,7 +3145,7 @@
     </div>
 
     <script>
-      const APP_VERSION = "2026-06-12T00-25-13";
+      const APP_VERSION = "2026-06-12T00-30-11";
       const STORAGE_KEY = "work-rest-calendar-settings-v2";
       const LEGACY_STORAGE_KEY = "work-rest-calendar-settings-v1";
       const THEME_STORAGE_KEY = "work-rest-calendar-theme-v1";
