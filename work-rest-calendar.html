@@ -518,6 +518,10 @@
         line-height: 1.5;
       }
 
+      .hero-preview-meta:empty {
+        display: none;
+      }
+
       .hero p {
         margin: 16px 0 0;
         max-width: 760px;
@@ -1466,7 +1470,7 @@
 
       body.dark-theme .hero-preview-dot {
         background: linear-gradient(180deg, #4cc786, #2e8f5d);
-        box-shadow: 0 0 0 4px rgba(76, 199, 134, 0.08);
+        box-shadow: none;
       }
 
       body.dark-theme .section::after,
@@ -1481,7 +1485,7 @@
         border-color: rgba(255, 255, 255, 0.085);
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.04),
-          0 6px 12px rgba(0, 0, 0, 0.12);
+          0 3px 8px rgba(0, 0, 0, 0.08);
       }
 
       body.dark-theme .weekdays div,
@@ -1538,7 +1542,7 @@
       body.dark-theme .month-switcher {
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.035),
-          0 4px 10px rgba(0, 0, 0, 0.1);
+          0 2px 6px rgba(0, 0, 0, 0.06);
       }
 
       body.dark-theme .theme-toggle-track {
@@ -1547,7 +1551,7 @@
 
       body.dark-theme .hero-badge::before {
         background: linear-gradient(180deg, #4cc786, #2e8f5d);
-        box-shadow: 0 0 0 3px rgba(76, 199, 134, 0.08);
+        box-shadow: none;
         animation-duration: 3.8s;
       }
 
@@ -1568,7 +1572,7 @@
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.04),
           inset 0 -1px 0 rgba(255, 255, 255, 0.02),
-          0 6px 12px rgba(0, 0, 0, 0.1);
+          0 3px 8px rgba(0, 0, 0, 0.08);
       }
 
       body.dark-theme .button-row button::before {
@@ -1582,7 +1586,7 @@
         color: #b8c0d7;
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.08),
-          0 6px 12px rgba(0, 0, 0, 0.14);
+          0 2px 6px rgba(0, 0, 0, 0.08);
       }
 
       body.dark-theme .stat em {
@@ -1604,14 +1608,14 @@
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.05),
           inset 0 -1px 0 rgba(140, 148, 171, 0.08),
-          0 6px 12px rgba(0, 0, 0, 0.1);
+          0 3px 8px rgba(0, 0, 0, 0.08);
       }
 
       body.dark-theme .button-row button:hover .button-orb {
         background: linear-gradient(180deg, rgba(148, 156, 180, 0.18), rgba(148, 156, 180, 0.08));
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.08),
-          0 6px 12px rgba(70, 76, 96, 0.14);
+          0 2px 6px rgba(70, 76, 96, 0.08);
       }
 
       body.dark-theme .flag {
@@ -1640,8 +1644,7 @@
         border-color: rgba(136, 153, 184, 0.16);
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.035),
-          inset 0 3px 0 rgba(136, 153, 184, 0.14),
-          0 10px 18px rgba(26, 33, 49, 0.08);
+          inset 0 2px 0 rgba(136, 153, 184, 0.12);
       }
 
       body.dark-theme .day.is-rest {
@@ -1649,8 +1652,7 @@
         border-color: rgba(98, 156, 134, 0.14);
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.035),
-          inset 0 3px 0 rgba(98, 156, 134, 0.12),
-          0 10px 18px rgba(18, 63, 50, 0.08);
+          inset 0 2px 0 rgba(98, 156, 134, 0.1);
       }
 
       body.dark-theme .day.is-overlap {
@@ -1658,8 +1660,7 @@
         border-color: rgba(146, 113, 182, 0.16);
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.035),
-          inset 0 3px 0 rgba(146, 113, 182, 0.14),
-          0 10px 18px rgba(55, 34, 82, 0.08);
+          inset 0 2px 0 rgba(146, 113, 182, 0.12);
       }
 
       body.dark-theme .day.is-makeup {
@@ -1667,8 +1668,7 @@
         border-color: rgba(158, 110, 103, 0.14);
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.035),
-          inset 0 3px 0 rgba(158, 110, 103, 0.12),
-          0 10px 18px rgba(70, 37, 35, 0.08);
+          inset 0 2px 0 rgba(158, 110, 103, 0.1);
       }
 
       body.dark-theme .day.is-today {
@@ -1676,9 +1676,7 @@
         outline: 1px solid rgba(176, 188, 219, 0.12);
         outline-offset: -2px;
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.05),
-          0 0 0 3px rgba(176, 188, 219, 0.05),
-          0 10px 18px rgba(34, 40, 58, 0.1);
+          inset 0 1px 0 rgba(255, 255, 255, 0.04);
       }
 
       body.dark-theme .day-number.today-mark {
@@ -2045,10 +2043,6 @@
           <div class="hero-intro">
             <span class="hero-kicker">Graphite Calendar</span>
             <h1>Eunice的日历</h1>
-            <div class="hero-pills">
-              <span class="hero-pill">中国法定节假日同步</span>
-              <span class="hero-pill">默认周期 上3休1</span>
-            </div>
           </div>
           <div class="hero-preview">
             <div class="hero-preview-card">
@@ -2130,7 +2124,6 @@
                 <span>节假日与休息日重叠</span>
               </div>
             </div>
-            <p class="hint">法定节假日与调休安排已按国务院办公厅通知内置同步，无需单独维护。</p>
           </div>
         </aside>
         </div>
@@ -2181,7 +2174,7 @@
     </div>
 
     <script>
-      const APP_VERSION = "2026-06-11T01-49-00";
+      const APP_VERSION = "2026-06-11T02-00-00";
       const STORAGE_KEY = "work-rest-calendar-settings-v2";
       const LEGACY_STORAGE_KEY = "work-rest-calendar-settings-v1";
       const THEME_STORAGE_KEY = "work-rest-calendar-theme-v1";
@@ -2638,11 +2631,11 @@
         let overlapTotal = 0;
 
         calendarTitle.textContent = `${settings.year} 年 ${monthNames[activeMonth]}`;
-        calendarSubtitle.textContent = `休息周期 上${settings.workDays}休${settings.restDays} · 法定节假日自动同步`;
+        calendarSubtitle.textContent = "";
 
         monthChip.textContent = `${settings.year}.${pad(activeMonth + 1)}`;
         heroMonth.textContent = `${settings.year} 年 ${monthNames[activeMonth]}`;
-        heroCycle.textContent = `周期 上${settings.workDays}休${settings.restDays} · 周末与法定节假日重叠自动高亮`;
+        heroCycle.textContent = "";
         monthsNode.innerHTML = "";
 
         const firstDay = new Date(settings.year, activeMonth, 1);
