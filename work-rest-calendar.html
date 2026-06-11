@@ -38,6 +38,8 @@
         --hero-sheen: linear-gradient(120deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.16) 42%, rgba(255, 255, 255, 0.52) 100%);
         --ease-fluid: cubic-bezier(0.32, 0.72, 0, 1);
         --ease-lift: cubic-bezier(0.22, 1, 0.36, 1);
+        --control-column: 224px;
+        --glass-rail: 238px;
       }
 
       body.dark-theme {
@@ -349,8 +351,8 @@
       .calendar-stage::after {
         content: "";
         position: absolute;
-        left: 16px;
-        right: 16px;
+        right: 14px;
+        width: var(--glass-rail);
         pointer-events: none;
         opacity: 0;
         transition:
@@ -361,7 +363,7 @@
       }
 
       .calendar-stage::before {
-        top: 20px;
+        top: 14px;
         bottom: -16px;
         border-radius: 34px;
         background:
@@ -371,7 +373,7 @@
       }
 
       .calendar-stage::after {
-        top: 32px;
+        top: 22px;
         bottom: -28px;
         border-radius: 38px;
         background:
@@ -394,6 +396,11 @@
 
       .hero {
         position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) var(--control-column);
+        column-gap: 22px;
+        row-gap: 12px;
+        align-items: start;
         padding: 18px 18px 19px;
         border: 1px solid rgba(255, 255, 255, 0.8);
         border-radius: 28px;
@@ -418,13 +425,7 @@
       }
 
       .hero-top {
-        position: relative;
-        z-index: 1;
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 14px;
-        margin-bottom: 16px;
+        display: contents;
       }
 
       .hero-signature {
@@ -435,9 +436,14 @@
       }
 
       .traffic-lights {
+        position: relative;
+        z-index: 1;
+        grid-column: 1;
+        grid-row: 1;
         display: inline-flex;
         align-items: center;
         gap: 8px;
+        margin-left: 2px;
       }
 
       .traffic-lights span {
@@ -733,14 +739,19 @@
       .hero-grid {
         position: relative;
         z-index: 1;
-        display: block;
+        grid-column: 1 / -1;
+        grid-row: 2;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) var(--control-column);
+        gap: 22px;
+        align-items: start;
       }
 
       .hero-intro {
         display: grid;
         gap: 10px;
         min-width: 0;
-        padding-left: 2px;
+        padding: 2px 0 0 2px;
       }
 
       .hero-kicker {
@@ -762,11 +773,13 @@
       .hero-actions {
         position: relative;
         isolation: isolate;
+        grid-column: 2;
+        grid-row: 2;
         display: grid;
         gap: 8px;
-        align-self: stretch;
+        align-self: start;
         justify-self: end;
-        width: min(100%, 224px);
+        width: 100%;
         padding: 9px;
         border-radius: 22px;
         border: 1px solid rgba(255, 255, 255, 0.84);
@@ -2664,6 +2677,7 @@
         }
 
         .hero {
+          display: block;
           padding: 18px 16px;
           border-radius: 24px;
         }
@@ -2673,6 +2687,9 @@
         }
 
         .hero-top {
+          position: relative;
+          z-index: 1;
+          display: flex;
           flex-direction: column;
           align-items: stretch;
           margin-bottom: 12px;
@@ -2682,6 +2699,12 @@
           width: 100%;
           grid-template-columns: repeat(2, minmax(0, 1fr));
           padding: 8px;
+        }
+
+        .calendar-stage::before,
+        .calendar-stage::after {
+          right: 10px;
+          width: clamp(160px, 24vw, 220px);
         }
 
         .theme-toggle,
@@ -2868,6 +2891,10 @@
           justify-items: start;
         }
 
+        .traffic-lights {
+          margin-left: 0;
+        }
+
         .hero-actions {
           padding: 7px;
         }
@@ -2879,8 +2906,8 @@
 
         .calendar-stage::before,
         .calendar-stage::after {
-          left: 10px;
           right: 10px;
+          width: 132px;
         }
 
         .day {
@@ -3074,7 +3101,7 @@
     </div>
 
     <script>
-      const APP_VERSION = "2026-06-11T23-45-09";
+      const APP_VERSION = "2026-06-11T23-59-08";
       const STORAGE_KEY = "work-rest-calendar-settings-v2";
       const LEGACY_STORAGE_KEY = "work-rest-calendar-settings-v1";
       const THEME_STORAGE_KEY = "work-rest-calendar-theme-v1";
