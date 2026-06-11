@@ -69,6 +69,52 @@
         --hero-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.032), transparent 34%);
       }
 
+      body.glass-style {
+        --paper: rgba(255, 255, 255, 0.42);
+        --paper-strong: rgba(255, 255, 255, 0.58);
+        --paper-solid: rgba(255, 255, 255, 0.6);
+        --line: rgba(255, 255, 255, 0.4);
+        --line-strong: rgba(255, 255, 255, 0.56);
+        --accent: #2f7dff;
+        --accent-deep: #1557ff;
+        --accent-soft: rgba(47, 125, 255, 0.15);
+        --weekend: rgba(96, 136, 255, 0.2);
+        --weekend-ink: #3b60db;
+        --holiday: rgba(88, 168, 255, 0.18);
+        --holiday-ink: #2d68dc;
+        --rest: rgba(76, 198, 173, 0.18);
+        --rest-ink: #157b76;
+        --mix: rgba(138, 113, 255, 0.22);
+        --mix-ink: #5a49da;
+        --makeup: rgba(255, 140, 140, 0.16);
+        --makeup-ink: #b94c62;
+        --today: #276fff;
+        --hero-sheen: linear-gradient(120deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.14) 40%, rgba(184, 220, 255, 0.52) 100%);
+      }
+
+      body.dark-theme.glass-style {
+        --paper: rgba(10, 14, 24, 0.48);
+        --paper-strong: rgba(14, 18, 30, 0.62);
+        --paper-solid: rgba(16, 21, 34, 0.72);
+        --line: rgba(255, 255, 255, 0.1);
+        --line-strong: rgba(255, 255, 255, 0.16);
+        --accent: #b5c7ff;
+        --accent-deep: #f1f5ff;
+        --accent-soft: rgba(122, 148, 220, 0.11);
+        --weekend: rgba(95, 118, 184, 0.2);
+        --weekend-ink: #c6d3ff;
+        --holiday: rgba(83, 115, 184, 0.22);
+        --holiday-ink: #d7e1ff;
+        --rest: rgba(49, 109, 105, 0.22);
+        --rest-ink: #c4ebe1;
+        --mix: rgba(93, 87, 180, 0.24);
+        --mix-ink: #ddd6ff;
+        --makeup: rgba(93, 81, 120, 0.22);
+        --makeup-ink: #eadcf6;
+        --today: #eaf0ff;
+        --hero-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.07), transparent 32%);
+      }
+
       * {
         box-sizing: border-box;
       }
@@ -95,8 +141,10 @@
       body.theme-transitioning .hero::after,
       body.theme-transitioning .hero-badge,
       body.theme-transitioning .theme-toggle,
+      body.theme-transitioning .style-toggle,
       body.theme-transitioning .theme-toggle-track,
       body.theme-transitioning .theme-toggle-thumb,
+      body.theme-transitioning .style-toggle-orb,
       body.theme-transitioning .hero-kicker,
       body.theme-transitioning .hero-pill,
       body.theme-transitioning .hero-preview-card,
@@ -389,6 +437,135 @@
       body.dark-theme .theme-toggle-thumb {
         transform: translateX(14px);
         background: linear-gradient(180deg, #f5f5f7, #d7d7de);
+      }
+
+      .style-toggle {
+        position: relative;
+        isolation: isolate;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        min-width: 176px;
+        padding: 7px 8px 7px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(60, 60, 67, 0.08);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(248, 250, 255, 0.6));
+        color: var(--ink);
+        font: inherit;
+        cursor: pointer;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.76),
+          0 8px 18px rgba(29, 29, 31, 0.06);
+        transition:
+          transform 420ms var(--ease-fluid),
+          box-shadow 420ms var(--ease-fluid),
+          color 260ms var(--ease-fluid),
+          border-color 260ms var(--ease-fluid),
+          background 260ms var(--ease-fluid);
+      }
+
+      .style-toggle::before {
+        content: "";
+        position: absolute;
+        inset: 1px;
+        z-index: 0;
+        border-radius: inherit;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0));
+        opacity: 0.8;
+        pointer-events: none;
+      }
+
+      .style-toggle-copy,
+      .style-toggle-orb {
+        position: relative;
+        z-index: 1;
+      }
+
+      .style-toggle-copy {
+        display: grid;
+        gap: 2px;
+        text-align: left;
+      }
+
+      .style-toggle-label {
+        color: color-mix(in srgb, var(--muted) 84%, transparent);
+        font-size: 0.58rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .style-toggle-text {
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      .style-toggle-orb {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.68);
+        background:
+          radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.18) 36%, transparent 60%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(233, 240, 255, 0.56));
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.88),
+          0 6px 14px rgba(54, 77, 118, 0.12);
+        transition:
+          transform 420ms var(--ease-fluid),
+          box-shadow 420ms var(--ease-fluid),
+          border-color 260ms var(--ease-fluid),
+          background 260ms var(--ease-fluid);
+      }
+
+      .style-toggle-orb::before,
+      .style-toggle-orb::after {
+        content: "";
+        position: absolute;
+        border-radius: 999px;
+      }
+
+      .style-toggle-orb::before {
+        inset: 8px;
+        background: linear-gradient(180deg, rgba(66, 136, 255, 0.5), rgba(142, 197, 255, 0.16));
+      }
+
+      .style-toggle-orb::after {
+        inset: 4px 6px auto;
+        height: 7px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0));
+        opacity: 0.8;
+      }
+
+      .style-toggle:hover {
+        transform: translateY(-1px);
+        border-color: rgba(74, 118, 204, 0.18);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.82),
+          0 12px 22px rgba(38, 50, 76, 0.08);
+      }
+
+      .style-toggle:hover .style-toggle-orb {
+        transform: translate3d(0, -1px, 0) scale(1.03);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.9),
+          0 8px 18px rgba(64, 95, 153, 0.12);
+      }
+
+      .style-toggle:active {
+        transform: translateY(1px) scale(0.986);
+      }
+
+      .style-toggle:focus-visible {
+        outline: none;
+        box-shadow:
+          0 0 0 4px rgba(10, 132, 255, 0.12),
+          inset 0 1px 0 rgba(255, 255, 255, 0.76);
       }
 
       .hero-badge:focus-visible {
@@ -1404,6 +1581,7 @@
 
       body.dark-theme .hero-badge,
       body.dark-theme .theme-toggle,
+      body.dark-theme .style-toggle,
       body.dark-theme .month-switcher,
       body.dark-theme .stat,
       body.dark-theme .section,
@@ -1463,6 +1641,7 @@
 
       body.dark-theme .hero-badge,
       body.dark-theme .theme-toggle,
+      body.dark-theme .style-toggle,
       body.dark-theme .month-switcher,
       body.dark-theme .stat,
       body.dark-theme .day {
@@ -1604,6 +1783,7 @@
 
       body.dark-theme .hero-badge:hover,
       body.dark-theme .theme-toggle:hover,
+      body.dark-theme .style-toggle:hover,
       body.dark-theme .month-switcher button:hover {
         background: rgba(122, 135, 171, 0.08);
         color: rgba(238, 241, 245, 0.9);
@@ -1611,10 +1791,25 @@
 
       body.dark-theme .hero-badge,
       body.dark-theme .theme-toggle,
+      body.dark-theme .style-toggle,
       body.dark-theme .month-switcher {
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.035),
           0 2px 6px rgba(0, 0, 0, 0.06);
+      }
+
+      body.dark-theme .style-toggle-orb {
+        border-color: rgba(255, 255, 255, 0.12);
+        background:
+          radial-gradient(circle at 32% 26%, rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.04) 38%, transparent 62%),
+          linear-gradient(180deg, rgba(116, 130, 168, 0.26), rgba(48, 58, 82, 0.34));
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.12),
+          0 4px 10px rgba(0, 0, 0, 0.08);
+      }
+
+      body.dark-theme .style-toggle-orb::before {
+        background: linear-gradient(180deg, rgba(200, 214, 255, 0.68), rgba(132, 156, 220, 0.16));
       }
 
       body.dark-theme .theme-toggle-track {
@@ -1758,6 +1953,353 @@
 
       body.dark-theme .day-number.today-mark::after {
         content: none;
+      }
+
+      body.glass-style {
+        background:
+          radial-gradient(circle at 12% 8%, rgba(118, 178, 255, 0.24), transparent 26%),
+          radial-gradient(circle at 86% 12%, rgba(196, 219, 255, 0.22), transparent 22%),
+          radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.82), transparent 34%),
+          linear-gradient(180deg, #f6f8ff 0%, #edf2fb 44%, #e6edf8 100%);
+      }
+
+      body.glass-style::before {
+        top: -70px;
+        right: -72px;
+        width: 420px;
+        height: 420px;
+        background: rgba(73, 142, 255, 0.22);
+        opacity: 0.74;
+      }
+
+      body.glass-style::after {
+        bottom: -126px;
+        left: -96px;
+        width: 420px;
+        height: 420px;
+        background: rgba(136, 177, 255, 0.18);
+        opacity: 0.62;
+      }
+
+      body.glass-style .grain {
+        opacity: 0.022;
+      }
+
+      body.glass-style .shell-rim {
+        background:
+          linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.26) 38%, rgba(171, 209, 255, 0.24) 100%),
+          rgba(255, 255, 255, 0.42);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.96),
+          0 24px 56px rgba(80, 100, 146, 0.1);
+      }
+
+      body.glass-style .hero,
+      body.glass-style .panel,
+      body.glass-style .calendar-board,
+      body.glass-style .section,
+      body.glass-style .month,
+      body.glass-style .stat,
+      body.glass-style .day:not(.empty),
+      body.glass-style .hero-badge,
+      body.glass-style .theme-toggle,
+      body.glass-style .style-toggle,
+      body.glass-style .month-switcher,
+      body.glass-style .toolbar p,
+      body.glass-style .hero-kicker,
+      body.glass-style .hero-pill,
+      body.glass-style .hero-preview-card,
+      body.glass-style .field input,
+      body.glass-style .field textarea,
+      body.glass-style .button-row button {
+        border-color: rgba(255, 255, 255, 0.5);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.28)),
+          rgba(255, 255, 255, 0.38);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.88),
+          inset 0 -1px 0 rgba(255, 255, 255, 0.16),
+          0 14px 34px rgba(66, 89, 132, 0.08);
+      }
+
+      body.glass-style .hero {
+        background:
+          radial-gradient(circle at 88% 12%, rgba(255, 255, 255, 0.84), transparent 22%),
+          linear-gradient(145deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.28) 52%, rgba(219, 236, 255, 0.24)),
+          rgba(255, 255, 255, 0.34);
+      }
+
+      body.glass-style .hero::after {
+        opacity: 0.68;
+      }
+
+      body.glass-style .hero-preview-card {
+        background:
+          radial-gradient(circle at 100% 0%, rgba(178, 217, 255, 0.42), transparent 34%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.22));
+      }
+
+      body.glass-style .hero-preview-dot,
+      body.glass-style .hero-badge::before {
+        box-shadow: 0 0 0 5px rgba(52, 199, 89, 0.08);
+      }
+
+      body.glass-style .theme-toggle-track {
+        background: rgba(123, 142, 188, 0.22);
+      }
+
+      body.glass-style .month-switcher:hover,
+      body.glass-style .stat:hover,
+      body.glass-style .month:hover,
+      body.glass-style .section:hover,
+      body.glass-style .panel:hover,
+      body.glass-style .calendar-board:hover,
+      body.glass-style .day:hover:not(.empty) {
+        border-color: rgba(255, 255, 255, 0.62);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.92),
+          inset 0 -1px 0 rgba(255, 255, 255, 0.18),
+          0 18px 38px rgba(76, 98, 140, 0.1);
+      }
+
+      body.glass-style .button-orb {
+        border-color: rgba(255, 255, 255, 0.5);
+        background:
+          radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.16) 34%, transparent 60%),
+          linear-gradient(180deg, rgba(176, 204, 255, 0.46), rgba(128, 170, 255, 0.12));
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.88),
+          0 6px 16px rgba(74, 100, 155, 0.12);
+      }
+
+      body.glass-style .button-row button:hover .button-orb {
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.9),
+          0 10px 20px rgba(74, 110, 176, 0.14);
+      }
+
+      body.glass-style .month-head {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.48), rgba(255, 255, 255, 0.16));
+        border-bottom-color: rgba(255, 255, 255, 0.34);
+      }
+
+      body.glass-style .day {
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.22)),
+          rgba(255, 255, 255, 0.28);
+      }
+
+      body.glass-style .flag {
+        border-color: rgba(255, 255, 255, 0.58);
+        background: rgba(255, 255, 255, 0.42);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78);
+      }
+
+      body.glass-style .flag.holiday {
+        background: rgba(118, 191, 255, 0.22);
+      }
+
+      body.glass-style .flag.rest {
+        background: rgba(90, 214, 188, 0.2);
+      }
+
+      body.glass-style .flag.makeup {
+        background: rgba(255, 160, 160, 0.18);
+      }
+
+      body.glass-style .day.is-weekend:not(.is-holiday):not(.is-overlap):not(.is-makeup) {
+        background: linear-gradient(180deg, rgba(170, 198, 255, 0.42), rgba(120, 153, 255, 0.16));
+        border-color: rgba(112, 147, 255, 0.26);
+      }
+
+      body.glass-style .day.is-holiday {
+        background: linear-gradient(180deg, rgba(156, 214, 255, 0.46), rgba(112, 168, 255, 0.18));
+        border-color: rgba(92, 145, 255, 0.28);
+      }
+
+      body.glass-style .day.is-rest {
+        background: linear-gradient(180deg, rgba(154, 241, 221, 0.4), rgba(98, 205, 177, 0.18));
+        border-color: rgba(90, 178, 157, 0.26);
+      }
+
+      body.glass-style .day.is-overlap {
+        background: linear-gradient(180deg, rgba(198, 187, 255, 0.48), rgba(134, 161, 255, 0.18));
+        border-color: rgba(132, 133, 238, 0.3);
+      }
+
+      body.glass-style .day.is-makeup {
+        background: linear-gradient(180deg, rgba(255, 210, 210, 0.44), rgba(255, 164, 164, 0.16));
+        border-color: rgba(230, 144, 160, 0.24);
+      }
+
+      body.glass-style .day.is-today {
+        border-color: rgba(96, 137, 255, 0.44);
+        box-shadow:
+          inset 0 0 0 1px rgba(255, 255, 255, 0.72),
+          0 12px 24px rgba(86, 109, 162, 0.08);
+      }
+
+      body.glass-style .day-number.today-mark {
+        color: var(--accent-deep);
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.76);
+      }
+
+      body.glass-style .style-toggle {
+        border-color: rgba(255, 255, 255, 0.56);
+      }
+
+      body.dark-theme.glass-style {
+        color-scheme: dark;
+        background:
+          radial-gradient(circle at 12% 8%, rgba(92, 121, 184, 0.2), transparent 24%),
+          radial-gradient(circle at 88% 10%, rgba(70, 102, 156, 0.16), transparent 22%),
+          radial-gradient(circle at 52% 100%, rgba(32, 44, 66, 0.2), transparent 34%),
+          linear-gradient(180deg, #070a11 0%, #09101a 42%, #05070c 100%);
+      }
+
+      body.dark-theme.glass-style::before {
+        background: rgba(98, 122, 199, 0.14);
+        opacity: 0.22;
+      }
+
+      body.dark-theme.glass-style::after {
+        background: rgba(71, 111, 180, 0.12);
+        opacity: 0.18;
+      }
+
+      body.dark-theme.glass-style .grain {
+        opacity: 0.016;
+      }
+
+      body.dark-theme.glass-style .shell-rim {
+        background:
+          linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02) 42%, rgba(122, 146, 212, 0.06) 100%),
+          linear-gradient(180deg, rgba(12, 16, 24, 0.96), rgba(7, 10, 16, 0.98));
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.08),
+          0 18px 42px rgba(0, 0, 0, 0.2);
+      }
+
+      body.dark-theme.glass-style .hero,
+      body.dark-theme.glass-style .panel,
+      body.dark-theme.glass-style .calendar-board,
+      body.dark-theme.glass-style .section,
+      body.dark-theme.glass-style .month,
+      body.dark-theme.glass-style .stat,
+      body.dark-theme.glass-style .day:not(.empty),
+      body.dark-theme.glass-style .hero-badge,
+      body.dark-theme.glass-style .theme-toggle,
+      body.dark-theme.glass-style .style-toggle,
+      body.dark-theme.glass-style .month-switcher,
+      body.dark-theme.glass-style .toolbar p,
+      body.dark-theme.glass-style .hero-kicker,
+      body.dark-theme.glass-style .hero-pill,
+      body.dark-theme.glass-style .hero-preview-card,
+      body.dark-theme.glass-style .field input,
+      body.dark-theme.glass-style .field textarea,
+      body.dark-theme.glass-style .button-row button {
+        border-color: rgba(255, 255, 255, 0.12);
+        background:
+          linear-gradient(180deg, rgba(28, 35, 50, 0.74), rgba(10, 14, 23, 0.38)),
+          rgba(11, 15, 24, 0.42);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.12),
+          inset 0 -1px 0 rgba(255, 255, 255, 0.04),
+          0 16px 36px rgba(0, 0, 0, 0.16);
+      }
+
+      body.dark-theme.glass-style .hero {
+        background:
+          radial-gradient(circle at 86% 12%, rgba(193, 213, 255, 0.12), transparent 24%),
+          linear-gradient(180deg, rgba(28, 36, 52, 0.74), rgba(12, 16, 24, 0.44) 72%),
+          rgba(9, 13, 21, 0.42);
+      }
+
+      body.dark-theme.glass-style .hero-preview-card {
+        background:
+          radial-gradient(circle at 100% 0%, rgba(155, 186, 255, 0.12), transparent 34%),
+          linear-gradient(180deg, rgba(30, 38, 54, 0.78), rgba(12, 17, 26, 0.46));
+      }
+
+      body.dark-theme.glass-style .theme-toggle-track {
+        background: rgba(132, 149, 197, 0.2);
+      }
+
+      body.dark-theme.glass-style .month-switcher:hover,
+      body.dark-theme.glass-style .stat:hover,
+      body.dark-theme.glass-style .month:hover,
+      body.dark-theme.glass-style .section:hover,
+      body.dark-theme.glass-style .panel:hover,
+      body.dark-theme.glass-style .calendar-board:hover,
+      body.dark-theme.glass-style .day:hover:not(.empty) {
+        border-color: rgba(255, 255, 255, 0.16);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.14),
+          inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+          0 18px 34px rgba(0, 0, 0, 0.18);
+      }
+
+      body.dark-theme.glass-style .button-orb {
+        border-color: rgba(255, 255, 255, 0.14);
+        background:
+          radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0.04) 36%, transparent 60%),
+          linear-gradient(180deg, rgba(125, 145, 197, 0.24), rgba(55, 69, 102, 0.2));
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.12),
+          0 6px 16px rgba(0, 0, 0, 0.12);
+      }
+
+      body.dark-theme.glass-style .flag {
+        border-color: rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      body.dark-theme.glass-style .flag.holiday {
+        background: rgba(98, 121, 196, 0.22);
+      }
+
+      body.dark-theme.glass-style .flag.rest {
+        background: rgba(58, 122, 112, 0.22);
+      }
+
+      body.dark-theme.glass-style .flag.makeup {
+        background: rgba(84, 77, 118, 0.22);
+      }
+
+      body.dark-theme.glass-style .day.is-weekend:not(.is-holiday):not(.is-overlap):not(.is-makeup) {
+        background: linear-gradient(180deg, rgba(73, 94, 146, 0.36), rgba(28, 40, 68, 0.24));
+        border-color: rgba(134, 153, 212, 0.16);
+      }
+
+      body.dark-theme.glass-style .day.is-holiday {
+        background: linear-gradient(180deg, rgba(77, 104, 168, 0.42), rgba(28, 43, 74, 0.28));
+        border-color: rgba(150, 172, 232, 0.18);
+      }
+
+      body.dark-theme.glass-style .day.is-rest {
+        background: linear-gradient(180deg, rgba(44, 98, 92, 0.4), rgba(19, 49, 47, 0.28));
+        border-color: rgba(112, 178, 169, 0.16);
+      }
+
+      body.dark-theme.glass-style .day.is-overlap {
+        background: linear-gradient(180deg, rgba(76, 80, 168, 0.42), rgba(32, 34, 76, 0.3));
+        border-color: rgba(160, 160, 238, 0.18);
+      }
+
+      body.dark-theme.glass-style .day.is-makeup {
+        background: linear-gradient(180deg, rgba(73, 66, 116, 0.4), rgba(34, 29, 56, 0.28));
+        border-color: rgba(154, 145, 198, 0.16);
+      }
+
+      body.dark-theme.glass-style .day.is-today {
+        border-color: rgba(202, 214, 255, 0.2);
+        box-shadow:
+          inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+          0 10px 20px rgba(0, 0, 0, 0.16);
+      }
+
+      body.dark-theme.glass-style .day-number.today-mark {
+        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.16);
       }
 
       @keyframes floatBlobOne {
@@ -1913,6 +2455,10 @@
           align-items: stretch;
         }
 
+        .style-toggle {
+          min-width: 0;
+        }
+
         .hero-grid {
           gap: 14px;
         }
@@ -1975,6 +2521,12 @@
 
         .hero-preview-card {
           width: 100%;
+        }
+
+        .theme-toggle,
+        .style-toggle {
+          width: 100%;
+          justify-content: space-between;
         }
 
         .panel,
@@ -2153,6 +2705,13 @@
               </span>
               <span id="theme-toggle-text">浅色模式</span>
             </button>
+            <button class="style-toggle" id="style-toggle" type="button" aria-pressed="false" aria-label="Toggle liquid glass surface">
+              <span class="style-toggle-copy">
+                <span class="style-toggle-label">Surface</span>
+                <span class="style-toggle-text" id="style-toggle-text">Graphite</span>
+              </span>
+              <span class="style-toggle-orb" aria-hidden="true"></span>
+            </button>
           </div>
         </div>
         <div class="hero-grid">
@@ -2290,10 +2849,11 @@
     </div>
 
     <script>
-      const APP_VERSION = "2026-06-11T04-02-00";
+      const APP_VERSION = "2026-06-11T05-18-00";
       const STORAGE_KEY = "work-rest-calendar-settings-v2";
       const LEGACY_STORAGE_KEY = "work-rest-calendar-settings-v1";
       const THEME_STORAGE_KEY = "work-rest-calendar-theme-v1";
+      const SURFACE_STORAGE_KEY = "work-rest-calendar-surface-v1";
       const monthNames = ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"];
       const weekdayNames = ["一", "二", "三", "四", "五", "六", "日"];
       const OFFICIAL_SCHEDULES = {
@@ -2354,6 +2914,8 @@
       const weatherBadge = document.getElementById("weather-badge");
       const themeToggle = document.getElementById("theme-toggle");
       const themeToggleText = document.getElementById("theme-toggle-text");
+      const styleToggle = document.getElementById("style-toggle");
+      const styleToggleText = document.getElementById("style-toggle-text");
       const monthsNode = document.getElementById("months");
       const calendarTitle = document.getElementById("calendar-title");
       const calendarSubtitle = document.getElementById("calendar-subtitle");
@@ -2439,10 +3001,41 @@
           : "light";
       }
 
+      function applySurfaceStyle(style, options = {}) {
+        const { animated = false } = options;
+        const isGlass = style === "glass";
+
+        if (animated) {
+          document.body.classList.add("theme-transitioning");
+          window.clearTimeout(themeTransitionTimer);
+        }
+
+        document.body.classList.toggle("glass-style", isGlass);
+        styleToggle.setAttribute("aria-pressed", String(isGlass));
+        styleToggleText.textContent = isGlass ? "Liquid Glass" : "Graphite";
+
+        if (animated) {
+          themeTransitionTimer = window.setTimeout(() => {
+            document.body.classList.remove("theme-transitioning");
+          }, 720);
+        }
+      }
+
+      function loadSurfaceStyle() {
+        const stored = localStorage.getItem(SURFACE_STORAGE_KEY);
+        return stored === "glass" ? "glass" : "graphite";
+      }
+
       function toggleTheme() {
         const nextTheme = document.body.classList.contains("dark-theme") ? "light" : "dark";
         applyTheme(nextTheme, { animated: true });
         localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+      }
+
+      function toggleSurfaceStyle() {
+        const nextStyle = document.body.classList.contains("glass-style") ? "graphite" : "glass";
+        applySurfaceStyle(nextStyle, { animated: true });
+        localStorage.setItem(SURFACE_STORAGE_KEY, nextStyle);
       }
 
       async function ensureLatestBuild() {
@@ -2739,7 +3332,7 @@
           return;
         }
 
-        root.querySelectorAll(".hero-badge, .month-switcher, .stat, .day:not(.empty)").forEach((node) => {
+        root.querySelectorAll(".hero-badge, .month-switcher, .theme-toggle, .style-toggle, .stat, .day:not(.empty)").forEach((node) => {
           if (node.dataset.hoverBound === "true") {
             return;
           }
@@ -2916,6 +3509,7 @@
         }
 
         applyTheme(loadThemePreference());
+        applySurfaceStyle(loadSurfaceStyle());
         fillInputs(initialSettings);
         renderCalendar();
         updateWeatherBadge();
@@ -2945,6 +3539,10 @@
 
       themeToggle.addEventListener("click", () => {
         toggleTheme();
+      });
+
+      styleToggle.addEventListener("click", () => {
+        toggleSurfaceStyle();
       });
 
       applyButton.addEventListener("click", () => {
