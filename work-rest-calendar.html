@@ -2667,6 +2667,554 @@
         }
       }
 
+      /* Premium layout refresh */
+      .shell {
+        width: min(1560px, calc(100% - 48px));
+        margin: 24px auto 32px;
+      }
+
+      .hero-shell {
+        border-radius: 36px;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.94),
+          0 36px 80px rgba(34, 40, 52, 0.08),
+          -18px 12px 48px rgba(94, 132, 214, 0.08);
+      }
+
+      .hero-shell .hero {
+        min-height: 194px;
+        grid-template-columns: minmax(0, 1fr) minmax(330px, 356px);
+        grid-template-rows: auto 1fr;
+        column-gap: 36px;
+        row-gap: 18px;
+        align-items: stretch;
+        padding: 30px 34px 34px;
+        border-radius: 34px;
+      }
+
+      .traffic-lights {
+        margin-left: 0;
+      }
+
+      .hero-grid {
+        grid-column: 1;
+        grid-row: 2;
+        display: flex;
+        align-self: stretch;
+      }
+
+      .hero-intro {
+        justify-content: flex-end;
+        gap: 18px;
+        padding: 8px 0 0;
+        align-self: stretch;
+      }
+
+      .hero-kicker {
+        display: none;
+      }
+
+      .hero h1 {
+        max-width: none;
+        white-space: nowrap;
+        font-size: clamp(3.34rem, 6vw, 5.36rem);
+        line-height: 0.88;
+        letter-spacing: -0.075em;
+      }
+
+      .hero-actions {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        align-self: center;
+        display: grid;
+        grid-template-columns: minmax(0, 1.18fr) minmax(138px, 0.88fr);
+        grid-template-areas:
+          "weather theme"
+          "weather style";
+        width: min(100%, 356px);
+        padding: 12px;
+        gap: 10px;
+        border-radius: 26px;
+      }
+
+      .hero-badge,
+      .theme-toggle,
+      .style-toggle {
+        min-height: 46px;
+      }
+
+      .hero-badge {
+        padding: 10px 14px 10px 12px;
+        font-size: 0.86rem;
+      }
+
+      #weather-badge {
+        grid-area: weather;
+        display: grid;
+        grid-template-columns: 16px minmax(0, 1fr);
+        grid-template-rows: auto auto;
+        align-content: center;
+        gap: 6px 12px;
+        min-height: 102px;
+        padding: 14px 16px 14px 14px;
+        text-align: left;
+      }
+
+      #weather-badge::before {
+        grid-row: 1 / span 2;
+        align-self: center;
+        width: 11px;
+        height: 11px;
+        box-shadow: 0 0 0 5px rgba(52, 199, 89, 0.1);
+      }
+
+      #theme-toggle {
+        grid-area: theme;
+      }
+
+      #style-toggle {
+        grid-area: style;
+      }
+
+      .weather-line {
+        display: block;
+        min-width: 0;
+      }
+
+      .weather-line.location {
+        color: color-mix(in srgb, var(--muted) 88%, transparent);
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .weather-line.detail {
+        color: var(--ink);
+        font-size: 1.02rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .theme-toggle {
+        justify-content: space-between;
+        padding: 8px 12px 8px 10px;
+        font-size: 0.84rem;
+      }
+
+      .theme-toggle-track {
+        width: 36px;
+        height: 20px;
+      }
+
+      .theme-toggle-thumb {
+        width: 16px;
+        height: 16px;
+      }
+
+      body.dark-theme .theme-toggle-thumb {
+        transform: translateX(16px);
+      }
+
+      .style-toggle {
+        min-width: 0;
+        padding: 8px 8px 8px 12px;
+        border-radius: 18px;
+      }
+
+      .style-toggle-label {
+        font-size: 0.48rem;
+      }
+
+      .style-toggle-text {
+        font-size: 0.92rem;
+      }
+
+      .style-toggle-orb {
+        width: 34px;
+        height: 34px;
+      }
+
+      .layout {
+        grid-template-columns: 292px minmax(0, 1fr);
+        gap: 22px;
+        margin-top: 20px;
+        align-items: stretch;
+      }
+
+      .panel-shell {
+        align-self: stretch;
+        border-radius: 32px;
+      }
+
+      .panel {
+        gap: 16px;
+        padding: 16px;
+        border-radius: 30px;
+        top: 18px;
+      }
+
+      .section {
+        padding: 18px 18px 16px;
+        border-radius: 24px;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+
+      .section-cap {
+        font-size: 0.76rem;
+        letter-spacing: 0.16em;
+      }
+
+      .section h2 {
+        font-size: 1.04rem;
+      }
+
+      .field-grid {
+        gap: 12px;
+      }
+
+      .field label {
+        margin-bottom: 8px;
+        font-size: 0.74rem;
+      }
+
+      .field input,
+      .field textarea {
+        min-height: 70px;
+        padding: 16px 16px;
+        border-radius: 20px;
+        font-size: 1.04rem;
+      }
+
+      .button-row {
+        margin-top: 14px;
+      }
+
+      .button-row button {
+        min-height: 56px;
+        padding: 12px 14px 12px 18px;
+      }
+
+      .legend {
+        gap: 14px;
+      }
+
+      .legend-item {
+        gap: 10px;
+        font-size: 0.96rem;
+      }
+
+      .swatch {
+        width: 14px;
+        height: 14px;
+        border-radius: 999px;
+      }
+
+      .calendar-stage {
+        width: 100%;
+        justify-self: stretch;
+        border-radius: 32px;
+      }
+
+      .calendar-stage::before,
+      .calendar-stage::after {
+        display: none;
+      }
+
+      .calendar-board {
+        width: 100%;
+        min-height: 724px;
+        padding: 20px 20px 18px;
+        border-radius: 32px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .toolbar {
+        gap: 16px;
+        margin-bottom: 18px;
+        padding-bottom: 18px;
+      }
+
+      .toolbar-main {
+        align-items: flex-start;
+        gap: 18px;
+      }
+
+      .toolbar-copy {
+        gap: 2px;
+      }
+
+      .toolbar h2 {
+        font-size: clamp(2.06rem, 2.52vw, 2.58rem);
+        letter-spacing: -0.055em;
+      }
+
+      .month-switcher {
+        padding: 5px;
+        gap: 8px;
+      }
+
+      .month-switcher button {
+        padding: 9px 15px;
+        font-weight: 700;
+      }
+
+      .nav-icon {
+        min-width: 44px;
+        height: 44px;
+      }
+
+      .month-chip {
+        min-width: 126px;
+        font-size: 0.88rem;
+      }
+
+      .stats {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .stat-primary {
+        grid-column: auto;
+      }
+
+      .stat {
+        min-height: 84px;
+        padding: 14px 14px 12px;
+        border-radius: 22px;
+        display: grid;
+        gap: 6px;
+        align-content: start;
+      }
+
+      .stat strong {
+        font-size: 1.9rem;
+      }
+
+      .stat span {
+        font-size: 0.78rem;
+      }
+
+      .stat em {
+        margin-top: 2px;
+        font-size: 0.62rem;
+      }
+
+      .months {
+        flex: 1 1 auto;
+      }
+
+      .month {
+        height: 100%;
+        padding: 0 10px 14px;
+        border-radius: 28px;
+      }
+
+      .month-head {
+        display: none;
+      }
+
+      .weekdays {
+        padding: 10px 6px 12px;
+      }
+
+      .weekdays div {
+        padding: 4px 0 6px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+      }
+
+      .days {
+        padding: 0;
+        gap: 10px;
+      }
+
+      .day {
+        grid-template-rows: minmax(0, 1fr) auto;
+        border-radius: 22px;
+        padding: 12px 10px 12px;
+      }
+
+      .day-flag-row {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: auto;
+        min-height: 0;
+      }
+
+      .day-header {
+        grid-row: 1;
+        min-height: 46px;
+      }
+
+      .day-number {
+        width: 38px;
+        min-width: 38px;
+        min-height: 38px;
+        font-size: 1.26rem;
+      }
+
+      .day-number.today-mark {
+        width: 38px;
+        min-width: 38px;
+        min-height: 38px;
+      }
+
+      .flag {
+        min-width: 24px;
+        height: 20px;
+        padding: 0 7px;
+        font-size: 0.62rem;
+      }
+
+      .day-label {
+        grid-row: 2;
+        min-height: 1.2em;
+        margin-top: 0;
+        padding: 0 2px;
+        font-size: 0.72rem;
+        line-height: 1.1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: keep-all;
+      }
+
+      body.dark-theme .hero-shell {
+        background:
+          linear-gradient(135deg, rgba(126, 154, 223, 0.12), rgba(255, 255, 255, 0.018) 34%, rgba(77, 109, 186, 0.02) 100%),
+          linear-gradient(180deg, rgba(8, 11, 18, 0.98), rgba(7, 9, 14, 0.98));
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.07),
+          0 30px 70px rgba(0, 0, 0, 0.26),
+          -18px 10px 42px rgba(78, 116, 212, 0.12);
+      }
+
+      body.dark-theme .panel-shell,
+      body.dark-theme .calendar-stage {
+        background:
+          linear-gradient(135deg, rgba(101, 126, 186, 0.08), rgba(255, 255, 255, 0.014) 34%, rgba(70, 98, 164, 0.02) 100%),
+          linear-gradient(180deg, rgba(10, 13, 20, 0.98), rgba(7, 9, 14, 0.98));
+      }
+
+      body.dark-theme .hero {
+        background:
+          radial-gradient(circle at 18% 100%, rgba(73, 108, 202, 0.1), transparent 30%),
+          radial-gradient(circle at 84% 18%, rgba(114, 135, 196, 0.08), transparent 20%),
+          linear-gradient(180deg, rgba(18, 23, 35, 0.98), rgba(10, 12, 18, 0.99));
+      }
+
+      body.dark-theme .panel,
+      body.dark-theme .calendar-board {
+        background:
+          linear-gradient(180deg, rgba(15, 20, 31, 0.98), rgba(10, 13, 20, 0.99));
+      }
+
+      body.dark-theme .section {
+        background:
+          linear-gradient(180deg, rgba(18, 23, 35, 0.94), rgba(12, 15, 24, 0.98));
+      }
+
+      body.dark-theme .hero-actions {
+        background:
+          linear-gradient(180deg, rgba(20, 27, 40, 0.92), rgba(10, 14, 23, 0.96)),
+          rgba(10, 14, 23, 0.9);
+      }
+
+      body.dark-theme .hero-badge,
+      body.dark-theme .theme-toggle,
+      body.dark-theme .style-toggle,
+      body.dark-theme .month-switcher,
+      body.dark-theme .stat,
+      body.dark-theme .day,
+      body.dark-theme .field input,
+      body.dark-theme .field textarea,
+      body.dark-theme .button-row button {
+        background:
+          linear-gradient(180deg, rgba(19, 25, 37, 0.98), rgba(10, 14, 22, 0.99)),
+          rgba(11, 15, 24, 0.94);
+      }
+
+      body.dark-theme .weather-line.location {
+        color: rgba(189, 200, 228, 0.68);
+      }
+
+      body.dark-theme .weather-line.detail {
+        color: rgba(239, 243, 255, 0.94);
+      }
+
+      body.dark-theme .month {
+        background:
+          linear-gradient(180deg, rgba(12, 17, 28, 0.98), rgba(9, 12, 18, 0.99));
+      }
+
+      body.dark-theme .weekdays div {
+        color: rgba(181, 192, 222, 0.68);
+      }
+
+      body.dark-theme .section-cap {
+        color: rgba(221, 229, 247, 0.42);
+      }
+
+      body.dark-theme.glass-style .hero-shell {
+        background:
+          linear-gradient(135deg, rgba(178, 203, 255, 0.12), rgba(255, 255, 255, 0.02) 38%, rgba(109, 146, 231, 0.03) 100%),
+          linear-gradient(180deg, rgba(8, 13, 22, 0.88), rgba(6, 10, 18, 0.96));
+      }
+
+      body.dark-theme.glass-style .panel-shell,
+      body.dark-theme.glass-style .calendar-stage {
+        background:
+          linear-gradient(135deg, rgba(157, 182, 238, 0.08), rgba(255, 255, 255, 0.016) 38%, rgba(86, 120, 204, 0.02) 100%),
+          linear-gradient(180deg, rgba(9, 13, 21, 0.9), rgba(7, 10, 16, 0.96));
+      }
+
+      body.dark-theme.glass-style .hero {
+        background:
+          radial-gradient(circle at 20% 96%, rgba(78, 116, 214, 0.12), transparent 30%),
+          radial-gradient(circle at 86% 14%, rgba(194, 214, 255, 0.08), transparent 24%),
+          linear-gradient(180deg, rgba(20, 28, 42, 0.72), rgba(10, 14, 23, 0.44) 72%),
+          rgba(9, 13, 21, 0.38);
+      }
+
+      body.dark-theme.glass-style .panel,
+      body.dark-theme.glass-style .calendar-board,
+      body.dark-theme.glass-style .section,
+      body.dark-theme.glass-style .month,
+      body.dark-theme.glass-style .stat,
+      body.dark-theme.glass-style .day:not(.empty),
+      body.dark-theme.glass-style .hero-badge,
+      body.dark-theme.glass-style .theme-toggle,
+      body.dark-theme.glass-style .style-toggle,
+      body.dark-theme.glass-style .month-switcher,
+      body.dark-theme.glass-style .field input,
+      body.dark-theme.glass-style .field textarea,
+      body.dark-theme.glass-style .button-row button {
+        background:
+          linear-gradient(180deg, rgba(22, 30, 45, 0.7), rgba(10, 14, 23, 0.34)),
+          rgba(11, 15, 24, 0.38);
+      }
+
+      body.dark-theme.glass-style .hero-actions {
+        background:
+          linear-gradient(180deg, rgba(25, 34, 49, 0.74), rgba(10, 14, 23, 0.32)),
+          rgba(11, 15, 24, 0.42);
+      }
+
       @media (prefers-reduced-motion: reduce) {
         .hero-badge::before,
         .stat,
@@ -2690,6 +3238,14 @@
       }
 
       @media (max-width: 1220px) {
+        .shell {
+          width: min(100% - 34px, 1500px);
+        }
+
+        .hero-shell .hero {
+          grid-template-columns: minmax(0, 1fr) minmax(306px, 330px);
+          column-gap: 26px;
+        }
       }
 
       @media (max-width: 980px) {
@@ -2701,8 +3257,9 @@
           position: static;
         }
 
-        .hero-grid {
-          grid-template-columns: 1fr;
+        .hero-shell .hero {
+          grid-template-columns: minmax(0, 1fr) minmax(284px, 320px);
+          padding: 28px 28px 30px;
         }
 
         .stats {
@@ -2720,35 +3277,51 @@
           margin-top: 12px;
         }
 
-        .hero {
-          display: block;
-          padding: 18px 16px;
-          border-radius: 24px;
+        .shell-rim {
+          border-radius: 30px;
         }
 
-        .shell-rim {
+        .hero-shell .hero {
+          grid-template-columns: 1fr;
+          grid-template-rows: auto auto auto;
+          min-height: auto;
+          padding: 22px 18px 20px;
           border-radius: 28px;
+          row-gap: 18px;
         }
 
         .hero-top {
-          position: relative;
-          z-index: 1;
-          display: flex;
-          flex-direction: column;
-          align-items: stretch;
-          margin-bottom: 12px;
+          display: block;
+          margin-bottom: 0;
+        }
+
+        .hero-grid {
+          display: block;
+        }
+
+        .hero-intro {
+          gap: 14px;
+          padding: 0;
+        }
+
+        .hero h1 {
+          white-space: normal;
+          font-size: clamp(2.36rem, 10vw, 3.34rem);
         }
 
         .hero-actions {
+          grid-column: auto;
+          grid-row: auto;
           width: 100%;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
+          grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+          grid-template-areas:
+            "weather theme"
+            "weather style";
           padding: 8px;
         }
 
-        .calendar-stage::before,
-        .calendar-stage::after {
-          right: 14px;
-          width: clamp(104px, 16vw, 132px);
+        #weather-badge {
+          min-height: 96px;
         }
 
         .theme-toggle,
@@ -2768,16 +3341,12 @@
         .toolbar-main {
           flex-direction: column;
           align-items: flex-start;
+          width: 100%;
         }
 
         .month-switcher {
           width: 100%;
           justify-content: space-between;
-          flex-wrap: wrap;
-        }
-
-        .stats {
-          justify-content: flex-start;
         }
 
         .field-grid {
@@ -2796,16 +3365,23 @@
 
       @media (max-width: 640px) {
         .hero h1 {
-          font-size: clamp(1.72rem, 10.4vw, 2.42rem);
+          font-size: clamp(2rem, 10.2vw, 2.72rem);
         }
 
-        .hero-kicker {
-          padding: 4px 8px;
-          font-size: 0.54rem;
+        .hero-shell .hero {
+          padding: 20px 16px 18px;
         }
 
         .hero-actions {
           grid-template-columns: 1fr;
+          grid-template-areas:
+            "weather"
+            "theme"
+            "style";
+        }
+
+        #weather-badge {
+          min-height: 78px;
         }
 
         .theme-toggle,
@@ -2854,47 +3430,30 @@
         }
 
         .month {
-          overflow-x: auto;
-          overflow-y: hidden;
-          -webkit-overflow-scrolling: touch;
-        }
-
-        .month::-webkit-scrollbar {
-          height: 6px;
-        }
-
-        .month::-webkit-scrollbar-thumb {
-          border-radius: 999px;
-          background: rgba(60, 60, 67, 0.18);
+          padding: 0 6px 10px;
         }
 
         .weekdays {
-          padding: 10px 10px 2px;
-          min-width: 388px;
+          padding: 8px 2px 10px;
         }
 
         .days {
-          padding: 0 10px 10px;
-          gap: 6px;
-          min-width: 388px;
+          gap: 7px;
           align-items: stretch;
         }
 
         .day {
-          min-width: 50px;
-          aspect-ratio: 1 / 1;
-          min-height: 0;
           padding: 10px 8px 12px;
-          border-radius: 16px;
+          border-radius: 18px;
         }
 
         .day-flag-row {
-          min-height: 22px;
+          top: 8px;
+          right: 8px;
         }
 
         .day-header {
-          min-height: 36px;
-          margin: 0;
+          min-height: 40px;
         }
 
         .day-number {
@@ -2921,18 +3480,13 @@
           width: min(100% - 14px, 1440px);
         }
 
-        .hero {
-          padding: 15px 12px 16px;
+        .hero-shell .hero {
+          padding: 18px 14px 16px;
+          border-radius: 22px;
         }
 
         .shell-rim {
           border-radius: 24px;
-        }
-
-        .hero-signature {
-          display: grid;
-          gap: 8px;
-          justify-items: start;
         }
 
         .traffic-lights {
@@ -2940,53 +3494,62 @@
         }
 
         .hero-actions {
-          padding: 7px;
+          padding: 8px;
         }
 
-        .theme-toggle,
-        .hero-badge {
-          justify-content: center;
+        #weather-badge {
+          min-height: 72px;
+          padding: 12px;
         }
 
-        .calendar-stage::before,
-        .calendar-stage::after {
-          right: 10px;
-          width: 88px;
+        .weather-line.location {
+          font-size: 0.72rem;
+        }
+
+        .weather-line.detail {
+          font-size: 0.92rem;
+        }
+
+        .toolbar h2 {
+          font-size: 1.74rem;
+        }
+
+        .stats {
+          gap: 8px;
+        }
+
+        .stat {
+          min-height: 76px;
+          padding: 12px;
         }
 
         .day {
-          min-width: 50px;
-          aspect-ratio: 1 / 1;
-          min-height: 0;
-          padding: 10px 8px 12px;
+          padding: 9px 6px 8px;
           border-radius: 16px;
         }
 
         .day-header {
           min-height: 34px;
-          margin: 2px 0;
         }
 
         .day-number {
-          width: 32px;
-          min-width: 32px;
-          min-height: 32px;
-          font-size: 1.02rem;
+          width: 30px;
+          min-width: 30px;
+          min-height: 30px;
+          font-size: 0.98rem;
         }
 
         .day-number.today-mark {
-          width: 32px;
-          min-width: 32px;
-          min-height: 32px;
+          width: 30px;
+          min-width: 30px;
+          min-height: 30px;
         }
 
         .flag {
-          top: 8px;
-          right: 8px;
           min-width: 20px;
-          height: 20px;
-          padding: 0 6px;
-          font-size: 0.62rem;
+          height: 18px;
+          padding: 0 5px;
+          font-size: 0.56rem;
         }
       }
     </style>
@@ -2995,7 +3558,7 @@
     <div class="grain" aria-hidden="true"></div>
     <div class="glass-scene" aria-hidden="true"></div>
     <div class="shell">
-      <div class="shell-rim reveal">
+      <div class="shell-rim reveal hero-shell">
       <section class="hero">
         <div class="hero-top">
           <div class="traffic-lights" aria-hidden="true">
@@ -3030,7 +3593,7 @@
       </div>
 
       <div class="layout">
-        <div class="shell-rim reveal">
+        <div class="shell-rim reveal panel-shell">
         <aside class="panel">
           <div class="section reveal">
             <div class="section-head">
@@ -3145,7 +3708,7 @@
     </div>
 
     <script>
-      const APP_VERSION = "2026-06-12T00-30-11";
+      const APP_VERSION = "2026-06-12T01-12-11";
       const STORAGE_KEY = "work-rest-calendar-settings-v2";
       const LEGACY_STORAGE_KEY = "work-rest-calendar-settings-v1";
       const THEME_STORAGE_KEY = "work-rest-calendar-theme-v1";
@@ -3259,8 +3822,40 @@
         return String(value).padStart(2, "0");
       }
 
-      function setWeatherBadge(text) {
-        weatherBadge.textContent = text;
+      function setWeatherBadge(value, detailText = "") {
+        let locationText = "";
+        let secondaryText = "";
+
+        if (typeof value === "object" && value !== null) {
+          locationText = value.location || "Weather";
+          secondaryText = value.detail || "";
+        } else if (detailText) {
+          locationText = String(value || "Weather");
+          secondaryText = String(detailText);
+        } else {
+          const parts = String(value || "").split(" / ");
+
+          if (parts.length >= 2) {
+            locationText = parts.shift() || "Weather";
+            secondaryText = parts.join(" · ");
+          } else {
+            locationText = "Weather";
+            secondaryText = String(value || "");
+          }
+        }
+
+        weatherBadge.replaceChildren();
+
+        const locationLine = document.createElement("span");
+        locationLine.className = "weather-line location";
+        locationLine.textContent = locationText;
+
+        const detailLine = document.createElement("span");
+        detailLine.className = "weather-line detail";
+        detailLine.textContent = secondaryText;
+
+        weatherBadge.append(locationLine, detailLine);
+        weatherBadge.setAttribute("aria-label", `${locationText} ${secondaryText}`.trim());
       }
 
       function formatLocationLabel(location) {
@@ -3466,7 +4061,7 @@
       }
 
       async function updateWeatherBadge() {
-        setWeatherBadge("天气读取中");
+        setWeatherBadge({ location: "天气", detail: "读取中" });
 
         try {
           const position = await getCurrentPosition();
@@ -3479,12 +4074,12 @@
         try {
           await fetchWeather(31.2304, 121.4737, "上海");
         } catch (error) {
-          setWeatherBadge("天气暂不可用");
+          setWeatherBadge({ location: "上海", detail: "天气暂不可用" });
         }
       }
 
       async function refreshWeatherBadge() {
-        setWeatherBadge("Loading weather");
+        setWeatherBadge({ location: "天气", detail: "定位与更新中" });
 
         try {
           const position = await getCurrentPosition();
@@ -3505,7 +4100,7 @@
         try {
           await fetchWeather(31.2304, 121.4737, "Shanghai (default)");
         } catch (error) {
-          setWeatherBadge("Weather unavailable");
+          setWeatherBadge({ location: "上海", detail: "天气暂不可用" });
         }
       }
 
