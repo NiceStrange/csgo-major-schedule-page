@@ -499,23 +499,98 @@
         display: flex;
         align-items: center;
         gap: 12px;
+        min-height: 52px;
+        padding: 10px 12px;
+        border-radius: 18px;
+        border: 1px solid rgba(191, 205, 236, 0.08);
+        background: linear-gradient(180deg, rgba(28, 35, 49, 0.64), rgba(20, 27, 38, 0.86));
         color: rgba(232, 238, 251, 0.72);
         font-size: 0.95rem;
+        transition:
+          transform 260ms var(--ease),
+          border-color 260ms var(--ease),
+          background 320ms var(--ease),
+          box-shadow 320ms var(--ease),
+          color 260ms var(--ease);
+      }
+
+      .legend-item:hover {
+        transform: translateY(-1px);
+      }
+
+      .legend-copy {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+
+      .legend-copy strong {
+        font-size: 0.95rem;
+        line-height: 1.1;
+        font-weight: 700;
+        color: rgba(245, 248, 255, 0.94);
+      }
+
+      .legend-copy small {
+        font-size: 0.72rem;
+        line-height: 1.15;
+        letter-spacing: 0.01em;
+        color: rgba(191, 201, 219, 0.62);
       }
 
       .legend-dot {
         width: 18px;
         height: 18px;
+        flex: 0 0 auto;
         border-radius: 999px;
         border: 1px solid rgba(225, 234, 252, 0.12);
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
       }
 
-      .legend-weekend { background: linear-gradient(180deg, rgba(79, 97, 168, 0.92), rgba(56, 71, 126, 0.96)); }
-      .legend-holiday { background: linear-gradient(180deg, rgba(88, 109, 176, 0.92), rgba(61, 78, 136, 0.96)); }
-      .legend-makeup { background: linear-gradient(180deg, rgba(74, 94, 158, 0.92), rgba(49, 64, 110, 0.96)); }
-      .legend-rest { background: linear-gradient(180deg, rgba(42, 87, 95, 0.92), rgba(28, 60, 66, 0.98)); }
-      .legend-overlap { background: linear-gradient(180deg, rgba(104, 110, 189, 0.95), rgba(69, 78, 134, 0.98)); }
+      .legend-weekend {
+        background: linear-gradient(180deg, rgba(79, 97, 168, 0.92), rgba(56, 71, 126, 0.96));
+      }
+
+      .legend-holiday {
+        background: linear-gradient(180deg, rgba(67, 97, 162, 0.94), rgba(47, 71, 119, 0.98));
+      }
+
+      .legend-makeup {
+        background: linear-gradient(180deg, rgba(74, 82, 101, 0.92), rgba(49, 56, 72, 0.96));
+      }
+
+      .legend-rest {
+        background: linear-gradient(180deg, rgba(42, 87, 95, 0.92), rgba(28, 60, 66, 0.98));
+      }
+
+      .legend-overlap {
+        background: linear-gradient(180deg, rgba(87, 106, 182, 0.95), rgba(58, 74, 127, 0.98));
+      }
+
+      .legend-item[data-type="weekend"] {
+        border-color: rgba(113, 132, 192, 0.2);
+        background: linear-gradient(180deg, rgba(38, 47, 67, 0.8), rgba(28, 35, 49, 0.92));
+      }
+
+      .legend-item[data-type="holiday"] {
+        border-color: rgba(88, 121, 190, 0.24);
+        background: linear-gradient(180deg, rgba(33, 46, 68, 0.84), rgba(25, 36, 54, 0.94));
+      }
+
+      .legend-item[data-type="makeup"] {
+        border-color: rgba(116, 126, 146, 0.18);
+        background: linear-gradient(180deg, rgba(37, 42, 53, 0.82), rgba(28, 32, 40, 0.94));
+      }
+
+      .legend-item[data-type="rest"] {
+        border-color: rgba(63, 120, 115, 0.24);
+        background: linear-gradient(180deg, rgba(25, 44, 47, 0.84), rgba(21, 36, 38, 0.96));
+      }
+
+      .legend-item[data-type="overlap"] {
+        border-color: rgba(107, 127, 197, 0.28);
+        background: linear-gradient(180deg, rgba(40, 50, 76, 0.86), rgba(28, 37, 57, 0.96));
+      }
 
       .calendar-shell {
         padding: 18px 22px 18px;
@@ -814,16 +889,16 @@
         --shadow-soft:
           0 16px 30px rgba(154, 165, 184, 0.1),
           inset 0 1px 0 rgba(255, 255, 255, 0.84);
-        --weekend-bg: linear-gradient(180deg, rgba(237, 241, 251, 1), rgba(228, 233, 244, 1));
-        --holiday-bg: linear-gradient(180deg, rgba(226, 236, 252, 1), rgba(216, 227, 244, 1));
-        --rest-bg: linear-gradient(180deg, rgba(231, 243, 239, 1), rgba(218, 233, 228, 1));
-        --overlap-bg: linear-gradient(180deg, rgba(226, 235, 252, 1), rgba(213, 224, 242, 1));
-        --makeup-bg: linear-gradient(180deg, rgba(236, 240, 246, 1), rgba(225, 230, 239, 1));
-        --saturday: #4d6fcc;
-        --sunday: #b66584;
+        --weekend-bg: linear-gradient(180deg, rgba(239, 243, 252, 1), rgba(228, 235, 247, 1));
+        --holiday-bg: linear-gradient(180deg, rgba(223, 234, 252, 1), rgba(211, 224, 246, 1));
+        --rest-bg: linear-gradient(180deg, rgba(230, 244, 239, 1), rgba(216, 235, 228, 1));
+        --overlap-bg: linear-gradient(180deg, rgba(220, 231, 252, 1), rgba(206, 220, 246, 1));
+        --makeup-bg: linear-gradient(180deg, rgba(239, 242, 247, 1), rgba(228, 233, 241, 1));
+        --saturday: #5873c3;
+        --sunday: #9f6482;
         --accent-green: #4aa785;
-        --accent-blue: #6f83b4;
-        --today-outline: rgba(92, 112, 146, 0.7);
+        --accent-blue: #6a81ba;
+        --today-outline: rgba(95, 113, 144, 0.62);
       }
 
       body.light-theme::before {
@@ -944,31 +1019,46 @@
       }
 
       .light-theme .day.is-today {
-        border-color: rgba(92, 111, 145, 0.58);
+        border-color: rgba(90, 112, 150, 0.44);
         box-shadow:
-          0 0 0 1px rgba(108, 124, 154, 0.12),
-          0 12px 20px rgba(172, 180, 194, 0.08),
+          0 0 0 1px rgba(123, 141, 177, 0.1),
+          0 12px 20px rgba(172, 180, 194, 0.06),
           inset 0 1px 0 rgba(255, 255, 255, 0.96);
       }
 
       .light-theme .day.is-rest {
-        border-color: rgba(138, 190, 173, 0.44);
+        border-color: rgba(133, 181, 164, 0.42);
+        box-shadow:
+          0 10px 18px rgba(155, 188, 176, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.96);
       }
 
       .light-theme .day.is-weekend:not(.is-rest):not(.is-holiday):not(.is-overlap):not(.is-makeup) {
-        border-color: rgba(148, 164, 204, 0.38);
+        border-color: rgba(150, 165, 205, 0.38);
+        box-shadow:
+          0 10px 18px rgba(166, 178, 207, 0.07),
+          inset 0 1px 0 rgba(255, 255, 255, 0.96);
       }
 
       .light-theme .day.is-holiday:not(.is-overlap) {
-        border-color: rgba(130, 159, 208, 0.42);
+        border-color: rgba(121, 154, 210, 0.44);
+        box-shadow:
+          0 12px 20px rgba(151, 170, 211, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.96);
       }
 
       .light-theme .day.is-overlap {
-        border-color: rgba(128, 154, 202, 0.5);
+        border-color: rgba(119, 148, 208, 0.48);
+        box-shadow:
+          0 12px 22px rgba(145, 162, 210, 0.11),
+          inset 0 1px 0 rgba(255, 255, 255, 0.96);
       }
 
       .light-theme .day.is-makeup {
-        border-color: rgba(156, 165, 182, 0.42);
+        border-color: rgba(160, 170, 189, 0.4);
+        box-shadow:
+          0 10px 18px rgba(176, 184, 198, 0.07),
+          inset 0 1px 0 rgba(255, 255, 255, 0.96);
       }
 
       .light-theme .flag {
@@ -990,6 +1080,67 @@
 
       .light-theme .legend-dot {
         border-color: rgba(181, 191, 206, 0.38);
+      }
+
+      .light-theme .legend-item {
+        border-color: rgba(199, 208, 222, 0.38);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(241, 245, 250, 0.98));
+        box-shadow:
+          0 10px 18px rgba(169, 178, 194, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.95);
+      }
+
+      .light-theme .legend-copy strong {
+        color: #29313d;
+      }
+
+      .light-theme .legend-copy small {
+        color: rgba(97, 108, 124, 0.66);
+      }
+
+      .light-theme .legend-item[data-type="weekend"] {
+        border-color: rgba(168, 182, 214, 0.42);
+        background: linear-gradient(180deg, rgba(243, 246, 252, 0.98), rgba(234, 239, 247, 1));
+      }
+
+      .light-theme .legend-item[data-type="holiday"] {
+        border-color: rgba(143, 168, 215, 0.44);
+        background: linear-gradient(180deg, rgba(236, 242, 252, 0.98), rgba(226, 234, 247, 1));
+      }
+
+      .light-theme .legend-item[data-type="makeup"] {
+        border-color: rgba(181, 188, 203, 0.42);
+        background: linear-gradient(180deg, rgba(244, 246, 250, 0.98), rgba(236, 240, 246, 1));
+      }
+
+      .light-theme .legend-item[data-type="rest"] {
+        border-color: rgba(153, 194, 181, 0.42);
+        background: linear-gradient(180deg, rgba(239, 247, 244, 0.98), rgba(229, 240, 236, 1));
+      }
+
+      .light-theme .legend-item[data-type="overlap"] {
+        border-color: rgba(141, 166, 219, 0.46);
+        background: linear-gradient(180deg, rgba(235, 241, 252, 0.98), rgba(224, 233, 248, 1));
+      }
+
+      .light-theme .legend-weekend {
+        background: linear-gradient(180deg, rgba(159, 173, 216, 0.98), rgba(122, 141, 195, 1));
+      }
+
+      .light-theme .legend-holiday {
+        background: linear-gradient(180deg, rgba(136, 163, 221, 0.98), rgba(98, 126, 193, 1));
+      }
+
+      .light-theme .legend-makeup {
+        background: linear-gradient(180deg, rgba(190, 197, 211, 0.98), rgba(154, 164, 182, 1));
+      }
+
+      .light-theme .legend-rest {
+        background: linear-gradient(180deg, rgba(143, 195, 177, 0.98), rgba(101, 160, 140, 1));
+      }
+
+      .light-theme .legend-overlap {
+        background: linear-gradient(180deg, rgba(127, 154, 221, 0.98), rgba(92, 120, 192, 1));
       }
 
       .light-theme .window-dots span:nth-child(1) { box-shadow: 0 2px 6px rgba(255, 96, 87, 0.22); }
@@ -1052,8 +1203,7 @@
           grid-template-areas:
             "location"
             "weather"
-            "theme"
-            "style";
+            "theme";
         }
 
         .stats {
@@ -1177,11 +1327,26 @@
               </div>
 
               <div class="legend">
-                <div class="legend-item"><span class="legend-dot legend-weekend"></span><span>周六周日</span></div>
-                <div class="legend-item"><span class="legend-dot legend-holiday"></span><span>法定节假日</span></div>
-                <div class="legend-item"><span class="legend-dot legend-makeup"></span><span>官方调休上班</span></div>
-                <div class="legend-item"><span class="legend-dot legend-rest"></span><span>自定义休息日</span></div>
-                <div class="legend-item"><span class="legend-dot legend-overlap"></span><span>节假日与休息日重叠</span></div>
+                <div class="legend-item" data-type="weekend">
+                  <span class="legend-dot legend-weekend"></span>
+                  <span class="legend-copy"><strong>周六周日</strong><small>保持周末识别感，便于快速扫视整月节奏</small></span>
+                </div>
+                <div class="legend-item" data-type="holiday">
+                  <span class="legend-dot legend-holiday"></span>
+                  <span class="legend-copy"><strong>法定节假日</strong><small>官方放假日期，使用主题主高亮色突出提醒</small></span>
+                </div>
+                <div class="legend-item" data-type="makeup">
+                  <span class="legend-dot legend-makeup"></span>
+                  <span class="legend-copy"><strong>官方调休上班</strong><small>调休工作日以更克制的中性色单独标记</small></span>
+                </div>
+                <div class="legend-item" data-type="rest">
+                  <span class="legend-dot legend-rest"></span>
+                  <span class="legend-copy"><strong>自定义休息日</strong><small>按你的作息周期高亮，和官方假期区分开来</small></span>
+                </div>
+                <div class="legend-item" data-type="overlap">
+                  <span class="legend-dot legend-overlap"></span>
+                  <span class="legend-copy"><strong>重叠高亮日</strong><small>周末、法休与自定义休息重合时会自动加强提示</small></span>
+                </div>
               </div>
             </section>
           </div>
