@@ -6,1105 +6,486 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <title>节假日与休息日日历</title>
+    <title>Eunice的日历</title>
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@600;700&family=Noto+Serif+SC:wght@500;600;700&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Serif+SC:wght@500;600;700&display=swap");
+
       :root {
-        --bg: #f2f2f7;
-        --bg-strong: #e9e9ef;
-        --paper: rgba(255, 255, 255, 0.78);
-        --paper-strong: rgba(255, 255, 255, 0.92);
-        --paper-solid: #ffffff;
-        --ink: #1d1d1f;
-        --muted: #6e6e73;
-        --line: rgba(60, 60, 67, 0.12);
-        --line-strong: rgba(60, 60, 67, 0.18);
-        --accent: #0a84ff;
-        --accent-deep: #0066cc;
-        --accent-soft: rgba(10, 132, 255, 0.12);
-        --weekend: rgba(90, 119, 255, 0.14);
-        --weekend-ink: #4f63d8;
-        --holiday: rgba(255, 159, 10, 0.16);
-        --holiday-ink: #b05a00;
-        --rest: rgba(68, 203, 143, 0.16);
-        --rest-ink: #1e7e5f;
-        --mix: rgba(183, 94, 255, 0.2);
-        --mix-ink: #7d3fd6;
-        --makeup: rgba(255, 99, 88, 0.16);
-        --makeup-ink: #c34235;
-        --today: #0a84ff;
-        --shadow: 0 28px 72px rgba(29, 29, 31, 0.12);
-        --shadow-soft: 0 12px 30px rgba(29, 29, 31, 0.07);
-        --hero-sheen: linear-gradient(120deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.16) 42%, rgba(255, 255, 255, 0.52) 100%);
-        --ease-fluid: cubic-bezier(0.32, 0.72, 0, 1);
-        --ease-lift: cubic-bezier(0.22, 1, 0.36, 1);
-        --control-column: 224px;
-        --glass-rail: 148px;
-      }
-
-      body.dark-theme {
-        --bg: #08090c;
-        --bg-strong: #020305;
-        --paper: rgba(10, 12, 16, 0.86);
-        --paper-strong: rgba(16, 18, 23, 0.96);
-        --paper-solid: #101217;
-        --ink: #e8ecf1;
-        --muted: #8c94a3;
-        --line: rgba(255, 255, 255, 0.055);
-        --line-strong: rgba(255, 255, 255, 0.085);
-        --accent: #aab8da;
-        --accent-deep: #edf1f8;
-        --accent-soft: rgba(122, 135, 171, 0.09);
-        --weekend: rgba(86, 96, 130, 0.14);
-        --weekend-ink: #aab3d3;
-        --holiday: rgba(82, 104, 132, 0.16);
-        --holiday-ink: #ccd7e8;
-        --rest: rgba(53, 101, 83, 0.16);
-        --rest-ink: #bfd8ca;
-        --mix: rgba(102, 71, 132, 0.18);
-        --mix-ink: #d4c2e8;
-        --makeup: rgba(120, 66, 61, 0.16);
-        --makeup-ink: #debbb7;
-        --today: #bcc8e6;
-        --shadow: 0 26px 68px rgba(0, 0, 0, 0.42);
-        --shadow-soft: 0 12px 24px rgba(0, 0, 0, 0.22);
-        --hero-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.032), transparent 34%);
-      }
-
-      body.glass-style {
-        --paper: rgba(255, 255, 255, 0.36);
-        --paper-strong: rgba(255, 255, 255, 0.52);
-        --paper-solid: rgba(255, 255, 255, 0.56);
-        --line: rgba(255, 255, 255, 0.34);
-        --line-strong: rgba(255, 255, 255, 0.48);
-        --accent: #3674ef;
-        --accent-deep: #1a56d9;
-        --accent-soft: rgba(54, 116, 239, 0.12);
-        --weekend: rgba(114, 145, 255, 0.18);
-        --weekend-ink: #415fd3;
-        --holiday: rgba(111, 190, 255, 0.16);
-        --holiday-ink: #2e67c8;
-        --rest: rgba(88, 198, 176, 0.16);
-        --rest-ink: #156e68;
-        --mix: rgba(144, 137, 255, 0.18);
-        --mix-ink: #5a54ca;
-        --makeup: rgba(181, 166, 230, 0.16);
-        --makeup-ink: #7258b7;
-        --today: #2a68ea;
-        --hero-sheen: linear-gradient(120deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.12) 42%, rgba(171, 213, 255, 0.34) 100%);
-      }
-
-      body.dark-theme.glass-style {
-        --paper: rgba(8, 13, 22, 0.42);
-        --paper-strong: rgba(12, 18, 30, 0.58);
-        --paper-solid: rgba(16, 22, 34, 0.68);
-        --line: rgba(255, 255, 255, 0.08);
-        --line-strong: rgba(255, 255, 255, 0.12);
-        --accent: #b9c9f8;
-        --accent-deep: #edf2ff;
-        --accent-soft: rgba(136, 158, 214, 0.08);
-        --weekend: rgba(86, 107, 167, 0.16);
-        --weekend-ink: #c4d0f5;
-        --holiday: rgba(74, 101, 162, 0.18);
-        --holiday-ink: #d3defc;
-        --rest: rgba(40, 98, 93, 0.18);
-        --rest-ink: #c0e5db;
-        --mix: rgba(80, 85, 168, 0.18);
-        --mix-ink: #d7d5fb;
-        --makeup: rgba(86, 82, 136, 0.18);
-        --makeup-ink: #ddd4f4;
-        --today: #f0f4ff;
-        --hero-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 30%);
+        --ease: cubic-bezier(0.32, 0.72, 0, 1);
+        --app-width: min(1540px, calc(100vw - 48px));
+        --shell-radius: 30px;
+        --panel-radius: 25px;
+        --cell-radius: 18px;
+        --body-bg:
+          radial-gradient(circle at 10% 16%, rgba(55, 97, 184, 0.24), transparent 24%),
+          radial-gradient(circle at 88% 14%, rgba(64, 114, 225, 0.18), transparent 20%),
+          radial-gradient(circle at 16% 84%, rgba(42, 82, 172, 0.16), transparent 28%),
+          linear-gradient(180deg, #111a2d 0%, #182742 42%, #1d3152 100%);
+        --surface:
+          linear-gradient(180deg, rgba(17, 24, 37, 0.97), rgba(12, 18, 29, 0.98));
+        --surface-soft:
+          linear-gradient(180deg, rgba(26, 34, 50, 0.94), rgba(15, 21, 32, 0.98));
+        --surface-subtle:
+          linear-gradient(180deg, rgba(29, 37, 53, 0.92), rgba(17, 24, 34, 0.96));
+        --surface-ribbon:
+          linear-gradient(180deg, rgba(153, 156, 162, 0.94), rgba(105, 108, 115, 0.92) 46%, rgba(66, 70, 79, 0.96));
+        --border: rgba(188, 208, 255, 0.12);
+        --border-soft: rgba(255, 255, 255, 0.06);
+        --text: #f4f7fd;
+        --text-soft: rgba(232, 239, 255, 0.82);
+        --text-mute: rgba(202, 213, 236, 0.46);
+        --text-faint: rgba(190, 200, 219, 0.28);
+        --shadow-panel:
+          0 22px 46px rgba(4, 8, 16, 0.28),
+          inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        --shadow-soft:
+          0 10px 24px rgba(4, 8, 16, 0.16),
+          inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        --weekend-bg: linear-gradient(180deg, rgba(50, 58, 99, 0.92), rgba(34, 41, 74, 0.96));
+        --holiday-bg: linear-gradient(180deg, rgba(62, 74, 117, 0.94), rgba(41, 50, 84, 0.98));
+        --rest-bg: linear-gradient(180deg, rgba(22, 49, 59, 0.96), rgba(18, 36, 45, 0.98));
+        --overlap-bg: linear-gradient(180deg, rgba(69, 77, 128, 0.98), rgba(47, 54, 97, 1));
+        --makeup-bg: linear-gradient(180deg, rgba(46, 59, 100, 0.96), rgba(35, 45, 78, 0.98));
+        --saturday: #6f8cff;
+        --sunday: #f06a84;
+        --accent-green: #6fd9a5;
+        --accent-blue: #9ab8ff;
+        --today-outline: rgba(218, 229, 255, 0.84);
       }
 
       * {
         box-sizing: border-box;
       }
 
+      html,
       body {
         margin: 0;
-        min-height: 100dvh;
+        min-height: 100%;
+      }
+
+      body {
         font-family: "Plus Jakarta Sans", "PingFang SC", "Microsoft YaHei", sans-serif;
-        color: var(--ink);
-        background:
-          radial-gradient(circle at 8% 0%, rgba(137, 178, 255, 0.18), transparent 28%),
-          radial-gradient(circle at 100% 8%, rgba(202, 210, 224, 0.18), transparent 26%),
-          radial-gradient(circle at 52% 100%, rgba(255, 255, 255, 0.7), transparent 36%),
-          linear-gradient(180deg, #fbfbfd 0%, var(--bg) 38%, var(--bg-strong) 100%);
+        color: var(--text);
+        background: var(--body-bg);
         overflow-x: hidden;
-        transition: background 480ms var(--ease-fluid), color 260ms var(--ease-fluid);
-      }
-
-      body.theme-transitioning::before,
-      body.theme-transitioning::after,
-      body.theme-transitioning .glass-scene,
-      body.theme-transitioning .glass-scene::before,
-      body.theme-transitioning .glass-scene::after,
-      body.theme-transitioning .calendar-stage::before,
-      body.theme-transitioning .calendar-stage::after,
-      body.theme-transitioning .grain,
-      body.theme-transitioning .shell-rim,
-      body.theme-transitioning .hero,
-      body.theme-transitioning .hero::after,
-      body.theme-transitioning .hero-actions,
-      body.theme-transitioning .hero-actions::before,
-      body.theme-transitioning .hero-badge,
-      body.theme-transitioning .theme-toggle,
-      body.theme-transitioning .style-toggle,
-      body.theme-transitioning .theme-toggle-track,
-      body.theme-transitioning .theme-toggle-thumb,
-      body.theme-transitioning .style-toggle-orb,
-      body.theme-transitioning .hero-kicker,
-      body.theme-transitioning .panel,
-      body.theme-transitioning .calendar-board,
-      body.theme-transitioning .section,
-      body.theme-transitioning .month-switcher,
-      body.theme-transitioning .toolbar p,
-      body.theme-transitioning .stat,
-      body.theme-transitioning .month,
-      body.theme-transitioning .day,
-      body.theme-transitioning .field input,
-      body.theme-transitioning .field textarea,
-      body.theme-transitioning .button-row button,
-      body.theme-transitioning .button-orb,
-      body.theme-transitioning .flag {
-        transition:
-          background 620ms var(--ease-fluid),
-          border-color 420ms var(--ease-fluid),
-          box-shadow 620ms var(--ease-fluid),
-          color 320ms var(--ease-fluid),
-          opacity 420ms var(--ease-fluid),
-          outline-color 420ms var(--ease-fluid),
-          transform 420ms var(--ease-fluid);
-      }
-
-      body.dark-theme {
-        color-scheme: dark;
-        background:
-          radial-gradient(circle at 12% 0%, rgba(72, 82, 122, 0.12), transparent 28%),
-          radial-gradient(circle at 100% 8%, rgba(44, 84, 73, 0.08), transparent 24%),
-          radial-gradient(circle at 50% 100%, rgba(84, 64, 110, 0.06), transparent 30%),
-          linear-gradient(180deg, #0c0d11 0%, #08090c 42%, var(--bg-strong) 100%);
-      }
-
-      body::before,
-      body::after {
-        content: "";
-        position: fixed;
-        inset: auto;
-        width: 340px;
-        height: 340px;
-        border-radius: 999px;
-        filter: blur(60px);
-        pointer-events: none;
-        opacity: 0.55;
-        z-index: 0;
       }
 
       body::before {
-        top: -80px;
-        right: -90px;
-        background: rgba(0, 113, 227, 0.18);
-        animation: floatBlobOne 18s var(--ease-fluid) infinite;
-      }
-
-      body::after {
-        bottom: -120px;
-        left: -80px;
-        background: rgba(175, 82, 222, 0.14);
-        animation: floatBlobTwo 24s var(--ease-fluid) infinite;
-      }
-
-      body.dark-theme::before {
-        background: rgba(78, 87, 130, 0.1);
-        opacity: 0.045;
-      }
-
-      body.dark-theme::after {
-        background: rgba(70, 112, 96, 0.08);
-        opacity: 0.04;
-      }
-
-      .grain {
+        content: "";
         position: fixed;
         inset: 0;
         pointer-events: none;
-        z-index: 0;
-        opacity: 0.038;
-        background-image:
-          radial-gradient(rgba(20, 24, 32, 0.18) 0.6px, transparent 0.6px),
-          radial-gradient(rgba(255, 255, 255, 0.3) 0.6px, transparent 0.6px);
-        background-position: 0 0, 12px 12px;
-        background-size: 24px 24px;
-        mix-blend-mode: soft-light;
-      }
-
-      body.dark-theme .grain {
-        opacity: 0.02;
-        mix-blend-mode: soft-light;
-      }
-
-      .glass-scene {
-        position: fixed;
-        inset: -12%;
-        z-index: 0;
-        pointer-events: none;
-        opacity: 0;
-        transform: scale(1.04);
         background:
-          radial-gradient(circle at 14% 22%, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.42) 10%, transparent 24%),
-          radial-gradient(circle at 82% 16%, rgba(98, 178, 255, 0.5), transparent 28%),
-          radial-gradient(circle at 76% 72%, rgba(88, 214, 238, 0.32), transparent 22%),
-          radial-gradient(circle at 26% 80%, rgba(168, 142, 255, 0.24), transparent 22%),
-          linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0) 30%, rgba(129, 180, 255, 0.18) 60%, rgba(255, 255, 255, 0.42) 100%);
-        filter: saturate(112%);
-        transition:
-          opacity 720ms var(--ease-fluid),
-          transform 720ms var(--ease-fluid),
-          filter 720ms var(--ease-fluid);
+          linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 10%),
+          radial-gradient(circle at 80% 62%, rgba(141, 178, 255, 0.08), transparent 24%);
       }
 
-      .glass-scene::before,
-      .glass-scene::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
+      button,
+      input {
+        font: inherit;
       }
 
-      .glass-scene::before {
-        background:
-          radial-gradient(circle at 34% 18%, rgba(255, 255, 255, 0.62), transparent 16%),
-          linear-gradient(118deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0) 28%, rgba(96, 160, 255, 0.16) 58%, rgba(255, 255, 255, 0.18) 86%);
-        filter: blur(34px);
-        opacity: 0.78;
+      button {
+        color: inherit;
       }
 
-      .glass-scene::after {
-        inset: 6% 4% 10%;
-        border-radius: 48px;
-        background:
-          radial-gradient(circle at 20% 28%, rgba(255, 255, 255, 0.28), transparent 20%),
-          radial-gradient(circle at 84% 30%, rgba(120, 196, 255, 0.26), transparent 18%),
-          linear-gradient(152deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0) 42%, rgba(149, 199, 255, 0.14) 70%, rgba(255, 255, 255, 0.08) 100%);
-        filter: blur(72px);
-        opacity: 0.72;
-      }
-
-      body.dark-theme .glass-scene {
-        background:
-          radial-gradient(circle at 18% 24%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.05) 10%, transparent 22%),
-          radial-gradient(circle at 82% 18%, rgba(95, 132, 226, 0.36), transparent 28%),
-          radial-gradient(circle at 74% 74%, rgba(72, 140, 218, 0.22), transparent 22%),
-          radial-gradient(circle at 28% 80%, rgba(86, 92, 184, 0.18), transparent 20%),
-          linear-gradient(142deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 34%, rgba(86, 126, 220, 0.14) 64%, rgba(255, 255, 255, 0.04) 100%);
-        filter: saturate(104%);
-      }
-
-      body.dark-theme .glass-scene::before {
-        background:
-          radial-gradient(circle at 32% 18%, rgba(255, 255, 255, 0.14), transparent 14%),
-          linear-gradient(118deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 30%, rgba(100, 132, 208, 0.12) 60%, rgba(255, 255, 255, 0.04) 88%);
-        opacity: 0.58;
-      }
-
-      body.dark-theme .glass-scene::after {
-        background:
-          radial-gradient(circle at 20% 26%, rgba(255, 255, 255, 0.08), transparent 18%),
-          radial-gradient(circle at 84% 30%, rgba(84, 132, 220, 0.18), transparent 18%),
-          linear-gradient(152deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0) 44%, rgba(92, 124, 204, 0.12) 72%, rgba(255, 255, 255, 0.02) 100%);
-        opacity: 0.56;
-      }
-
-      body.glass-style .glass-scene {
-        opacity: 0.56;
-        transform: scale(1.01);
-      }
-
-      .shell {
+      .app-shell {
+        width: var(--app-width);
+        margin: 24px auto 18px;
         position: relative;
         z-index: 1;
-        width: min(1420px, calc(100% - 28px));
-        margin: 14px auto 20px;
       }
 
-      .shell-rim {
+      .frame {
         position: relative;
-        isolation: isolate;
-        padding: 2px;
-        border-radius: 38px;
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(219, 223, 230, 0.68)),
-          rgba(255, 255, 255, 0.42);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.88),
-          0 26px 54px rgba(27, 31, 38, 0.08);
+        border-radius: var(--shell-radius);
+        border: 1px solid var(--border);
+        background: var(--surface);
+        box-shadow: var(--shadow-panel);
       }
 
-      .shell > .shell-rim:first-of-type {
-        z-index: 4;
-      }
-
-      .shell-rim > * {
-        position: relative;
-        z-index: 1;
-        border-radius: inherit;
-      }
-
-      .calendar-stage::before,
-      .calendar-stage::after {
+      .frame::before {
         content: "";
         position: absolute;
-        right: 22px;
-        width: var(--glass-rail);
+        inset: 1px;
+        border-radius: inherit;
+        border: 1px solid var(--border-soft);
         pointer-events: none;
-        opacity: 0;
-        transition:
-          opacity 520ms var(--ease-fluid),
-          transform 720ms var(--ease-fluid),
-          filter 720ms var(--ease-fluid);
-        z-index: 0;
-      }
-
-      .calendar-stage {
-        width: min(100%, 864px);
-        justify-self: start;
-      }
-
-      .calendar-stage::before {
-        top: 20px;
-        bottom: -18px;
-        border-radius: 34px;
-        background:
-          linear-gradient(160deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.02) 42%, rgba(137, 188, 255, 0.12) 76%, rgba(255, 255, 255, 0.18) 100%);
-        filter: blur(14px);
-        transform: translate3d(0, 8px, 0) scale(0.972);
-      }
-
-      .calendar-stage::after {
-        top: 30px;
-        bottom: -28px;
-        border-radius: 38px;
-        background:
-          radial-gradient(circle at 16% 20%, rgba(255, 255, 255, 0.24), transparent 18%),
-          radial-gradient(circle at 84% 24%, rgba(128, 196, 255, 0.2), transparent 20%),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0) 48%, rgba(125, 170, 255, 0.12) 100%);
-        filter: blur(26px);
-        transform: translate3d(0, 12px, 0) scale(0.962);
-      }
-
-      body.dark-theme .shell-rim {
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.042), rgba(255, 255, 255, 0.008)),
-          linear-gradient(180deg, rgba(15, 17, 22, 0.98), rgba(8, 9, 12, 0.98));
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.03),
-          inset 0 -1px 0 rgba(255, 255, 255, 0.02),
-          0 10px 24px rgba(0, 0, 0, 0.24);
       }
 
       .hero {
-        position: relative;
+        min-height: 156px;
+        padding: 28px 26px 22px 42px;
         display: grid;
-        grid-template-columns: minmax(0, 1fr) var(--control-column);
-        column-gap: 22px;
-        row-gap: 12px;
-        align-items: start;
-        padding: 18px 18px 19px;
-        border: 1px solid rgba(255, 255, 255, 0.8);
-        border-radius: 28px;
-        background:
-          radial-gradient(circle at 88% 16%, rgba(255, 255, 255, 0.72), transparent 26%),
-          linear-gradient(145deg, rgba(255, 255, 255, 0.94), rgba(252, 253, 255, 0.78) 52%, rgba(244, 246, 251, 0.72)),
-          var(--paper);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.86),
-          0 22px 42px rgba(38, 44, 53, 0.08);
+        grid-template-columns: minmax(0, 1fr) 380px;
+        align-items: center;
         overflow: hidden;
       }
 
-      .hero::after {
-        content: "";
+      .window-dots {
         position: absolute;
-        inset: 0;
-        background: var(--hero-sheen);
-        opacity: 0.42;
-        pointer-events: none;
-        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 62%);
+        top: 16px;
+        left: 20px;
+        display: flex;
+        gap: 10px;
       }
 
-      .hero-top {
-        display: contents;
-      }
-
-      .hero-signature {
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-        min-width: 0;
-      }
-
-      .traffic-lights {
-        position: relative;
-        z-index: 1;
-        grid-column: 1;
-        grid-row: 1;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        margin-left: 2px;
-      }
-
-      .traffic-lights span {
+      .window-dots span {
         width: 12px;
         height: 12px;
         border-radius: 999px;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
       }
 
-      .traffic-lights span:nth-child(1) {
-        background: #ff5f57;
-      }
+      .window-dots span:nth-child(1) { background: #ff6057; }
+      .window-dots span:nth-child(2) { background: #ffbd2e; }
+      .window-dots span:nth-child(3) { background: #28ca42; }
 
-      .traffic-lights span:nth-child(2) {
-        background: #febc2e;
-      }
-
-      .traffic-lights span:nth-child(3) {
-        background: #28c840;
-      }
-
-      .hero-badge {
+      .hero-copy {
         position: relative;
-        display: inline-flex;
+        z-index: 1;
+      }
+
+      .hero h1 {
+        margin: 0;
+        font-family: "Noto Serif SC", "Times New Roman", serif;
+        font-size: 3.68rem;
+        line-height: 1;
+        letter-spacing: -0.07em;
+        font-weight: 600;
+        color: #f4f7ff;
+      }
+
+      .hero-subtitle {
+        margin: 10px 0 0;
+        color: rgba(220, 228, 247, 0.72);
+        font-size: 0.9rem;
+        letter-spacing: -0.01em;
+      }
+
+      .hero-controls {
+        position: relative;
+        z-index: 1;
+        justify-self: end;
+        width: 386px;
+        padding: 9px;
+        border-radius: 20px;
+        border: 1px solid rgba(178, 194, 229, 0.12);
+        background: linear-gradient(180deg, rgba(35, 43, 59, 0.74), rgba(17, 24, 37, 0.92));
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.04),
+          0 18px 32px rgba(3, 6, 13, 0.16);
+        display: grid;
+        grid-template-columns: 1fr 176px;
+        grid-template-areas:
+          "location theme"
+          "weather style";
+        gap: 8px;
+      }
+
+      .hero-pill {
+        min-height: 38px;
+        border-radius: 16px;
+        border: 1px solid rgba(180, 197, 233, 0.1);
+        background: linear-gradient(180deg, rgba(29, 36, 52, 0.92), rgba(20, 27, 39, 0.98));
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        transition:
+          transform 260ms var(--ease),
+          border-color 260ms var(--ease),
+          background 260ms var(--ease);
+      }
+
+      .hero-pill:hover {
+        transform: translateY(-1px);
+        border-color: rgba(213, 225, 250, 0.16);
+      }
+
+      .control-chip,
+      .theme-toggle,
+      .style-toggle {
+        width: 100%;
+      }
+
+      .control-chip {
+        display: flex;
         align-items: center;
         gap: 8px;
-        padding: 7px 13px 7px 11px;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.68);
-        border: 1px solid rgba(60, 60, 67, 0.08);
-        color: var(--muted);
-        font-size: 0.74rem;
+        padding: 0 13px;
+        font-size: 0.84rem;
         font-weight: 600;
-        letter-spacing: 0.01em;
         cursor: pointer;
-        user-select: none;
-        transition: transform 380ms var(--ease-fluid), color 260ms var(--ease-fluid), border-color 260ms var(--ease-fluid), background 260ms var(--ease-fluid), box-shadow 380ms var(--ease-fluid);
       }
 
-      .hero-badge::before {
-        content: "";
-        width: 8px;
-        height: 8px;
+      .control-chip svg {
+        width: 14px;
+        height: 14px;
+        stroke: rgba(215, 227, 250, 0.66);
+        fill: none;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        flex: 0 0 auto;
+      }
+
+      .control-location {
+        grid-area: location;
+        color: rgba(233, 240, 255, 0.84);
+      }
+
+      .control-weather {
+        grid-area: weather;
+        justify-content: flex-start;
+        gap: 10px;
+      }
+
+      .control-weather strong {
+        font-size: 0.94rem;
+      }
+
+      .weather-copy {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        min-width: 0;
+      }
+
+      .weather-copy span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .status-dot {
+        width: 9px;
+        height: 9px;
+        flex: 0 0 auto;
         border-radius: 999px;
-        background: linear-gradient(180deg, #34c759, #1ea94b);
-        box-shadow: 0 0 0 4px rgba(52, 199, 89, 0.12);
-        animation: pulseDot 2.6s var(--ease-fluid) infinite;
-      }
-
-      .hero-badge:hover {
-        transform: translate3d(0, -1px, 0) scale(1.002);
-        color: var(--accent);
-        border-color: rgba(10, 132, 255, 0.18);
-        background: rgba(255, 255, 255, 0.78);
+        background: var(--accent-green);
+        box-shadow: 0 0 0 4px rgba(111, 217, 165, 0.12);
       }
 
       .theme-toggle {
-        display: inline-flex;
+        grid-area: theme;
+        display: flex;
         align-items: center;
+        justify-content: space-between;
         gap: 10px;
-        padding: 5px 10px 5px 7px;
-        border-radius: 999px;
-        border: 1px solid rgba(60, 60, 67, 0.08);
-        background: rgba(255, 255, 255, 0.64);
-        color: var(--muted);
-        font: inherit;
-        font-size: 0.72rem;
-        font-weight: 600;
+        padding: 0 13px;
         cursor: pointer;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
-        transition:
-          transform 380ms var(--ease-fluid),
-          box-shadow 380ms var(--ease-fluid),
-          color 260ms var(--ease-fluid),
-          border-color 260ms var(--ease-fluid),
-          background 260ms var(--ease-fluid);
       }
 
-      .theme-toggle:hover {
-        transform: translateY(-1px);
-        color: var(--ink);
-        border-color: rgba(10, 132, 255, 0.16);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.78),
-          0 10px 20px rgba(29, 29, 31, 0.08);
+      .toggle-label {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: rgba(244, 247, 255, 0.78);
       }
 
-      .theme-toggle:focus-visible {
-        outline: none;
-        box-shadow:
-          0 0 0 4px rgba(10, 132, 255, 0.12),
-          inset 0 1px 0 rgba(255, 255, 255, 0.78);
-      }
-
-      .theme-toggle-track {
-        position: relative;
-        width: 32px;
-        height: 18px;
+      .toggle-track {
+        width: 34px;
+        height: 20px;
         border-radius: 999px;
-        background: rgba(120, 120, 128, 0.28);
-        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
-        transition: background 260ms var(--ease-fluid);
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(208, 221, 249, 0.08);
+        position: relative;
+        flex: 0 0 auto;
       }
 
-      .theme-toggle-thumb {
+      .toggle-thumb {
         position: absolute;
         top: 2px;
         left: 2px;
         width: 14px;
         height: 14px;
         border-radius: 999px;
-        background: linear-gradient(180deg, #ffffff, #f2f2f7);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(213, 221, 238, 0.92));
         box-shadow:
-          0 1px 2px rgba(0, 0, 0, 0.14),
-          inset 0 1px 0 rgba(255, 255, 255, 0.82);
-        transition: transform 300ms var(--ease-fluid), background 300ms var(--ease-fluid);
+          0 4px 10px rgba(0, 0, 0, 0.22),
+          inset 0 1px 0 rgba(255, 255, 255, 0.62);
+        transition: transform 260ms var(--ease);
       }
 
-      body.dark-theme .theme-toggle-thumb {
+      .light-theme .toggle-thumb {
         transform: translateX(14px);
-        background: linear-gradient(180deg, #f5f5f7, #d7d7de);
       }
 
       .style-toggle {
-        position: relative;
-        isolation: isolate;
-        display: inline-flex;
+        grid-area: style;
+        min-height: 38px;
+        display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 10px;
-        min-width: 152px;
-        padding: 5px 7px 5px 11px;
-        border-radius: 999px;
-        border: 1px solid rgba(60, 60, 67, 0.08);
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(248, 250, 255, 0.6));
-        color: var(--ink);
-        font: inherit;
+        padding: 0 8px 0 13px;
         cursor: pointer;
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.76),
-          0 8px 18px rgba(29, 29, 31, 0.06);
-        transition:
-          transform 420ms var(--ease-fluid),
-          box-shadow 420ms var(--ease-fluid),
-          color 260ms var(--ease-fluid),
-          border-color 260ms var(--ease-fluid),
-          background 260ms var(--ease-fluid);
       }
 
-      .style-toggle::before {
-        content: "";
-        position: absolute;
-        inset: 1px;
-        z-index: 0;
-        border-radius: inherit;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0));
-        opacity: 0.8;
-        pointer-events: none;
-      }
-
-      .style-toggle-copy,
-      .style-toggle-orb {
-        position: relative;
-        z-index: 1;
-      }
-
-      .style-toggle-copy {
+      .style-copy {
         display: grid;
-        gap: 2px;
+        gap: 1px;
         text-align: left;
       }
 
-      .style-toggle-label {
-        color: color-mix(in srgb, var(--muted) 84%, transparent);
-        font-size: 0.5rem;
-        font-weight: 700;
+      .style-copy small {
+        font-size: 0.52rem;
         letter-spacing: 0.18em;
+        color: rgba(224, 231, 246, 0.36);
         text-transform: uppercase;
       }
 
-      .style-toggle-text {
-        font-size: 0.72rem;
+      .style-copy span {
+        font-size: 0.92rem;
         font-weight: 700;
-        letter-spacing: -0.02em;
       }
 
-      .style-toggle-orb {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+      .style-orb {
         width: 30px;
         height: 30px;
+        flex: 0 0 auto;
         border-radius: 999px;
-        border: 1px solid rgba(255, 255, 255, 0.68);
         background:
-          radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.18) 36%, transparent 60%),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(233, 240, 255, 0.56));
+          radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.8), transparent 18%),
+          radial-gradient(circle at 64% 66%, rgba(178, 199, 250, 0.42), transparent 46%),
+          linear-gradient(180deg, rgba(161, 169, 192, 0.88), rgba(85, 93, 119, 0.96));
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.88),
-          0 6px 14px rgba(54, 77, 118, 0.12);
-        transition:
-          transform 420ms var(--ease-fluid),
-          box-shadow 420ms var(--ease-fluid),
-          border-color 260ms var(--ease-fluid),
-          background 260ms var(--ease-fluid);
+          inset 0 1px 0 rgba(255, 255, 255, 0.4),
+          0 6px 18px rgba(3, 6, 13, 0.22);
       }
 
-      .style-toggle-orb::before,
-      .style-toggle-orb::after {
-        content: "";
-        position: absolute;
-        border-radius: 999px;
-      }
-
-      .style-toggle-orb::before {
-        inset: 8px;
-        background: linear-gradient(180deg, rgba(66, 136, 255, 0.5), rgba(142, 197, 255, 0.16));
-      }
-
-      .style-toggle-orb::after {
-        inset: 4px 6px auto;
-        height: 7px;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0));
-        opacity: 0.8;
-      }
-
-      .style-toggle:hover {
-        transform: translateY(-1px);
-        border-color: rgba(74, 118, 204, 0.18);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.82),
-          0 12px 22px rgba(38, 50, 76, 0.08);
-      }
-
-      .style-toggle:hover .style-toggle-orb {
-        transform: translate3d(0, -1px, 0) scale(1.03);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.9),
-          0 8px 18px rgba(64, 95, 153, 0.12);
-      }
-
-      .style-toggle[aria-pressed="true"] {
-        border-color: rgba(101, 151, 255, 0.24);
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(238, 246, 255, 0.68)),
-          rgba(255, 255, 255, 0.72);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.88),
-          0 12px 24px rgba(52, 89, 159, 0.1);
-      }
-
-      .style-toggle[aria-pressed="true"] .style-toggle-text {
-        color: var(--accent-deep);
-      }
-
-      .style-toggle[aria-pressed="true"] .style-toggle-orb {
-        transform: translate3d(0, -1px, 0) scale(1.04);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.92),
-          0 10px 22px rgba(66, 104, 175, 0.16);
-      }
-
-      .style-toggle:active {
-        transform: translateY(1px) scale(0.986);
-      }
-
-      .style-toggle:focus-visible {
-        outline: none;
-        box-shadow:
-          0 0 0 4px rgba(10, 132, 255, 0.12),
-          inset 0 1px 0 rgba(255, 255, 255, 0.76);
-      }
-
-      .hero-badge:focus-visible {
-        outline: none;
-        box-shadow:
-          0 0 0 4px rgba(10, 132, 255, 0.12),
-          inset 0 1px 0 rgba(255, 255, 255, 0.72);
-      }
-
-      .hero h1 {
-        position: relative;
-        z-index: 1;
-        margin: 0;
-        max-width: 8ch;
-        font-size: clamp(2.08rem, 3.4vw, 3.16rem);
-        font-weight: 800;
-        line-height: 0.94;
-        letter-spacing: -0.06em;
-        text-wrap: balance;
-      }
-
-      .hero-grid {
-        position: relative;
-        z-index: 1;
-        grid-column: 1 / 2;
-        grid-row: 2;
+      .content {
+        margin-top: 20px;
         display: grid;
-        grid-template-columns: minmax(0, 1fr) var(--control-column);
-        gap: 22px;
-        align-items: start;
+        grid-template-columns: 298px minmax(0, 1fr);
+        gap: 20px;
+        align-items: stretch;
       }
 
-      .hero-intro {
+      .sidebar,
+      .calendar-shell {
+        min-height: 800px;
+        padding: 18px;
+      }
+
+      .sidebar-stack {
+        height: 100%;
         display: grid;
-        gap: 10px;
-        min-width: 0;
-        padding: 2px 0 0 2px;
+        grid-template-rows: auto 1fr;
+        gap: 16px;
       }
 
-      .hero-kicker {
-        display: inline-flex;
-        align-items: center;
-        align-self: start;
-        width: fit-content;
-        padding: 6px 11px;
-        border-radius: 999px;
-        border: 1px solid rgba(60, 60, 67, 0.08);
-        background: rgba(255, 255, 255, 0.78);
-        color: var(--muted);
-        font-size: 0.6rem;
+      .subpanel {
+        border-radius: var(--panel-radius);
+        border: 1px solid rgba(189, 208, 246, 0.1);
+        background: var(--surface-soft);
+        box-shadow: var(--shadow-soft);
+        padding: 18px 16px 16px;
+      }
+
+      .subpanel-header {
+        margin-bottom: 14px;
+      }
+
+      .subpanel-header small {
+        display: block;
+        color: rgba(219, 228, 245, 0.42);
+        font-size: 0.74rem;
         font-weight: 700;
-        letter-spacing: 0.18em;
+        letter-spacing: 0.16em;
         text-transform: uppercase;
       }
 
-      .hero-actions {
-        position: relative;
-        isolation: isolate;
-        z-index: 3;
-        grid-column: 2;
-        grid-row: 2;
+      .subpanel-header h2 {
+        margin: 5px 0 0;
+        font-size: 1.05rem;
+        line-height: 1.1;
+      }
+
+      .field-stack {
         display: grid;
-        gap: 8px;
-        align-self: start;
-        justify-self: end;
-        width: 100%;
-        padding: 9px;
-        border-radius: 22px;
-        border: 1px solid rgba(255, 255, 255, 0.84);
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(247, 249, 254, 0.62)),
-          rgba(255, 255, 255, 0.44);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.88),
-          0 14px 28px rgba(37, 44, 56, 0.06);
-        transition:
-          border-color 260ms var(--ease-fluid),
-          box-shadow 420ms var(--ease-fluid),
-          transform 420ms var(--ease-fluid),
-          background 260ms var(--ease-fluid);
-        pointer-events: auto;
-      }
-
-      .hero-actions::before {
-        content: "";
-        position: absolute;
-        inset: 1px;
-        z-index: 0;
-        border-radius: inherit;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0) 58%);
-        opacity: 0.86;
-        pointer-events: none;
-      }
-
-      .hero-actions > * {
-        position: relative;
-        z-index: 1;
-        width: 100%;
-      }
-
-      .hero-actions:hover {
-        border-color: rgba(122, 150, 211, 0.16);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.9),
-          0 16px 30px rgba(37, 44, 56, 0.08);
-      }
-
-      .hero p {
-        margin: 12px 0 0;
-        max-width: 680px;
-        color: var(--muted);
-        font-size: 0.92rem;
-        line-height: 1.62;
-      }
-
-      .layout {
-        position: relative;
-        z-index: 1;
-        display: grid;
-        grid-template-columns: 286px minmax(0, 1fr);
-        gap: 14px;
-        margin-top: 10px;
-        align-items: start;
-      }
-
-      .hero-badge,
-      .theme-toggle,
-      .style-toggle {
-        pointer-events: auto;
-      }
-
-      .panel,
-      .calendar-board {
-        border: 1px solid rgba(255, 255, 255, 0.74);
-        border-radius: 28px;
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 250, 254, 0.74)),
-          var(--paper);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.88),
-          0 10px 22px rgba(31, 34, 40, 0.05);
-        transition:
-          border-color 260ms var(--ease-fluid),
-          box-shadow 420ms var(--ease-fluid),
-          background 260ms var(--ease-fluid);
-      }
-
-      .panel {
-        display: flex;
-        flex-direction: column;
         gap: 10px;
-        padding: 12px;
-        align-self: start;
-        position: sticky;
-        top: 10px;
-        backdrop-filter: blur(18px) saturate(140%);
-        -webkit-backdrop-filter: blur(18px) saturate(140%);
-      }
-
-      .section {
-        position: relative;
-        padding: 14px;
-        border-radius: 22px;
-        border: 1px solid rgba(255, 255, 255, 0.8);
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(247, 249, 252, 0.72));
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.82),
-          0 10px 22px rgba(29, 32, 37, 0.045);
-        transition:
-          box-shadow 420ms var(--ease-fluid),
-          border-color 260ms var(--ease-fluid),
-          background 260ms var(--ease-fluid);
-      }
-
-      .section::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 46%);
-        pointer-events: none;
-      }
-
-      .section:hover {
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.84),
-          0 12px 24px rgba(29, 29, 31, 0.05);
-        border-color: rgba(255, 255, 255, 0.88);
-      }
-
-      .section + .section {
-        margin-top: 0;
-      }
-
-      .section-head {
-        display: grid;
-        gap: 4px;
-        margin-bottom: 10px;
-      }
-
-      .section-cap {
-        color: var(--muted);
-        font-size: 0.72rem;
-        font-weight: 700;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-      }
-
-      .section h2 {
-        margin: 0;
-        font-size: 0.98rem;
-        font-weight: 600;
-        letter-spacing: -0.03em;
-      }
-
-      .field-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 10px;
-      }
-
-      .field.full {
-        grid-column: 1 / -1;
       }
 
       .field label {
         display: block;
-        margin-bottom: 5px;
+        margin-bottom: 7px;
         font-size: 0.76rem;
-        font-weight: 600;
-        color: var(--muted);
+        color: rgba(235, 240, 250, 0.7);
       }
 
-      .field input,
-      .field textarea,
-      .field button {
-        width: 100%;
-        border-radius: 18px;
-        border: 1px solid rgba(15, 23, 42, 0.06);
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 249, 253, 0.96));
-        color: var(--ink);
-        font: inherit;
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.82),
-          0 8px 18px rgba(25, 28, 34, 0.04);
-      }
-
-      .field input,
-      .field textarea {
-        padding: 11px 14px;
-        transition: border-color 260ms var(--ease-fluid), box-shadow 380ms var(--ease-fluid), transform 380ms var(--ease-fluid);
-      }
-
-      .field input:focus,
-      .field textarea:focus {
-        outline: none;
-        border-color: rgba(0, 113, 227, 0.35);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.7),
-          0 0 0 4px rgba(10, 132, 255, 0.12);
-      }
-
-      .field textarea {
-        min-height: 184px;
-        resize: vertical;
-        line-height: 1.6;
-      }
-
-      .button-row {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        margin-top: 12px;
-      }
-
-      .button-row button {
+      .input-wrap {
         position: relative;
-        isolation: isolate;
-        overflow: hidden;
-        flex: 1 1 140px;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        min-height: 50px;
-        padding: 10px 12px 10px 16px;
-        border: 1px solid rgba(15, 23, 42, 0.08);
-        border-radius: 999px;
-        font-weight: 700;
-        letter-spacing: -0.01em;
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 247, 252, 0.94)),
-          rgba(255, 255, 255, 0.9);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.92),
-          0 14px 28px rgba(24, 28, 34, 0.06);
-        transition:
-          transform 420ms var(--ease-fluid),
-          box-shadow 420ms var(--ease-fluid),
-          filter 260ms var(--ease-fluid),
-          background 260ms var(--ease-fluid),
-          border-color 260ms var(--ease-fluid),
-          color 260ms var(--ease-fluid);
       }
 
-      .button-row button::before {
-        content: "";
+      .field input {
+        width: 100%;
+        height: 68px;
+        padding: 0 46px 0 16px;
+        border-radius: 18px;
+        border: 1px solid rgba(207, 220, 247, 0.08);
+        outline: none;
+        color: var(--text);
+        background: linear-gradient(180deg, rgba(24, 31, 45, 0.92), rgba(18, 24, 35, 0.98));
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      }
+
+      .field input:focus {
+        border-color: rgba(218, 228, 250, 0.16);
+      }
+
+      .field-icon {
         position: absolute;
-        inset: 1px;
-        border-radius: inherit;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0));
-        opacity: 0.82;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(234, 241, 255, 0.74);
+        font-size: 1rem;
         pointer-events: none;
       }
 
-      .primary {
-        color: var(--ink);
-        border-color: rgba(86, 102, 130, 0.14);
-      }
-
-      .button-copy {
-        position: relative;
-        z-index: 1;
-        display: inline-flex;
+      .apply-button {
+        width: 100%;
+        margin-top: 14px;
+        height: 54px;
+        border: 0;
+        padding: 0 14px 0 18px;
+        border-radius: 20px;
+        background: linear-gradient(180deg, rgba(36, 44, 61, 0.92), rgba(17, 24, 36, 0.98));
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        display: flex;
         align-items: center;
-        gap: 10px;
-        color: inherit;
-        font-size: 0.88rem;
+        justify-content: space-between;
+        cursor: pointer;
+        transition: transform 260ms var(--ease);
       }
 
-      .button-orb {
-        position: relative;
-        z-index: 1;
+      .apply-button:hover {
+        transform: translateY(-1px);
+      }
+
+      .apply-button strong {
+        font-size: 0.98rem;
+      }
+
+      .apply-button .orb {
+        width: 34px;
+        height: 34px;
+        border-radius: 999px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 32px;
-        height: 32px;
-        border-radius: 999px;
-        border: 1px solid rgba(15, 23, 42, 0.06);
-        background: linear-gradient(180deg, rgba(32, 37, 45, 0.08), rgba(32, 37, 45, 0.03));
-        color: var(--accent-deep);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.78),
-          0 4px 14px rgba(22, 28, 36, 0.08);
-        transition: transform 420ms var(--ease-fluid), background 260ms var(--ease-fluid), box-shadow 420ms var(--ease-fluid);
+        background: linear-gradient(180deg, rgba(57, 71, 108, 0.92), rgba(31, 42, 69, 0.98));
+        border: 1px solid rgba(212, 224, 252, 0.08);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
       }
 
-      .button-orb svg {
+      .apply-button svg {
         width: 14px;
         height: 14px;
         stroke: currentColor;
-        stroke-width: 1.75;
         fill: none;
+        stroke-width: 2;
       }
 
-      .ghost {
-        background: rgba(255, 255, 255, 0.82);
-      }
-
-      .button-row button:hover {
-        transform: translateY(-2px) scale(1.004);
-        border-color: rgba(118, 132, 163, 0.18);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.96),
-          0 20px 34px rgba(24, 28, 34, 0.08);
-        filter: saturate(1.03);
-      }
-
-      .button-row button:active {
-        transform: translateY(1px) scale(0.984);
-      }
-
-      .button-row button:hover .button-orb {
-        transform: translateX(3px) translateY(-1px) scale(1.05);
-        background: linear-gradient(180deg, rgba(10, 132, 255, 0.16), rgba(10, 132, 255, 0.08));
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.82),
-          0 8px 18px rgba(10, 132, 255, 0.16);
+      .legend-panel {
+        display: flex;
+        flex-direction: column;
       }
 
       .legend {
@@ -1116,261 +497,142 @@
         display: flex;
         align-items: center;
         gap: 12px;
-        color: var(--muted);
-        font-size: 0.92rem;
+        color: rgba(232, 238, 251, 0.72);
+        font-size: 0.95rem;
       }
 
-      .swatch {
-        width: 16px;
-        height: 16px;
-        border-radius: 6px;
-        border: 1px solid rgba(15, 23, 42, 0.08);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.64);
+      .legend-dot {
+        width: 18px;
+        height: 18px;
+        border-radius: 999px;
+        border: 1px solid rgba(225, 234, 252, 0.12);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
       }
 
-      .calendar-board {
-        width: min(100%, 860px);
-        justify-self: start;
-        padding: 13px 13px 14px;
-      }
+      .legend-weekend { background: linear-gradient(180deg, rgba(79, 97, 168, 0.92), rgba(56, 71, 126, 0.96)); }
+      .legend-holiday { background: linear-gradient(180deg, rgba(88, 109, 176, 0.92), rgba(61, 78, 136, 0.96)); }
+      .legend-makeup { background: linear-gradient(180deg, rgba(74, 94, 158, 0.92), rgba(49, 64, 110, 0.96)); }
+      .legend-rest { background: linear-gradient(180deg, rgba(42, 87, 95, 0.92), rgba(28, 60, 66, 0.98)); }
+      .legend-overlap { background: linear-gradient(180deg, rgba(104, 110, 189, 0.95), rgba(69, 78, 134, 0.98)); }
 
-      .toolbar {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-        margin-bottom: 10px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid rgba(15, 23, 42, 0.06);
-      }
-
-      .toolbar-main {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-        width: 100%;
-      }
-
-      .toolbar-copy {
-        flex: 1 1 auto;
+      .calendar-shell {
+        padding: 18px 22px 18px;
         display: grid;
-        gap: 4px;
+        grid-template-rows: auto auto minmax(0, 1fr);
+        gap: 18px;
+      }
+
+      .calendar-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 0;
+      }
+
+      .calendar-title-wrap h2 {
+        margin: 2px 0 0;
+        font-family: "Noto Serif SC", "Times New Roman", serif;
+        font-size: 2.02rem;
+        line-height: 1.02;
+        letter-spacing: -0.05em;
+        font-weight: 600;
       }
 
       .month-switcher {
-        display: inline-flex;
+        display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 4px;
         padding: 4px;
-        border-radius: 999px;
-        border: 1px solid rgba(15, 23, 42, 0.08);
-        background: rgba(255, 255, 255, 0.8);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.8),
-          0 8px 18px rgba(18, 21, 28, 0.05);
-        transition:
-          transform 420ms var(--ease-fluid),
-          border-color 260ms var(--ease-fluid),
-          box-shadow 420ms var(--ease-fluid),
-          background 260ms var(--ease-fluid);
+        border-radius: 18px;
+        border: 1px solid rgba(194, 208, 241, 0.08);
+        background: linear-gradient(180deg, rgba(29, 36, 51, 0.92), rgba(20, 26, 37, 0.98));
       }
 
-      .month-switcher button {
+      .switch-button,
+      .switch-label,
+      .switch-today {
+        height: 38px;
         border: 0;
+        border-radius: 14px;
         background: transparent;
-        color: var(--ink);
-        font: inherit;
-        font-weight: 600;
-        border-radius: 999px;
-        padding: 7px 11px;
+        color: rgba(246, 249, 255, 0.9);
+      }
+
+      .switch-button {
+        width: 44px;
+        font-size: 1.42rem;
         cursor: pointer;
-        transition: transform 380ms var(--ease-fluid), color 260ms var(--ease-fluid), background 260ms var(--ease-fluid), box-shadow 380ms var(--ease-fluid);
       }
 
-      .month-switcher button:hover {
-        background: rgba(0, 113, 227, 0.1);
-        color: var(--accent);
-      }
-
-      .month-switcher button:active {
-        transform: scale(0.98);
-      }
-
-      .month-switcher:hover {
-        transform: translate3d(0, -1px, 0) scale(1.002);
-        border-color: rgba(103, 128, 174, 0.16);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.84),
-          0 12px 22px rgba(18, 21, 28, 0.06);
-      }
-
-      .nav-icon {
-        min-width: 40px;
-        height: 40px;
-        padding-inline: 0;
-        font-size: 0.98rem;
-        background: rgba(255, 255, 255, 0.74);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.84);
-      }
-
-      .month-chip {
-        min-width: 104px;
-        text-align: center;
-        color: var(--ink);
-        font-size: 0.78rem;
-        font-weight: 700;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
-      }
-
-      .toolbar h2 {
-        margin: 0;
-        font-size: 1.34rem;
-        letter-spacing: -0.05em;
-      }
-
-      .toolbar p {
-        margin: 0;
+      .switch-label {
+        min-width: 116px;
         display: inline-flex;
         align-items: center;
-        width: fit-content;
-        min-height: 28px;
-        padding: 0 9px;
-        border-radius: 999px;
-        border: 1px solid rgba(60, 60, 67, 0.08);
-        background: rgba(255, 255, 255, 0.6);
-        color: var(--muted);
-        font-size: 0.72rem;
-        line-height: 1;
+        justify-content: center;
+        padding: 0 22px;
+        font-size: 0.96rem;
+        font-weight: 600;
+      }
+
+      .switch-today {
+        min-width: 58px;
+        padding: 0 18px;
+        font-size: 0.96rem;
+        font-weight: 600;
+        cursor: pointer;
       }
 
       .stats {
+        margin-top: 0;
         display: grid;
-        grid-template-columns: repeat(6, minmax(0, 1fr));
-        gap: 7px;
-        width: 100%;
+        grid-template-columns: 2.2fr 1fr 1fr 1fr;
+        gap: 14px;
       }
 
-      .stat {
-        position: relative;
-        grid-column: span 1;
-        min-width: 0;
-        padding: 10px 11px 9px;
+      .stat-card {
+        min-height: 70px;
         border-radius: 18px;
-        border: 1px solid rgba(15, 23, 42, 0.08);
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(246, 248, 252, 0.86));
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.82),
-          0 8px 18px rgba(22, 28, 36, 0.045);
-        overflow: hidden;
-        transition:
-          transform 420ms var(--ease-fluid),
-          box-shadow 420ms var(--ease-fluid),
-          border-color 260ms var(--ease-fluid),
-          background 260ms var(--ease-fluid);
-        will-change: transform;
-      }
-
-      .stat-primary {
-        grid-column: span 3;
-      }
-
-      .stat::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(135deg, rgba(10, 132, 255, 0.08), transparent 60%);
-        opacity: 0.8;
-        pointer-events: none;
-      }
-
-      .stat:hover {
-        transform: translate3d(0, -1px, 0) scale(1.002);
-        border-color: rgba(103, 128, 174, 0.16);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.88),
-          0 14px 24px rgba(29, 29, 31, 0.06);
-      }
-
-      .stat strong {
-        position: relative;
-        z-index: 1;
-        display: block;
-        font-size: 1.1rem;
-        letter-spacing: -0.05em;
-      }
-
-      .stat span {
-        position: relative;
-        z-index: 1;
-        color: var(--muted);
-        font-size: 0.7rem;
-      }
-
-      .stat em {
-        position: relative;
-        z-index: 1;
-        display: block;
-        margin-top: 5px;
-        color: var(--muted);
-        font-size: 0.58rem;
-        font-style: normal;
-        font-weight: 700;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-      }
-
-      .months {
-        display: block;
-      }
-
-      .month {
-        max-width: 100%;
-        border: 1px solid rgba(255, 255, 255, 0.84);
-        border-radius: 22px;
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(247, 249, 253, 0.88));
-        overflow: hidden;
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.82),
-          0 10px 22px rgba(24, 28, 34, 0.05);
-        transition:
-          border-color 260ms var(--ease-fluid),
-          box-shadow 420ms var(--ease-fluid),
-          background 260ms var(--ease-fluid);
-        animation: monthReveal 700ms var(--ease-lift) both;
-      }
-
-      .month:hover {
-        border-color: rgba(255, 255, 255, 0.9);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.86),
-          0 12px 24px rgba(24, 28, 34, 0.055);
-      }
-
-      .month-head {
+        border: 1px solid rgba(194, 208, 241, 0.1);
+        background: linear-gradient(180deg, rgba(24, 31, 45, 0.94), rgba(16, 22, 33, 0.98));
+        box-shadow: var(--shadow-soft);
+        padding: 0 20px;
         display: flex;
-        align-items: baseline;
-        justify-content: center;
-        padding: 11px 14px 10px;
-        border-bottom: 1px solid rgba(15, 23, 42, 0.06);
-        background: linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.34));
-        text-align: center;
         flex-direction: column;
+        justify-content: center;
         gap: 3px;
       }
 
-      .month-head h3 {
-        margin: 0;
-        font-size: 0.98rem;
-        letter-spacing: -0.04em;
+      .stat-value {
+        font-size: 3rem;
+        line-height: 1;
+        font-weight: 500;
+        letter-spacing: -0.06em;
       }
 
-      .month-head span {
-        color: var(--muted);
-        font-size: 0.66rem;
+      .stat-label {
+        font-size: 0.98rem;
+        color: rgba(243, 247, 255, 0.8);
+      }
+
+      .stat-note {
+        font-size: 0.7rem;
+        color: rgba(205, 214, 230, 0.44);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      .calendar-stage {
+        min-height: 0;
+        border-radius: 24px;
+        border: 1px solid rgba(194, 208, 241, 0.08);
+        background: linear-gradient(180deg, rgba(20, 28, 42, 0.92), rgba(13, 19, 28, 0.98));
+        padding: 10px 10px 12px;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr);
+        gap: 8px;
       }
 
       .weekdays,
@@ -1380,62 +642,49 @@
       }
 
       .weekdays {
-        padding: 7px 11px 1px;
+        padding: 0 4px;
       }
 
       .weekdays div {
-        padding: 3px 0 5px;
         text-align: center;
-        color: var(--muted);
-        font-size: 0.63rem;
-        font-weight: 600;
-        letter-spacing: 0.04em;
+        font-size: 0.86rem;
+        font-weight: 700;
+        color: rgba(234, 240, 250, 0.68);
       }
 
-      .weekdays div.is-weekend {
-        color: var(--weekend-ink);
+      .weekdays .is-weekend {
+        color: #89a0ff;
       }
 
       .days {
-        padding: 0 10px 10px;
-        gap: 4px;
-        align-items: stretch;
+        --week-count: 5;
+        gap: 8px;
+        min-height: 0;
+        grid-template-rows: repeat(var(--week-count), minmax(0, 1fr));
       }
 
       .day {
         position: relative;
+        min-height: 0;
+        border-radius: var(--cell-radius);
+        border: 1px solid rgba(195, 210, 245, 0.1);
+        background: linear-gradient(180deg, rgba(22, 29, 43, 0.96), rgba(16, 22, 32, 0.98));
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.03),
+          0 6px 16px rgba(4, 8, 16, 0.08);
+        padding: 13px 12px 10px;
         display: grid;
-        grid-template-rows: minmax(17px, auto) minmax(26px, 1fr) auto;
+        grid-template-rows: 16px 1fr auto;
         align-items: center;
         justify-items: center;
-        aspect-ratio: 1 / 1;
-        min-height: 0;
-        width: 100%;
-        padding: 6px 6px 7px;
-        border-radius: 14px;
-        border: 1px solid rgba(15, 23, 42, 0.08);
-        background: rgba(255, 255, 255, 0.86);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.62),
-          0 6px 16px rgba(18, 24, 33, 0.035);
-        text-align: center;
-        overflow: hidden;
         transition:
-          transform 420ms var(--ease-fluid),
-          box-shadow 420ms var(--ease-fluid),
-          border-color 260ms var(--ease-fluid),
-          background 260ms var(--ease-fluid);
-        animation: dayReveal 620ms var(--ease-lift) both;
-        animation-delay: calc(var(--day-index, 0) * 16ms);
-        will-change: transform;
+          transform 260ms var(--ease),
+          border-color 260ms var(--ease);
       }
 
-      .day:hover:not(.empty) {
-        transform: translate3d(0, -1px, 0) scale(1.002);
-        border-color: rgba(97, 116, 152, 0.18);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.78),
-          0 12px 20px rgba(15, 23, 42, 0.07);
+      .day:hover {
+        transform: translateY(-1px);
+        border-color: rgba(221, 231, 251, 0.14);
       }
 
       .day.empty {
@@ -1444,2383 +693,374 @@
         box-shadow: none;
       }
 
-      .day-flag-row {
-        display: flex;
-        align-items: flex-start;
-        justify-content: flex-end;
-        width: 100%;
-        min-height: 15px;
-        margin: 0;
-      }
-
-      .day-header {
-        display: grid;
-        place-items: center;
-        align-self: center;
-        width: 100%;
-        min-height: 26px;
-        margin: 0;
-      }
-
-      .day-number {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 26px;
-        min-width: 26px;
-        min-height: 26px;
-        font-weight: 700;
-        font-size: 0.88rem;
-        line-height: 1;
-        letter-spacing: -0.04em;
-        text-align: center;
-      }
-
-      .day-number.today-mark {
-        color: var(--accent-deep);
-        font-weight: 800;
-        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.74);
-      }
-
-      .day-number.today-mark::after {
-        content: none;
-      }
-
-      .flag {
-        position: relative;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 18px;
-        height: 16px;
-        border-radius: 999px;
-        padding: 0 5px;
-        font-size: 0.54rem;
-        font-weight: 700;
-        border: 1px solid rgba(255, 255, 255, 0.35);
-      }
-
-      .flag.holiday {
-        color: var(--holiday-ink);
-        background: rgba(255, 163, 36, 0.2);
-      }
-
-      .flag.rest {
-        color: var(--rest-ink);
-        background: rgba(68, 203, 143, 0.18);
-      }
-
-      .flag.makeup {
-        color: var(--makeup-ink);
-        background: rgba(255, 99, 88, 0.18);
-      }
-
-      .day-label {
-        color: color-mix(in srgb, var(--ink) 72%, transparent);
-        display: flex;
-        align-items: flex-start;
-        justify-content: center;
-        align-self: start;
-        margin-top: 1px;
-        padding: 0 4px;
-        font-size: 0.62rem;
-        line-height: 1.16;
-        word-break: break-all;
-        min-height: 1.45em;
-        width: 100%;
-        text-align: center;
-      }
-
-      .hover-bounce {
-        animation: widgetHoverLift 780ms cubic-bezier(0.22, 0.8, 0.18, 1) 1 both;
-      }
-
-      .day-label:empty {
-        display: none;
-      }
-
-      .day.is-weekend:not(.is-holiday):not(.is-overlap):not(.is-makeup) {
-        background: linear-gradient(180deg, rgba(90, 119, 255, 0.1), rgba(90, 119, 255, 0.04));
-        border-color: rgba(90, 119, 255, 0.14);
-      }
-
-      .day.is-saturday:not(.is-holiday):not(.is-overlap):not(.is-makeup) .day-number:not(.today-mark) {
-        color: #5671f0;
-      }
-
-      .day.is-sunday:not(.is-holiday):not(.is-overlap):not(.is-makeup) .day-number:not(.today-mark) {
-        color: #d85f78;
-      }
-
-      .day-meta {
-        margin-top: 8px;
-        font-size: 0.7rem;
-        color: var(--muted);
-      }
-
-      .day-meta:empty,
-      .toolbar p:empty {
-        display: none;
-      }
-
-      .day.is-holiday {
-        background: linear-gradient(180deg, rgba(255, 168, 52, 0.24), rgba(255, 192, 92, 0.1));
-        border-color: rgba(255, 163, 36, 0.22);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.74),
-          inset 0 3px 0 rgba(255, 172, 60, 0.24);
-      }
-
-      .day.is-rest {
-        background: linear-gradient(180deg, rgba(68, 203, 143, 0.2), rgba(68, 203, 143, 0.08));
-        border-color: rgba(68, 203, 143, 0.18);
-      }
-
-      .day.is-overlap {
-        background: linear-gradient(180deg, rgba(183, 94, 255, 0.28), rgba(183, 94, 255, 0.12));
-        border-color: rgba(183, 94, 255, 0.24);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.74),
-          inset 0 3px 0 rgba(183, 94, 255, 0.24),
-          0 12px 28px rgba(120, 73, 210, 0.08);
-      }
-
-      .day.is-makeup {
-        background: linear-gradient(180deg, rgba(255, 99, 88, 0.18), rgba(255, 99, 88, 0.08));
-        border-color: rgba(255, 99, 88, 0.18);
-      }
+      .day.is-rest { background: var(--rest-bg); }
+      .day.is-weekend:not(.is-rest):not(.is-holiday):not(.is-overlap):not(.is-makeup) { background: var(--weekend-bg); }
+      .day.is-holiday:not(.is-overlap) { background: var(--holiday-bg); }
+      .day.is-overlap { background: var(--overlap-bg); }
+      .day.is-makeup { background: var(--makeup-bg); }
 
       .day.is-today {
-        border-color: rgba(118, 132, 255, 0.24);
-        outline: 1px solid rgba(118, 132, 255, 0.22);
-        outline-offset: -2px;
+        border-color: var(--today-outline);
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.72),
-          0 0 0 4px rgba(118, 132, 255, 0.055),
-          0 18px 28px rgba(118, 132, 255, 0.08);
-      }
-
-      .day.is-today::after {
-        content: "";
-        position: absolute;
-        inset: 4px;
-        border-radius: 16px;
-        border: 1px solid rgba(118, 132, 255, 0.16);
-        pointer-events: none;
-      }
-
-      .hint {
-        margin-top: 10px;
-        font-size: 0.82rem;
-        color: var(--muted);
-        line-height: 1.7;
-      }
-
-      .inline-button {
-        width: 100%;
-        border: 0;
-        border-radius: 16px;
-        padding: 14px 16px;
-        background: rgba(255, 255, 255, 0.88);
-        color: var(--ink);
-        font: inherit;
-        font-weight: 600;
-        cursor: pointer;
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.72),
-          0 8px 18px rgba(29, 29, 31, 0.06);
-        transition: transform 380ms var(--ease-fluid), box-shadow 380ms var(--ease-fluid), background 260ms var(--ease-fluid);
-      }
-
-      .inline-button:hover {
-        transform: translateY(-1px);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.8),
-          0 12px 24px rgba(29, 29, 31, 0.1);
-      }
-
-      .reveal {
-        opacity: 0;
-        transform: translateY(24px) scale(0.985);
-        filter: blur(10px);
-        transition:
-          opacity 820ms var(--ease-lift),
-          transform 820ms var(--ease-lift),
-          filter 820ms var(--ease-lift);
-        transition-delay: var(--reveal-delay, 0ms);
-      }
-
-      .reveal.is-visible {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        filter: blur(0);
-      }
-
-      .modal-overlay {
-        position: fixed;
-        inset: 0;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        padding: 24px;
-        background: rgba(20, 20, 24, 0.28);
-        backdrop-filter: blur(18px) saturate(150%);
-        -webkit-backdrop-filter: blur(18px) saturate(150%);
-        z-index: 20;
-      }
-
-      .modal-overlay.open {
-        display: flex;
-      }
-
-      .modal-card {
-        width: min(760px, 100%);
-        max-height: min(88vh, 920px);
-        overflow: auto;
-        border-radius: 30px;
-        border: 1px solid rgba(255, 255, 255, 0.76);
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(248, 249, 252, 0.88));
-        box-shadow: 0 30px 80px rgba(29, 29, 31, 0.18);
-      }
-
-      .modal-head {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 16px;
-        padding: 22px 22px 16px;
-        border-bottom: 1px solid rgba(60, 60, 67, 0.08);
-      }
-
-      .modal-head h3 {
-        margin: 0;
-        font-size: 1.25rem;
-        letter-spacing: -0.03em;
-      }
-
-      .modal-head p {
-        margin: 6px 0 0;
-        color: var(--muted);
-        font-size: 0.88rem;
-        line-height: 1.6;
-      }
-
-      .close-button {
-        width: 36px;
-        height: 36px;
-        border: 0;
-        border-radius: 999px;
-        background: rgba(60, 60, 67, 0.08);
-        color: var(--muted);
-        font-size: 1.1rem;
-        cursor: pointer;
-      }
-
-      .modal-body {
-        padding: 18px 22px 22px;
-      }
-
-      .modal-body textarea {
-        min-height: 300px;
-      }
-
-      body.modal-open {
-        overflow: hidden;
-      }
-
-      .day.is-weekend .day-number:not(.today-mark) {
-        color: color-mix(in srgb, var(--weekend-ink) 70%, var(--ink));
-      }
-
-      body.dark-theme .hero-badge,
-      body.dark-theme .theme-toggle,
-      body.dark-theme .style-toggle,
-      body.dark-theme .month-switcher,
-      body.dark-theme .stat,
-      body.dark-theme .section,
-      body.dark-theme .day,
-      body.dark-theme .field input,
-      body.dark-theme .field textarea,
-      body.dark-theme .hero,
-      body.dark-theme .panel,
-      body.dark-theme .calendar-board,
-      body.dark-theme .month {
-        border-color: rgba(255, 255, 255, 0.07);
-      }
-
-      body.dark-theme .field input,
-      body.dark-theme .field textarea,
-      body.dark-theme .field button {
-        background:
-          linear-gradient(180deg, rgba(21, 23, 28, 0.96), rgba(13, 14, 18, 0.98)),
-          rgba(14, 16, 20, 0.94);
-        color: var(--ink);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.035),
-          inset 0 -1px 0 rgba(0, 0, 0, 0.42);
-      }
-
-      body.dark-theme .field input:focus,
-      body.dark-theme .field textarea:focus {
-        border-color: rgba(155, 168, 204, 0.18);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.045),
-          0 0 0 3px rgba(135, 148, 184, 0.09),
-          0 10px 18px rgba(28, 34, 58, 0.1);
-      }
-
-      body.dark-theme .hero,
-      body.dark-theme .panel,
-      body.dark-theme .calendar-board {
-        background:
-          linear-gradient(180deg, rgba(16, 18, 23, 0.96), rgba(10, 11, 15, 0.98)),
-          var(--paper);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.04),
-          inset 0 -1px 0 rgba(255, 255, 255, 0.02),
-          0 8px 20px rgba(0, 0, 0, 0.18);
-      }
-
-      body.dark-theme .hero {
-        background:
-          radial-gradient(circle at 82% 18%, rgba(94, 106, 154, 0.08), transparent 22%),
-          linear-gradient(180deg, rgba(18, 20, 25, 0.96), rgba(11, 12, 16, 0.98) 74%),
-          var(--paper);
-      }
-
-      body.dark-theme .hero::after {
-        opacity: 0.16;
-      }
-
-      body.dark-theme .hero-badge,
-      body.dark-theme .theme-toggle,
-      body.dark-theme .style-toggle,
-      body.dark-theme .month-switcher,
-      body.dark-theme .stat,
-      body.dark-theme .day {
-        background:
-          linear-gradient(180deg, rgba(24, 26, 32, 0.96), rgba(16, 17, 22, 0.98)),
-          rgba(17, 19, 24, 0.92);
-      }
-
-      body.dark-theme .month {
-        background:
-          linear-gradient(180deg, rgba(16, 18, 23, 0.98), rgba(11, 12, 16, 0.98));
-      }
-
-      body.dark-theme .month-head {
-        border-bottom-color: rgba(255, 255, 255, 0.06);
-        background:
-          radial-gradient(circle at 50% 0%, rgba(112, 122, 156, 0.045), transparent 40%),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.006));
-      }
-
-      body.dark-theme .section {
-        background:
-          linear-gradient(180deg, rgba(21, 23, 29, 0.92), rgba(14, 16, 20, 0.94));
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.035),
-          0 4px 10px rgba(0, 0, 0, 0.1);
-      }
-
-      body.dark-theme .hero-kicker,
-      body.dark-theme .toolbar p,
-      body.dark-theme .section-cap {
-        border-color: rgba(255, 255, 255, 0.08);
-      }
-
-      body.dark-theme .hero-actions {
-        border-color: rgba(255, 255, 255, 0.08);
-        background:
-          linear-gradient(180deg, rgba(24, 27, 33, 0.9), rgba(15, 17, 22, 0.94)),
-          rgba(16, 18, 24, 0.88);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.04),
-          0 10px 22px rgba(0, 0, 0, 0.12);
-      }
-
-      body.dark-theme .hero-actions::before {
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0) 56%);
-      }
-
-      body.dark-theme .hero-kicker,
-      body.dark-theme .toolbar p {
-        background:
-          linear-gradient(180deg, rgba(28, 30, 36, 0.9), rgba(18, 20, 24, 0.9));
-        color: rgba(238, 241, 245, 0.68);
-      }
-
-      body.dark-theme .section::after,
-      body.dark-theme .stat::after {
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 50%);
-      }
-
-      body.dark-theme .panel,
-      body.dark-theme .calendar-board,
-      body.dark-theme .section,
-      body.dark-theme .month-switcher,
-      body.dark-theme .stat,
-      body.dark-theme .month,
-      body.dark-theme .day:not(.empty) {
-        border-color: rgba(255, 255, 255, 0.082);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.04),
-          0 3px 8px rgba(0, 0, 0, 0.08);
-      }
-
-      body.dark-theme .panel:hover,
-      body.dark-theme .calendar-board:hover,
-      body.dark-theme .section:hover,
-      body.dark-theme .month:hover {
-        border-color: rgba(255, 255, 255, 0.094);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.045),
-          0 5px 12px rgba(0, 0, 0, 0.09);
-      }
-
-      body.dark-theme .stat:hover,
-      body.dark-theme .day:hover:not(.empty),
-      body.dark-theme .month-switcher:hover {
-        border-color: rgba(172, 186, 220, 0.12);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.052),
-          0 6px 14px rgba(0, 0, 0, 0.1);
-      }
-
-      body.dark-theme .weekdays div,
-      body.dark-theme .legend-item,
-      body.dark-theme .field label,
-      body.dark-theme .hint,
-      body.dark-theme .stat span,
-      body.dark-theme .month-head span {
-        color: var(--muted);
-      }
-
-      body.dark-theme .toolbar {
-        border-bottom-color: rgba(255, 255, 255, 0.06);
-      }
-
-      body.dark-theme .month-switcher button {
-        color: rgba(232, 236, 241, 0.74);
-      }
-
-      body.dark-theme .nav-icon {
-        background: rgba(255, 255, 255, 0.04);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.05),
-          0 6px 12px rgba(0, 0, 0, 0.14);
-      }
-
-      body.dark-theme .month-chip {
-        color: var(--ink);
-        text-shadow: none;
-      }
-
-      body.dark-theme .weekdays div.is-weekend {
-        color: var(--weekend-ink);
-      }
-
-      body.dark-theme .day.is-weekend:not(.is-holiday):not(.is-overlap):not(.is-makeup) {
-        background:
-          linear-gradient(180deg, rgba(50, 58, 88, 0.42), rgba(28, 32, 50, 0.4));
-        border-color: rgba(123, 134, 170, 0.12);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.025),
-          inset 0 3px 0 rgba(123, 134, 170, 0.08);
-      }
-
-      body.dark-theme .hero-badge:hover,
-      body.dark-theme .theme-toggle:hover,
-      body.dark-theme .style-toggle:hover,
-      body.dark-theme .month-switcher button:hover {
-        background: rgba(122, 135, 171, 0.08);
-        color: rgba(238, 241, 245, 0.9);
-      }
-
-      body.dark-theme .hero-badge,
-      body.dark-theme .theme-toggle,
-      body.dark-theme .style-toggle,
-      body.dark-theme .month-switcher {
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.035),
-          0 2px 6px rgba(0, 0, 0, 0.06);
-      }
-
-      body.dark-theme .hero-actions:hover {
-        border-color: rgba(176, 189, 222, 0.12);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.05),
-          0 12px 24px rgba(0, 0, 0, 0.14);
-      }
-
-      body.dark-theme .style-toggle-orb {
-        border-color: rgba(255, 255, 255, 0.12);
-        background:
-          radial-gradient(circle at 32% 26%, rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.04) 38%, transparent 62%),
-          linear-gradient(180deg, rgba(116, 130, 168, 0.26), rgba(48, 58, 82, 0.34));
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.12),
-          0 4px 10px rgba(0, 0, 0, 0.08);
-      }
-
-      body.dark-theme .style-toggle-orb::before {
-        background: linear-gradient(180deg, rgba(200, 214, 255, 0.68), rgba(132, 156, 220, 0.16));
-      }
-
-      body.dark-theme .style-toggle[aria-pressed="true"] {
-        border-color: rgba(166, 185, 236, 0.18);
-        background:
-          linear-gradient(180deg, rgba(36, 40, 50, 0.96), rgba(18, 21, 28, 0.98)),
-          rgba(17, 19, 24, 0.92);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.05),
-          0 8px 18px rgba(0, 0, 0, 0.12);
-      }
-
-      body.dark-theme .theme-toggle-track {
-        background: linear-gradient(180deg, rgba(95, 98, 108, 0.34), rgba(66, 68, 76, 0.24));
-      }
-
-      body.dark-theme .hero-badge::before {
-        background: linear-gradient(180deg, #4cc786, #2e8f5d);
-        box-shadow: none;
-        animation-duration: 3.8s;
-      }
-
-      body.dark-theme .day-label {
-        color: rgba(232, 236, 241, 0.7);
-      }
-
-      body.dark-theme .section-cap {
-        color: rgba(232, 236, 241, 0.46);
-      }
-
-      body.dark-theme .button-row button {
-        border-color: rgba(255, 255, 255, 0.08);
-        background:
-          linear-gradient(180deg, rgba(33, 35, 41, 0.98), rgba(19, 21, 26, 0.98)),
-          rgba(18, 20, 24, 0.94);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.04),
-          inset 0 -1px 0 rgba(255, 255, 255, 0.02),
-          0 3px 8px rgba(0, 0, 0, 0.08);
-      }
-
-      body.dark-theme .button-row button::before {
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
-        opacity: 0.5;
-      }
-
-      body.dark-theme .button-orb {
-        border-color: rgba(255, 255, 255, 0.08);
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03));
-        color: #b8c0d7;
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.08),
-          0 2px 6px rgba(0, 0, 0, 0.08);
-      }
-
-      body.dark-theme .stat em {
-        color: rgba(232, 236, 241, 0.4);
-      }
-
-      body.dark-theme .toolbar h2,
-      body.dark-theme .section h2,
-      body.dark-theme .month-head h3,
-      body.dark-theme .hero h1 {
-        color: var(--ink);
-      }
-
-      body.dark-theme .primary {
-        border-color: rgba(140, 148, 171, 0.14);
-        background:
-          linear-gradient(180deg, rgba(34, 36, 42, 0.98), rgba(20, 22, 28, 0.98)),
-          rgba(18, 20, 24, 0.94);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.05),
-          inset 0 -1px 0 rgba(140, 148, 171, 0.08),
-          0 3px 8px rgba(0, 0, 0, 0.08);
-      }
-
-      body.dark-theme .button-row button:hover .button-orb {
-        background: linear-gradient(180deg, rgba(148, 156, 180, 0.18), rgba(148, 156, 180, 0.08));
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.08),
-          0 2px 6px rgba(70, 76, 96, 0.08);
-      }
-
-      body.dark-theme .flag {
-        border-color: rgba(255, 255, 255, 0.06);
-        color: rgba(245, 247, 251, 0.86);
-        background: linear-gradient(180deg, rgba(50, 52, 60, 0.86), rgba(35, 37, 42, 0.9));
-      }
-
-      body.dark-theme .flag.holiday {
-        background: linear-gradient(180deg, rgba(66, 80, 104, 0.86), rgba(45, 56, 74, 0.9));
-        color: var(--holiday-ink);
-      }
-
-      body.dark-theme .flag.rest {
-        background: linear-gradient(180deg, rgba(39, 74, 62, 0.86), rgba(28, 54, 45, 0.9));
-        color: var(--rest-ink);
-      }
-
-      body.dark-theme .flag.makeup {
-        background: linear-gradient(180deg, rgba(82, 49, 47, 0.86), rgba(58, 35, 33, 0.9));
-        color: var(--makeup-ink);
-      }
-
-      body.dark-theme .day.is-holiday {
-        background: linear-gradient(180deg, rgba(42, 52, 70, 0.96), rgba(27, 34, 47, 0.98));
-        border-color: rgba(136, 153, 184, 0.16);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.035),
-          inset 0 2px 0 rgba(136, 153, 184, 0.12);
-      }
-
-      body.dark-theme .day.is-rest {
-        background: linear-gradient(180deg, rgba(22, 58, 49, 0.96), rgba(16, 40, 34, 0.98));
-        border-color: rgba(98, 156, 134, 0.14);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.035),
-          inset 0 2px 0 rgba(98, 156, 134, 0.1);
-      }
-
-      body.dark-theme .day.is-overlap {
-        background: linear-gradient(180deg, rgba(60, 40, 82, 0.96), rgba(40, 27, 55, 0.98));
-        border-color: rgba(146, 113, 182, 0.16);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.035),
-          inset 0 2px 0 rgba(146, 113, 182, 0.12);
-      }
-
-      body.dark-theme .day.is-makeup {
-        background: linear-gradient(180deg, rgba(70, 40, 39, 0.96), rgba(48, 28, 27, 0.98));
-        border-color: rgba(158, 110, 103, 0.14);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.035),
-          inset 0 2px 0 rgba(158, 110, 103, 0.1);
-      }
-
-      body.dark-theme .day.is-today {
-        border-color: rgba(176, 188, 219, 0.18);
-        outline: 1px solid rgba(176, 188, 219, 0.12);
-        outline-offset: -2px;
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.04);
-      }
-
-      body.dark-theme .day-number.today-mark {
-        color: var(--accent-deep);
-        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.14);
-      }
-
-      body.dark-theme .day-number.today-mark::after {
-        content: none;
-      }
-
-      body.glass-style {
-        background:
-          radial-gradient(circle at 12% 8%, rgba(127, 184, 255, 0.2), transparent 24%),
-          radial-gradient(circle at 84% 10%, rgba(206, 227, 255, 0.18), transparent 20%),
-          radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.74), transparent 32%),
-          linear-gradient(180deg, #f7f9fd 0%, #edf2f8 42%, #e7edf5 100%);
-      }
-
-      body.glass-style::before {
-        top: -70px;
-        right: -72px;
-        width: 420px;
-        height: 420px;
-        background: rgba(73, 142, 255, 0.16);
-        opacity: 0.58;
-      }
-
-      body.glass-style::after {
-        bottom: -126px;
-        left: -96px;
-        width: 420px;
-        height: 420px;
-        background: rgba(136, 177, 255, 0.13);
-        opacity: 0.5;
-      }
-
-      body.glass-style .grain {
-        opacity: 0.022;
-      }
-
-      body.glass-style .shell-rim {
-        background:
-          linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.22) 36%, rgba(178, 211, 255, 0.18) 100%),
-          rgba(255, 255, 255, 0.34);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.94),
-          0 20px 48px rgba(76, 97, 139, 0.08);
-      }
-
-      body.glass-style .hero,
-      body.glass-style .panel,
-      body.glass-style .calendar-board,
-      body.glass-style .section,
-      body.glass-style .month,
-      body.glass-style .stat,
-      body.glass-style .day:not(.empty),
-      body.glass-style .hero-badge,
-      body.glass-style .theme-toggle,
-      body.glass-style .style-toggle,
-      body.glass-style .month-switcher,
-      body.glass-style .toolbar p,
-      body.glass-style .hero-kicker,
-      body.glass-style .field input,
-      body.glass-style .field textarea,
-      body.glass-style .button-row button {
-        border-color: rgba(255, 255, 255, 0.44);
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.64), rgba(255, 255, 255, 0.24)),
-          rgba(255, 255, 255, 0.34);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.84),
-          inset 0 -1px 0 rgba(255, 255, 255, 0.12),
-          0 12px 28px rgba(66, 89, 132, 0.07);
-      }
-
-      body.glass-style .hero {
-        background:
-          radial-gradient(circle at 88% 12%, rgba(255, 255, 255, 0.78), transparent 22%),
-          linear-gradient(145deg, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.24) 52%, rgba(214, 232, 255, 0.2)),
-          rgba(255, 255, 255, 0.3);
-      }
-
-      body.glass-style .hero::after {
-        opacity: 0.58;
-      }
-
-      body.glass-style .hero-badge::before {
-        box-shadow: 0 0 0 4px rgba(52, 199, 89, 0.06);
-      }
-
-      body.glass-style .hero-badge,
-      body.glass-style .theme-toggle,
-      body.glass-style .style-toggle,
-      body.glass-style .month-switcher {
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.3)),
-          rgba(255, 255, 255, 0.44);
-      }
-
-      body.glass-style .hero-actions {
-        border-color: rgba(255, 255, 255, 0.52);
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.66), rgba(255, 255, 255, 0.22)),
-          rgba(255, 255, 255, 0.32);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.88),
-          0 16px 30px rgba(66, 89, 132, 0.08);
-      }
-
-      body.glass-style .hero-actions::before {
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.52), rgba(255, 255, 255, 0) 60%);
-      }
-
-      body.glass-style .calendar-stage::before {
-        opacity: 0.82;
-        transform: translate3d(0, 6px, 0) scale(0.992);
-      }
-
-      body.glass-style .calendar-stage::after {
-        opacity: 0.66;
-        transform: translate3d(0, 9px, 0) scale(0.988);
-      }
-
-      body.glass-style .hero,
-      body.glass-style .panel,
-      body.glass-style .calendar-board,
-      body.glass-style .hero-badge,
-      body.glass-style .theme-toggle,
-      body.glass-style .style-toggle,
-      body.glass-style .month-switcher {
-        backdrop-filter: blur(28px) saturate(168%);
-        -webkit-backdrop-filter: blur(28px) saturate(168%);
-      }
-
-      body.glass-style .theme-toggle-track {
-        background: rgba(123, 142, 188, 0.22);
-      }
-
-      body.glass-style .month-switcher:hover,
-      body.glass-style .stat:hover,
-      body.glass-style .month:hover,
-      body.glass-style .section:hover,
-      body.glass-style .panel:hover,
-      body.glass-style .calendar-board:hover,
-      body.glass-style .day:hover:not(.empty) {
-        border-color: rgba(255, 255, 255, 0.62);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.9),
-          inset 0 -1px 0 rgba(255, 255, 255, 0.16),
-          0 16px 30px rgba(76, 98, 140, 0.08);
-      }
-
-      body.glass-style .button-orb {
-        border-color: rgba(255, 255, 255, 0.5);
-        background:
-          radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.14) 34%, transparent 60%),
-          linear-gradient(180deg, rgba(179, 205, 255, 0.38), rgba(128, 170, 255, 0.1));
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.84),
-          0 4px 12px rgba(74, 100, 155, 0.1);
-      }
-
-      body.glass-style .button-row button:hover .button-orb {
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.9),
-          0 10px 20px rgba(74, 110, 176, 0.14);
-      }
-
-      body.glass-style .month-head {
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.48), rgba(255, 255, 255, 0.16));
-        border-bottom-color: rgba(255, 255, 255, 0.34);
-      }
-
-      body.glass-style .day {
-        background:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.64), rgba(255, 255, 255, 0.2)),
-          rgba(255, 255, 255, 0.24);
-      }
-
-      body.glass-style .flag {
-        border-color: rgba(255, 255, 255, 0.58);
-        background: rgba(255, 255, 255, 0.42);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78);
-      }
-
-      body.glass-style .flag.holiday {
-        background: rgba(118, 191, 255, 0.22);
-      }
-
-      body.glass-style .flag.rest {
-        background: rgba(90, 214, 188, 0.2);
-      }
-
-      body.glass-style .flag.makeup {
-        background: rgba(189, 174, 242, 0.2);
-      }
-
-      body.glass-style .day.is-weekend:not(.is-holiday):not(.is-overlap):not(.is-makeup) {
-        background: linear-gradient(180deg, rgba(173, 197, 255, 0.36), rgba(120, 153, 255, 0.14));
-        border-color: rgba(112, 147, 255, 0.22);
-      }
-
-      body.glass-style .day.is-holiday {
-        background: linear-gradient(180deg, rgba(159, 214, 255, 0.38), rgba(112, 168, 255, 0.14));
-        border-color: rgba(92, 145, 255, 0.24);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.82),
-          inset 0 3px 0 rgba(112, 174, 255, 0.16);
-      }
-
-      body.glass-style .day.is-rest {
-        background: linear-gradient(180deg, rgba(154, 238, 220, 0.34), rgba(98, 205, 177, 0.14));
-        border-color: rgba(90, 178, 157, 0.22);
-      }
-
-      body.glass-style .day.is-overlap {
-        background: linear-gradient(180deg, rgba(194, 193, 255, 0.4), rgba(137, 163, 255, 0.16));
-        border-color: rgba(127, 135, 233, 0.28);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.84),
-          inset 0 3px 0 rgba(143, 136, 241, 0.16),
-          0 10px 18px rgba(95, 108, 176, 0.06);
-      }
-
-      body.glass-style .day.is-makeup {
-        background: linear-gradient(180deg, rgba(218, 207, 255, 0.36), rgba(170, 150, 232, 0.14));
-        border-color: rgba(141, 126, 208, 0.22);
-      }
-
-      body.glass-style .day.is-today {
-        border-color: rgba(90, 129, 240, 0.38);
-        box-shadow:
-          inset 0 0 0 1px rgba(255, 255, 255, 0.68),
-          0 8px 18px rgba(86, 109, 162, 0.06);
-      }
-
-      body.glass-style .day-number.today-mark {
-        color: var(--accent-deep);
-        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.76);
-      }
-
-      body.glass-style .style-toggle {
-        border-color: rgba(255, 255, 255, 0.56);
-      }
-
-      body.dark-theme.glass-style {
-        color-scheme: dark;
-        background:
-          radial-gradient(circle at 12% 8%, rgba(83, 110, 170, 0.14), transparent 24%),
-          radial-gradient(circle at 88% 10%, rgba(65, 94, 148, 0.12), transparent 22%),
-          radial-gradient(circle at 52% 100%, rgba(24, 34, 54, 0.14), transparent 34%),
-          linear-gradient(180deg, #060910 0%, #09101a 42%, #05070c 100%);
-      }
-
-      body.dark-theme.glass-style::before {
-        background: rgba(98, 122, 199, 0.1);
-        opacity: 0.16;
-      }
-
-      body.dark-theme.glass-style::after {
-        background: rgba(71, 111, 180, 0.08);
-        opacity: 0.12;
-      }
-
-      body.dark-theme.glass-style .grain {
-        opacity: 0.016;
-      }
-
-      body.dark-theme.glass-style .shell-rim {
-        background:
-          linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.018) 42%, rgba(122, 146, 212, 0.045) 100%),
-          linear-gradient(180deg, rgba(12, 16, 24, 0.94), rgba(7, 10, 16, 0.98));
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.065),
-          0 16px 34px rgba(0, 0, 0, 0.18);
-      }
-
-      body.dark-theme.glass-style .hero,
-      body.dark-theme.glass-style .panel,
-      body.dark-theme.glass-style .calendar-board,
-      body.dark-theme.glass-style .section,
-      body.dark-theme.glass-style .month,
-      body.dark-theme.glass-style .stat,
-      body.dark-theme.glass-style .day:not(.empty),
-      body.dark-theme.glass-style .hero-badge,
-      body.dark-theme.glass-style .theme-toggle,
-      body.dark-theme.glass-style .style-toggle,
-      body.dark-theme.glass-style .month-switcher,
-      body.dark-theme.glass-style .toolbar p,
-      body.dark-theme.glass-style .hero-kicker,
-      body.dark-theme.glass-style .field input,
-      body.dark-theme.glass-style .field textarea,
-      body.dark-theme.glass-style .button-row button {
-        border-color: rgba(255, 255, 255, 0.1);
-        background:
-          linear-gradient(180deg, rgba(25, 32, 47, 0.68), rgba(10, 14, 23, 0.34)),
-          rgba(11, 15, 24, 0.38);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.09),
-          inset 0 -1px 0 rgba(255, 255, 255, 0.03),
-          0 14px 26px rgba(0, 0, 0, 0.14);
-      }
-
-      body.dark-theme.glass-style .hero {
-        background:
-          radial-gradient(circle at 86% 12%, rgba(193, 213, 255, 0.09), transparent 24%),
-          linear-gradient(180deg, rgba(25, 33, 48, 0.68), rgba(12, 16, 24, 0.4) 72%),
-          rgba(9, 13, 21, 0.38);
-      }
-
-      body.dark-theme.glass-style .hero-badge,
-      body.dark-theme.glass-style .theme-toggle,
-      body.dark-theme.glass-style .style-toggle,
-      body.dark-theme.glass-style .month-switcher {
-        background:
-          linear-gradient(180deg, rgba(28, 35, 50, 0.74), rgba(12, 16, 24, 0.34)),
-          rgba(11, 15, 24, 0.42);
-      }
-
-      body.dark-theme.glass-style .hero-actions {
-        border-color: rgba(255, 255, 255, 0.1);
-        background:
-          linear-gradient(180deg, rgba(28, 35, 50, 0.7), rgba(12, 16, 24, 0.32)),
-          rgba(11, 15, 24, 0.4);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.09),
-          0 16px 28px rgba(0, 0, 0, 0.16);
-      }
-
-      body.dark-theme.glass-style .hero-actions::before {
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 58%);
-      }
-
-      body.dark-theme.glass-style .calendar-stage::before {
-        opacity: 0.52;
-        background:
-          linear-gradient(160deg, rgba(179, 204, 255, 0.08), rgba(255, 255, 255, 0.01) 40%, rgba(88, 124, 210, 0.12) 100%);
-      }
-
-      body.dark-theme.glass-style .calendar-stage::after {
-        opacity: 0.42;
-        background:
-          radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.08), transparent 18%),
-          radial-gradient(circle at 84% 24%, rgba(110, 156, 255, 0.12), transparent 20%),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0) 46%, rgba(88, 124, 210, 0.08) 100%);
-      }
-
-      body.dark-theme.glass-style .hero,
-      body.dark-theme.glass-style .panel,
-      body.dark-theme.glass-style .calendar-board,
-      body.dark-theme.glass-style .hero-badge,
-      body.dark-theme.glass-style .theme-toggle,
-      body.dark-theme.glass-style .style-toggle,
-      body.dark-theme.glass-style .month-switcher {
-        backdrop-filter: blur(26px) saturate(138%);
-        -webkit-backdrop-filter: blur(26px) saturate(138%);
-      }
-
-      body.dark-theme.glass-style .theme-toggle-track {
-        background: rgba(132, 149, 197, 0.2);
-      }
-
-      body.dark-theme.glass-style .month {
-        background:
-          linear-gradient(180deg, rgba(18, 24, 38, 0.74), rgba(8, 12, 20, 0.42)),
-          rgba(10, 14, 23, 0.38);
-      }
-
-      body.dark-theme.glass-style .month-head {
-        border-bottom-color: rgba(145, 171, 232, 0.16);
-        background:
-          radial-gradient(circle at 50% -18%, rgba(196, 214, 255, 0.16), transparent 46%),
-          linear-gradient(180deg, rgba(98, 116, 158, 0.34), rgba(40, 50, 74, 0.2) 38%, rgba(12, 17, 28, 0.18) 100%),
-          rgba(16, 22, 35, 0.34);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.18),
-          inset 0 -1px 0 rgba(92, 116, 168, 0.12);
-      }
-
-      body.dark-theme.glass-style .month-head h3 {
-        color: rgba(240, 245, 255, 0.94);
-      }
-
-      body.dark-theme.glass-style .month-head span {
-        color: rgba(185, 199, 232, 0.74);
-      }
-
-      body.dark-theme.glass-style .month-switcher:hover,
-      body.dark-theme.glass-style .stat:hover,
-      body.dark-theme.glass-style .month:hover,
-      body.dark-theme.glass-style .section:hover,
-      body.dark-theme.glass-style .panel:hover,
-      body.dark-theme.glass-style .calendar-board:hover,
-      body.dark-theme.glass-style .day:hover:not(.empty) {
-        border-color: rgba(255, 255, 255, 0.13);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.12),
-          inset 0 -1px 0 rgba(255, 255, 255, 0.04),
-          0 14px 26px rgba(0, 0, 0, 0.16);
-      }
-
-      body.dark-theme.glass-style .button-orb {
-        border-color: rgba(255, 255, 255, 0.14);
-        background:
-          radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.03) 36%, transparent 60%),
-          linear-gradient(180deg, rgba(125, 145, 197, 0.18), rgba(55, 69, 102, 0.16));
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.1),
-          0 4px 12px rgba(0, 0, 0, 0.1);
-      }
-
-      body.dark-theme.glass-style .flag {
-        border-color: rgba(255, 255, 255, 0.12);
-        background: rgba(255, 255, 255, 0.06);
-      }
-
-      body.dark-theme.glass-style .flag.holiday {
-        background: rgba(98, 121, 196, 0.22);
-      }
-
-      body.dark-theme.glass-style .flag.rest {
-        background: rgba(58, 122, 112, 0.22);
-      }
-
-      body.dark-theme.glass-style .flag.makeup {
-        background: rgba(77, 75, 132, 0.18);
-      }
-
-      body.dark-theme.glass-style .day.is-weekend:not(.is-holiday):not(.is-overlap):not(.is-makeup) {
-        background: linear-gradient(180deg, rgba(67, 88, 142, 0.3), rgba(28, 40, 68, 0.2));
-        border-color: rgba(134, 153, 212, 0.14);
-      }
-
-      body.dark-theme.glass-style .day.is-holiday {
-        background: linear-gradient(180deg, rgba(73, 101, 164, 0.34), rgba(28, 43, 74, 0.24));
-        border-color: rgba(147, 171, 235, 0.16);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.08),
-          inset 0 3px 0 rgba(133, 161, 229, 0.08);
-      }
-
-      body.dark-theme.glass-style .day.is-rest {
-        background: linear-gradient(180deg, rgba(40, 94, 89, 0.34), rgba(19, 49, 47, 0.24));
-        border-color: rgba(112, 178, 169, 0.14);
-      }
-
-      body.dark-theme.glass-style .day.is-overlap {
-        background: linear-gradient(180deg, rgba(72, 79, 164, 0.34), rgba(32, 34, 76, 0.26));
-        border-color: rgba(160, 160, 238, 0.16);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.08),
-          inset 0 3px 0 rgba(154, 154, 236, 0.08),
-          0 8px 16px rgba(0, 0, 0, 0.1);
-      }
-
-      body.dark-theme.glass-style .day.is-makeup {
-        background: linear-gradient(180deg, rgba(71, 67, 122, 0.32), rgba(34, 29, 56, 0.24));
-        border-color: rgba(154, 145, 198, 0.14);
-      }
-
-      body.dark-theme.glass-style .day.is-today {
-        border-color: rgba(196, 210, 255, 0.16);
-        box-shadow:
-          inset 0 0 0 1px rgba(255, 255, 255, 0.11),
-          0 8px 16px rgba(0, 0, 0, 0.14);
-      }
-
-      body.dark-theme.glass-style .day.is-today::after {
-        border-color: rgba(206, 217, 255, 0.16);
-      }
-
-      body.dark-theme.glass-style .day-number.today-mark {
-        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.16);
-      }
-
-      @keyframes floatBlobOne {
-        0%,
-        100% {
-          transform: translate3d(0, 0, 0) scale(1);
-        }
-
-        50% {
-          transform: translate3d(-18px, 20px, 0) scale(1.06);
-        }
-      }
-
-      @keyframes floatBlobTwo {
-        0%,
-        100% {
-          transform: translate3d(0, 0, 0) scale(1);
-        }
-
-        50% {
-          transform: translate3d(22px, -16px, 0) scale(1.08);
-        }
-      }
-
-      @keyframes pulseDot {
-        0%,
-        100% {
-          transform: scale(1);
-          box-shadow: 0 0 0 4px rgba(52, 199, 89, 0.12);
-        }
-
-        50% {
-          transform: scale(1.08);
-          box-shadow: 0 0 0 7px rgba(52, 199, 89, 0.08);
-        }
-      }
-
-      @keyframes widgetHoverLift {
-        0% {
-          transform: translate3d(0, 0, 0) scale(1);
-        }
-
-        24% {
-          transform: translate3d(0, -6px, 0) scale(1.012);
-        }
-
-        52% {
-          transform: translate3d(0, -2px, 0) scale(1.004);
-        }
-
-        72% {
-          transform: translate3d(0, -3px, 0) scale(1.006);
-        }
-
-        100% {
-          transform: translate3d(0, -1px, 0) scale(1.002);
-        }
-      }
-
-      @keyframes monthReveal {
-        from {
-          opacity: 0;
-          transform: translateY(8px);
-        }
-
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      @keyframes dayReveal {
-        from {
-          opacity: 0;
-          transform: translateY(10px) scale(0.98);
-        }
-
-        to {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
-      }
-
-      /* Premium layout refresh */
-      .shell {
-        width: min(1560px, calc(100% - 48px));
-        margin: 18px auto 24px;
-      }
-
-      .hero-shell {
-        border-radius: 36px;
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.94),
-          0 36px 80px rgba(34, 40, 52, 0.08),
-          -18px 12px 48px rgba(94, 132, 214, 0.08);
-      }
-
-      .hero-shell .hero {
-        min-height: 154px;
-        grid-template-columns: minmax(0, 1fr) minmax(330px, 356px);
-        grid-template-rows: auto 1fr;
-        column-gap: 36px;
-        row-gap: 14px;
-        align-items: stretch;
-        padding: 22px 32px 22px;
-        border-radius: 34px;
-      }
-
-      .traffic-lights {
-        margin-left: 0;
-      }
-
-      .hero-grid {
-        grid-column: 1;
-        grid-row: 2;
-        display: flex;
-        align-self: stretch;
-      }
-
-      .hero-intro {
-        justify-content: flex-end;
-        gap: 8px;
-        padding: 4px 0 0;
-        align-self: stretch;
-      }
-
-      .hero-kicker {
-        display: block;
-        margin-left: 8px;
-        padding: 0;
-        width: auto;
-        border: 0;
-        border-radius: 0;
-        background: transparent;
-        color: rgba(198, 208, 236, 0.66);
-        font-size: 0.94rem;
-        font-weight: 500;
-        letter-spacing: 0.02em;
-        text-transform: none;
-        box-shadow: none;
-      }
-
-      .hero h1 {
-        max-width: none;
-        white-space: nowrap;
-        color: #edf3ff;
-        font-family: "Noto Serif SC", "Cormorant Garamond", serif;
-        font-size: clamp(3.12rem, 5.28vw, 4.82rem);
-        font-weight: 600;
-        line-height: 0.94;
-        letter-spacing: -0.055em;
-        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.05);
-      }
-
-      .hero-actions {
-        grid-column: 2;
-        grid-row: 1 / span 2;
-        align-self: center;
-        display: grid;
-        grid-template-columns: minmax(0, 1.18fr) minmax(138px, 0.88fr);
-        grid-template-areas:
-          "weather theme"
-          "weather style";
-        width: min(100%, 356px);
-        padding: 12px;
-        gap: 10px;
-        border-radius: 24px;
-      }
-
-      .hero-badge,
-      .theme-toggle,
-      .style-toggle {
-        min-height: 46px;
-      }
-
-      .hero-badge {
-        padding: 10px 14px 10px 12px;
-        font-size: 0.86rem;
-      }
-
-      #weather-badge {
-        grid-area: weather;
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        align-content: center;
-        gap: 10px;
-        min-height: 76px;
-        padding: 12px 16px;
-        text-align: left;
-      }
-
-      #weather-badge::before {
-        content: none;
-      }
-
-      #theme-toggle {
-        grid-area: theme;
-      }
-
-      #style-toggle {
-        grid-area: style;
-      }
-
-      .weather-line {
-        display: inline-flex;
-        align-items: center;
-        min-width: 0;
-        gap: 9px;
-      }
-
-      .weather-line.location {
-        color: color-mix(in srgb, var(--muted) 88%, transparent);
-        font-size: 0.76rem;
-        font-weight: 600;
-        letter-spacing: 0.01em;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .weather-line.location::before,
-      .weather-line.detail::before {
-        content: "";
-        width: 14px;
-        height: 14px;
-        flex: 0 0 14px;
-        background: currentColor;
-        opacity: 0.92;
-      }
-
-      .weather-line.location::before {
-        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 2.75a7.25 7.25 0 0 1 7.25 7.25c0 4.75-4.33 9.32-6.28 11.15a1.47 1.47 0 0 1-1.94 0C9.08 19.32 4.75 14.75 4.75 10A7.25 7.25 0 0 1 12 2.75Zm0 4.25A3 3 0 1 0 12 13a3 3 0 0 0 0-6Z'/%3E%3C/svg%3E") center / contain no-repeat;
-      }
-
-      .weather-line.detail::before {
-        width: 15px;
-        height: 15px;
-        flex-basis: 15px;
-        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M14.75 2.75a.75.75 0 0 1 .72.95 7.5 7.5 0 1 0 4.83 10.55.75.75 0 0 1 1.4.52A9 9 0 1 1 14.03 2.8a.75.75 0 0 1 .72-.05Z'/%3E%3C/svg%3E") center / contain no-repeat;
-      }
-
-      .weather-line.detail {
-        color: var(--ink);
-        font-size: 0.98rem;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .theme-toggle {
-        justify-content: space-between;
-        padding: 8px 12px 8px 10px;
-        font-size: 0.82rem;
-      }
-
-      .theme-toggle-track {
-        width: 36px;
-        height: 20px;
-      }
-
-      .theme-toggle-thumb {
-        width: 16px;
-        height: 16px;
-      }
-
-      body.dark-theme .theme-toggle-thumb {
-        transform: translateX(16px);
-      }
-
-      .style-toggle {
-        min-width: 0;
-        padding: 8px 8px 8px 12px;
-        border-radius: 18px;
-      }
-
-      .style-toggle-label {
-        display: none;
-      }
-
-      .style-toggle-text {
-        font-size: 0.88rem;
-      }
-
-      .style-toggle-orb {
-        width: 34px;
-        height: 34px;
-      }
-
-      .layout {
-        grid-template-columns: 292px minmax(0, 1fr);
-        gap: 16px;
-        margin-top: 16px;
-        align-items: stretch;
-      }
-
-      .panel-shell {
-        align-self: stretch;
-        border-radius: 32px;
-      }
-
-      .panel {
-        gap: 10px;
-        padding: 12px;
-        border-radius: 30px;
-        top: 18px;
-      }
-
-      .section {
-        padding: 14px;
-        border-radius: 24px;
-      }
-
-      .section-head {
-        display: flex;
-        align-items: baseline;
-        gap: 10px;
-        margin-bottom: 12px;
-      }
-
-      .section-cap {
-        font-size: 0.74rem;
-        letter-spacing: 0.16em;
-      }
-
-      .section h2 {
-        font-size: 1rem;
-      }
-
-      .field-grid {
-        gap: 8px;
-      }
-
-      .field label {
-        margin-bottom: 7px;
-        font-size: 0.72rem;
-      }
-
-      .field input,
-      .field textarea {
-        min-height: 48px;
-        padding: 10px 15px;
-        border-radius: 20px;
-        font-size: 0.94rem;
-      }
-
-      .button-row {
-        margin-top: 10px;
-      }
-
-      .button-row button {
-        min-height: 44px;
-        padding: 10px 14px 10px 16px;
-      }
-
-      .legend {
-        gap: 9px;
-      }
-
-      .legend-item {
-        gap: 10px;
-        font-size: 0.84rem;
-      }
-
-      .swatch {
-        width: 14px;
-        height: 14px;
-        border-radius: 999px;
-      }
-
-      .calendar-stage {
-        width: 100%;
-        justify-self: stretch;
-        border-radius: 32px;
-      }
-
-      .calendar-stage::before,
-      .calendar-stage::after {
-        display: none;
-      }
-
-      .calendar-board {
-        width: 100%;
-        min-height: 632px;
-        padding: 16px 16px 14px;
-        border-radius: 32px;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .toolbar {
-        gap: 12px;
-        margin-bottom: 12px;
-        padding-bottom: 12px;
-      }
-
-      .toolbar-main {
-        align-items: flex-start;
-        gap: 18px;
-      }
-
-      .toolbar-copy {
-        gap: 0;
-      }
-
-      .toolbar h2 {
-        color: #edf3ff;
-        font-family: "Cormorant Garamond", "Noto Serif SC", serif;
-        font-size: clamp(2.12rem, 2.52vw, 2.74rem);
-        font-weight: 600;
-        letter-spacing: -0.032em;
-      }
-
-      .month-switcher {
-        padding: 4px;
-        gap: 6px;
-      }
-
-      .month-switcher button {
-        padding: 7px 13px;
-        font-weight: 700;
-      }
-
-      .nav-icon {
-        min-width: 38px;
-        height: 38px;
-      }
-
-      .month-chip {
-        min-width: 112px;
-        font-size: 0.84rem;
-      }
-
-      .stats {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 12px;
-      }
-
-      .stat-primary {
-        grid-column: auto;
-      }
-
-      .stat {
-        min-height: 64px;
-        padding: 10px 13px 9px;
-        border-radius: 22px;
-        display: grid;
-        gap: 6px;
-        align-content: start;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .stat strong {
-        font-size: 1.58rem;
-      }
-
-      .stat span {
-        font-size: 0.72rem;
-      }
-
-      .stat em {
-        margin-top: 0;
-        font-size: 0.56rem;
-      }
-
-      .stat::before {
-        content: "";
-        position: absolute;
-        top: 15px;
-        right: 14px;
-        width: 22px;
-        height: 22px;
-        background: linear-gradient(180deg, rgba(183, 236, 255, 0.92), rgba(92, 199, 220, 0.68));
-        opacity: 0.9;
-      }
-
-      .stat-holiday::before {
-        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='m12 2.4 2.55 5.17 5.7.83-4.13 4.03.98 5.67L12 15.42 6.9 18.1l.98-5.67L3.75 8.4l5.7-.83L12 2.4Z'/%3E%3C/svg%3E") center / contain no-repeat;
-      }
-
-      .stat-rest::before {
-        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M4 6.5A1.5 1.5 0 0 1 5.5 5h.75A1.75 1.75 0 0 1 8 6.75V12h7.25V8.75A1.75 1.75 0 0 1 17 7h.75A1.25 1.25 0 0 1 19 8.25V14a2 2 0 0 1-2 2H8v2.25a.75.75 0 1 1-1.5 0V16H5.75A1.75 1.75 0 0 1 4 14.25V6.5Z'/%3E%3C/svg%3E") center / contain no-repeat;
-      }
-
-      .stat-makeup::before {
-        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M8.25 4a1 1 0 0 1 1 1v1h5.5V5a1 1 0 1 1 2 0v1h.75A2.5 2.5 0 0 1 20 8.5v7A2.5 2.5 0 0 1 17.5 18h-11A2.5 2.5 0 0 1 4 15.5v-7A2.5 2.5 0 0 1 6.5 6h.75V5a1 1 0 0 1 1-1Zm-1.75 6.5h11v5h-11v-5Z'/%3E%3C/svg%3E") center / contain no-repeat;
-      }
-
-      .stat-overlap::before {
-        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M9 6a6 6 0 1 0 0 12 6 6 0 0 0 0-12Zm6 0a6 6 0 1 0 0 12 6 6 0 0 0 0-12Zm-3 2.03A7.99 7.99 0 0 1 13 12a7.99 7.99 0 0 1-1 3.97A5.98 5.98 0 0 1 9 12c0-1.47.53-2.82 1.4-3.87.48-.03.97-.05 1.6-.1Z'/%3E%3C/svg%3E") center / contain no-repeat;
-      }
-
-      .months {
-        flex: 1 1 auto;
-      }
-
-      .month {
-        height: 100%;
-        padding: 0 6px 8px;
-        border-radius: 28px;
-      }
-
-      .month-head {
-        display: none;
-      }
-
-      .weekdays {
-        padding: 4px 6px 8px;
-      }
-
-      .weekdays div {
-        padding: 2px 0 6px;
-        font-size: 0.68rem;
-        font-weight: 700;
-        letter-spacing: 0.06em;
-      }
-
-      .days {
-        padding: 0;
-        gap: 7px;
-      }
-
-      .day {
-        aspect-ratio: auto;
-        height: 88px;
-        grid-template-rows: minmax(0, 1fr) auto;
-        border-radius: 20px;
-        padding: 9px 10px 9px;
+          0 0 0 1px rgba(210, 222, 248, 0.28),
+          inset 0 1px 0 rgba(255, 255, 255, 0.08);
       }
 
       .day-flag-row {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        width: auto;
-        min-height: 0;
-      }
-
-      .day-header {
-        grid-row: 1;
-        min-height: 34px;
-      }
-
-      .day-number {
-        width: 32px;
-        min-width: 32px;
-        min-height: 32px;
-        font-size: 1.02rem;
-      }
-
-      .day-number.today-mark {
-        width: 32px;
-        min-width: 32px;
-        min-height: 32px;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        gap: 6px;
       }
 
       .flag {
         min-width: 22px;
         height: 18px;
         padding: 0 6px;
-        font-size: 0.58rem;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #f6f9ff;
+        font-size: 0.66rem;
+        font-weight: 800;
+        border: 1px solid rgba(225, 234, 252, 0.16);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
       }
+
+      .flag.rest { background: linear-gradient(180deg, rgba(125, 194, 179, 0.9), rgba(75, 136, 126, 0.96)); }
+      .flag.makeup { background: linear-gradient(180deg, rgba(152, 170, 228, 0.92), rgba(94, 113, 183, 0.96)); }
+      .flag.holiday { background: linear-gradient(180deg, rgba(145, 159, 235, 0.92), rgba(97, 110, 193, 0.96)); }
+
+      .day-number {
+        font-size: 1.12rem;
+        line-height: 1;
+        font-weight: 800;
+        color: rgba(247, 249, 255, 0.96);
+        align-self: center;
+      }
+
+      .day.is-saturday .day-number { color: var(--saturday); }
+      .day.is-sunday .day-number { color: var(--sunday); }
 
       .day-label {
-        grid-row: 2;
-        min-height: 1.2em;
-        margin-top: 0;
-        padding: 0 2px;
-        font-size: 0.62rem;
-        line-height: 1.1;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        word-break: keep-all;
+        min-height: 1.1em;
+        font-size: 0.72rem;
+        color: rgba(240, 244, 252, 0.72);
       }
 
-      body.dark-theme .hero-shell {
+      body.glass-style .frame,
+      body.glass-style .subpanel,
+      body.glass-style .calendar-stage,
+      body.glass-style .hero-controls,
+      body.glass-style .stat-card,
+      body.glass-style .hero-pill,
+      body.glass-style .field input,
+      body.glass-style .apply-button {
         background:
-          linear-gradient(135deg, rgba(126, 154, 223, 0.12), rgba(255, 255, 255, 0.018) 34%, rgba(77, 109, 186, 0.02) 100%),
-          linear-gradient(180deg, rgba(8, 11, 18, 0.98), rgba(7, 9, 14, 0.98));
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.08),
-          0 30px 70px rgba(0, 0, 0, 0.24),
-          -24px 16px 48px rgba(67, 129, 255, 0.16);
+          linear-gradient(180deg, rgba(44, 54, 79, 0.5), rgba(18, 24, 36, 0.82)),
+          rgba(255, 255, 255, 0.03);
       }
 
-      body.dark-theme .panel-shell,
-      body.dark-theme .calendar-stage {
-        background:
-          linear-gradient(135deg, rgba(101, 126, 186, 0.08), rgba(255, 255, 255, 0.014) 34%, rgba(70, 98, 164, 0.02) 100%),
-          linear-gradient(180deg, rgba(10, 13, 20, 0.98), rgba(7, 9, 14, 0.98));
+      body.light-theme {
+        --body-bg:
+          radial-gradient(circle at 10% 12%, rgba(109, 160, 255, 0.22), transparent 22%),
+          radial-gradient(circle at 84% 12%, rgba(170, 198, 255, 0.28), transparent 20%),
+          linear-gradient(180deg, #f4f8ff 0%, #e8f0ff 44%, #d9e6fb 100%);
+        --surface:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(241, 247, 255, 0.96));
+        --surface-soft:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(243, 247, 255, 0.98));
+        --surface-subtle:
+          linear-gradient(180deg, rgba(250, 252, 255, 0.96), rgba(239, 245, 255, 1));
+        --surface-ribbon:
+          linear-gradient(180deg, rgba(237, 239, 244, 0.98), rgba(204, 208, 217, 0.96) 50%, rgba(174, 178, 188, 0.98));
+        --border: rgba(165, 187, 227, 0.42);
+        --border-soft: rgba(255, 255, 255, 0.62);
+        --text: #1f2736;
+        --text-soft: rgba(37, 46, 62, 0.82);
+        --text-mute: rgba(69, 83, 106, 0.56);
+        --text-faint: rgba(69, 83, 106, 0.3);
+        --shadow-panel:
+          0 24px 54px rgba(123, 152, 214, 0.18),
+          inset 0 1px 0 rgba(255, 255, 255, 0.78);
+        --shadow-soft:
+          0 14px 30px rgba(137, 164, 220, 0.12),
+          inset 0 1px 0 rgba(255, 255, 255, 0.68);
+        --weekend-bg: linear-gradient(180deg, rgba(229, 236, 255, 0.98), rgba(210, 220, 250, 1));
+        --holiday-bg: linear-gradient(180deg, rgba(223, 232, 255, 1), rgba(210, 220, 246, 1));
+        --rest-bg: linear-gradient(180deg, rgba(216, 244, 240, 1), rgba(203, 236, 231, 1));
+        --overlap-bg: linear-gradient(180deg, rgba(221, 229, 255, 1), rgba(208, 219, 252, 1));
+        --makeup-bg: linear-gradient(180deg, rgba(224, 234, 255, 1), rgba(213, 223, 249, 1));
+        --today-outline: rgba(119, 148, 224, 0.68);
       }
 
-      body.dark-theme .hero {
-        background:
-          radial-gradient(circle at 4% 100%, rgba(69, 135, 255, 0.28), transparent 18%),
-          radial-gradient(circle at 84% 18%, rgba(114, 135, 196, 0.08), transparent 20%),
-          linear-gradient(180deg, rgba(18, 23, 35, 0.98), rgba(10, 12, 18, 0.99));
-      }
+      .light-theme .window-dots span:nth-child(1) { box-shadow: 0 2px 6px rgba(255, 96, 87, 0.22); }
+      .light-theme .window-dots span:nth-child(2) { box-shadow: 0 2px 6px rgba(255, 189, 46, 0.22); }
+      .light-theme .window-dots span:nth-child(3) { box-shadow: 0 2px 6px rgba(40, 202, 66, 0.22); }
 
-      body.dark-theme .panel,
-      body.dark-theme .calendar-board {
-        background:
-          linear-gradient(180deg, rgba(15, 20, 31, 0.98), rgba(10, 13, 20, 0.99));
-      }
-
-      body.dark-theme .section {
-        background:
-          linear-gradient(180deg, rgba(18, 23, 35, 0.94), rgba(12, 15, 24, 0.98));
-      }
-
-      body.dark-theme .hero-actions {
-        background:
-          linear-gradient(180deg, rgba(20, 27, 40, 0.92), rgba(10, 14, 23, 0.96)),
-          rgba(10, 14, 23, 0.9);
-      }
-
-      body.dark-theme .hero-badge,
-      body.dark-theme .theme-toggle,
-      body.dark-theme .style-toggle,
-      body.dark-theme .month-switcher,
-      body.dark-theme .stat,
-      body.dark-theme .day,
-      body.dark-theme .field input,
-      body.dark-theme .field textarea,
-      body.dark-theme .button-row button {
-        background:
-          linear-gradient(180deg, rgba(19, 25, 37, 0.98), rgba(10, 14, 22, 0.99)),
-          rgba(11, 15, 24, 0.94);
-      }
-
-      body.dark-theme .weather-line.location {
-        color: rgba(191, 202, 229, 0.74);
-      }
-
-      body.dark-theme .weather-line.detail {
-        color: rgba(241, 245, 255, 0.96);
-      }
-
-      body.dark-theme .month {
-        background:
-          linear-gradient(180deg, rgba(12, 17, 28, 0.98), rgba(9, 12, 18, 0.99));
-      }
-
-      body.dark-theme .weekdays div {
-        color: rgba(181, 192, 222, 0.68);
-      }
-
-      body.dark-theme .section-cap {
-        color: rgba(170, 183, 214, 0.56);
-      }
-
-      body.dark-theme.glass-style .hero-shell {
-        background:
-          linear-gradient(135deg, rgba(178, 203, 255, 0.12), rgba(255, 255, 255, 0.02) 38%, rgba(109, 146, 231, 0.03) 100%),
-          linear-gradient(180deg, rgba(8, 13, 22, 0.88), rgba(6, 10, 18, 0.96));
-      }
-
-      body.dark-theme.glass-style .panel-shell,
-      body.dark-theme.glass-style .calendar-stage {
-        background:
-          linear-gradient(135deg, rgba(157, 182, 238, 0.08), rgba(255, 255, 255, 0.016) 38%, rgba(86, 120, 204, 0.02) 100%),
-          linear-gradient(180deg, rgba(9, 13, 21, 0.9), rgba(7, 10, 16, 0.96));
-      }
-
-      body.dark-theme.glass-style .hero {
-        background:
-          radial-gradient(circle at 20% 96%, rgba(78, 116, 214, 0.12), transparent 30%),
-          radial-gradient(circle at 86% 14%, rgba(194, 214, 255, 0.08), transparent 24%),
-          linear-gradient(180deg, rgba(20, 28, 42, 0.72), rgba(10, 14, 23, 0.44) 72%),
-          rgba(9, 13, 21, 0.38);
-      }
-
-      body.dark-theme.glass-style .panel,
-      body.dark-theme.glass-style .calendar-board,
-      body.dark-theme.glass-style .section,
-      body.dark-theme.glass-style .month,
-      body.dark-theme.glass-style .stat,
-      body.dark-theme.glass-style .day:not(.empty),
-      body.dark-theme.glass-style .hero-badge,
-      body.dark-theme.glass-style .theme-toggle,
-      body.dark-theme.glass-style .style-toggle,
-      body.dark-theme.glass-style .month-switcher,
-      body.dark-theme.glass-style .field input,
-      body.dark-theme.glass-style .field textarea,
-      body.dark-theme.glass-style .button-row button {
-        background:
-          linear-gradient(180deg, rgba(22, 30, 45, 0.7), rgba(10, 14, 23, 0.34)),
-          rgba(11, 15, 24, 0.38);
-      }
-
-      body.dark-theme.glass-style .hero-actions {
-        background:
-          linear-gradient(180deg, rgba(25, 34, 49, 0.74), rgba(10, 14, 23, 0.32)),
-          rgba(11, 15, 24, 0.42);
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .hero-badge::before,
-        .stat,
-        .month,
-        .day {
-          animation: none !important;
+      @media (max-width: 1280px) {
+        .hero {
+          grid-template-columns: minmax(0, 1fr) 340px;
+          padding-left: 30px;
         }
 
-        .theme-toggle,
-        .style-toggle,
-        .month-switcher,
-        .button-row button,
-        .stat:hover,
-        .day:hover:not(.empty),
-        .month-switcher:hover,
-        .hero-badge:hover,
-        .hover-bounce {
-          animation: none;
-          transform: none;
-        }
-      }
-
-      @media (max-width: 1220px) {
-        .shell {
-          width: min(100% - 34px, 1500px);
-        }
-
-        .hero-shell .hero {
-          grid-template-columns: minmax(0, 1fr) minmax(306px, 330px);
-          column-gap: 26px;
-        }
-      }
-
-      @media (max-width: 980px) {
-        .layout {
-          grid-template-columns: 1fr;
-        }
-
-        .panel {
-          position: static;
-        }
-
-        .hero-shell .hero {
-          grid-template-columns: minmax(0, 1fr) minmax(284px, 320px);
-          padding: 28px 28px 30px;
+        .content {
+          grid-template-columns: 280px minmax(0, 1fr);
         }
 
         .stats {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
+      }
 
-        .stat-primary {
-          grid-column: 1 / -1;
+      @media (max-width: 980px) {
+        .app-shell {
+          width: min(100% - 24px, 1536px);
+        }
+
+        .hero {
+          grid-template-columns: 1fr;
+          gap: 18px;
+          padding: 22px 18px;
+        }
+
+        .hero-controls {
+          width: 100%;
+          justify-self: stretch;
+        }
+
+        .content {
+          grid-template-columns: 1fr;
         }
       }
 
       @media (max-width: 760px) {
-        .shell {
-          width: min(100% - 20px, 1440px);
-          margin-top: 12px;
-        }
-
-        .shell-rim {
-          border-radius: 30px;
-        }
-
-        .hero-shell .hero {
-          grid-template-columns: 1fr;
-          grid-template-rows: auto auto auto;
-          min-height: auto;
-          padding: 22px 18px 20px;
-          border-radius: 28px;
-          row-gap: 18px;
-        }
-
-        .hero-top {
-          display: block;
-          margin-bottom: 0;
-        }
-
-        .hero-grid {
-          display: block;
-        }
-
-        .hero-intro {
-          gap: 14px;
-          padding: 0;
+        :root {
+          --app-width: calc(100vw - 24px);
         }
 
         .hero h1 {
-          white-space: normal;
-          font-size: clamp(2.36rem, 10vw, 3.34rem);
+          font-size: 2.86rem;
         }
 
-        .hero-actions {
-          grid-column: auto;
-          grid-row: auto;
-          width: 100%;
-          grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-          grid-template-areas:
-            "weather theme"
-            "weather style";
-          padding: 8px;
-        }
-
-        #weather-badge {
-          min-height: 96px;
-        }
-
-        .theme-toggle,
-        .style-toggle {
-          min-width: 0;
-        }
-
-        .calendar-board {
-          padding: 14px;
-        }
-
-        .toolbar {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-
-        .toolbar-main {
-          flex-direction: column;
-          align-items: flex-start;
-          width: 100%;
-        }
-
-        .month-switcher {
-          width: 100%;
-          justify-content: space-between;
-        }
-
-        .field-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .modal-overlay {
-          padding: 12px;
-        }
-
-        .modal-head,
-        .modal-body {
-          padding-inline: 16px;
-        }
-      }
-
-      @media (max-width: 640px) {
-        .hero h1 {
-          font-size: clamp(2rem, 10.2vw, 2.72rem);
-        }
-
-        .hero-shell .hero {
-          padding: 20px 16px 18px;
-        }
-
-        .hero-actions {
+        .hero-controls {
           grid-template-columns: 1fr;
           grid-template-areas:
+            "location"
             "weather"
             "theme"
             "style";
         }
 
-        #weather-badge {
-          min-height: 78px;
+        .stats {
+          grid-template-columns: 1fr;
         }
 
-        .theme-toggle,
-        .style-toggle {
+        .calendar-top {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .month-switcher {
           width: 100%;
           justify-content: space-between;
         }
 
-        .panel,
-        .calendar-board {
-          border-radius: 24px;
-        }
-
-        .section {
-          padding: 14px;
-        }
-
-        .month-switcher {
-          gap: 6px;
-          padding: 4px;
-        }
-
-        .month-switcher button {
-          padding: 9px 12px;
-        }
-
-        .month-chip {
-          width: 100%;
-          min-width: 0;
-          order: -1;
-          padding: 6px 0 2px;
-        }
-
-        .stats {
-          display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          width: 100%;
-        }
-
-        .stat {
-          min-width: 0;
-        }
-
-        .stat-primary {
-          grid-column: 1 / -1;
-        }
-
-        .month {
-          padding: 0 6px 10px;
-        }
-
-        .weekdays {
-          padding: 8px 2px 10px;
-        }
-
-        .days {
-          gap: 7px;
-          align-items: stretch;
+        .switch-label {
+          flex: 1;
         }
 
         .day {
-          padding: 10px 8px 12px;
-          border-radius: 18px;
-        }
-
-        .day-flag-row {
-          top: 8px;
-          right: 8px;
-        }
-
-        .day-header {
-          min-height: 40px;
-        }
-
-        .day-number {
-          width: 34px;
-          min-width: 34px;
-          min-height: 34px;
-          font-size: 1.08rem;
-        }
-
-        .day-number.today-mark {
-          width: 34px;
-          min-width: 34px;
-          min-height: 34px;
-        }
-
-        .day-label {
-          min-height: 1.9em;
-          font-size: 0.7rem;
-        }
-      }
-
-      @media (max-width: 420px) {
-        .shell {
-          width: min(100% - 14px, 1440px);
-        }
-
-        .hero-shell .hero {
-          padding: 18px 14px 16px;
-          border-radius: 22px;
-        }
-
-        .shell-rim {
-          border-radius: 24px;
-        }
-
-        .traffic-lights {
-          margin-left: 0;
-        }
-
-        .hero-actions {
-          padding: 8px;
-        }
-
-        #weather-badge {
-          min-height: 72px;
-          padding: 12px;
-        }
-
-        .weather-line.location {
-          font-size: 0.72rem;
-        }
-
-        .weather-line.detail {
-          font-size: 0.92rem;
-        }
-
-        .toolbar h2 {
-          font-size: 1.74rem;
-        }
-
-        .stats {
-          gap: 8px;
-        }
-
-        .stat {
-          min-height: 76px;
-          padding: 12px;
-        }
-
-        .day {
-          padding: 9px 6px 8px;
-          border-radius: 16px;
-        }
-
-        .day-header {
-          min-height: 34px;
-        }
-
-        .day-number {
-          width: 30px;
-          min-width: 30px;
-          min-height: 30px;
-          font-size: 0.98rem;
-        }
-
-        .day-number.today-mark {
-          width: 30px;
-          min-width: 30px;
-          min-height: 30px;
-        }
-
-        .flag {
-          min-width: 20px;
-          height: 18px;
-          padding: 0 5px;
-          font-size: 0.56rem;
+          min-height: 86px;
         }
       }
     </style>
   </head>
-  <body>
-    <div class="grain" aria-hidden="true"></div>
-    <div class="glass-scene" aria-hidden="true"></div>
-    <div class="shell">
-      <div class="shell-rim reveal hero-shell">
-      <section class="hero">
-        <div class="hero-top">
-          <div class="traffic-lights" aria-hidden="true">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <div class="hero-actions">
-            <div class="hero-badge" id="weather-badge" role="button" tabindex="0" aria-label="刷新天气">天气读取中</div>
-            <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="切换深色模式">
-              <span class="theme-toggle-track" aria-hidden="true">
-                <span class="theme-toggle-thumb"></span>
-              </span>
-              <span id="theme-toggle-text">浅色模式</span>
-            </button>
-            <button class="style-toggle" id="style-toggle" type="button" aria-pressed="false" aria-label="Toggle liquid glass surface">
-              <span class="style-toggle-copy">
-                <span class="style-toggle-label">Surface</span>
-                <span class="style-toggle-text" id="style-toggle-text">Graphite</span>
-              </span>
-              <span class="style-toggle-orb" aria-hidden="true"></span>
-            </button>
-          </div>
+  <body class="dark-theme graphite-style">
+    <div class="app-shell">
+      <header class="frame hero">
+        <div class="window-dots" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
-        <div class="hero-grid">
-          <div class="hero-intro">
-            <span class="hero-kicker">专注规划 · 优雅生活</span>
-            <h1>Eunice的日历</h1>
-          </div>
-        </div>
-      </section>
-      </div>
 
-      <div class="layout">
-        <div class="shell-rim reveal panel-shell">
-        <aside class="panel">
-          <div class="section reveal">
-            <div class="section-head">
-              <span class="section-cap">Cycle</span>
-              <h2>日历设置</h2>
-            </div>
-            <div class="field-grid">
-              <div class="field">
-                <label for="year-input">显示年份</label>
-                <input id="year-input" type="number" min="2000" max="2100" />
+        <div class="hero-copy">
+          <h1>Eunice的日历</h1>
+          <p class="hero-subtitle">专注规划 · 优雅生活</p>
+        </div>
+
+        <div class="hero-controls">
+          <button class="hero-pill control-chip control-location" id="weather-location" type="button" aria-label="刷新定位">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 20s-6-5.1-6-10a6 6 0 1112 0c0 4.9-6 10-6 10z"></path>
+              <circle cx="12" cy="10" r="2.2"></circle>
+            </svg>
+            <span id="weather-location-text">驻马店市 / 河南省</span>
+          </button>
+
+          <button class="hero-pill control-chip control-weather" id="weather-badge" type="button" aria-label="刷新天气">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14 3a7.5 7.5 0 000 15 7 7 0 01-3-13.3A7.45 7.45 0 0114 3z"></path>
+            </svg>
+            <span><strong id="weather-temperature">24°C</strong> / <span id="weather-status">阴</span></span>
+          </button>
+
+          <button class="hero-pill theme-toggle" id="theme-toggle" type="button" aria-pressed="true" aria-label="切换深色模式">
+            <span class="toggle-label" id="theme-toggle-text">深色模式</span>
+            <span class="toggle-track" aria-hidden="true">
+              <span class="toggle-thumb"></span>
+            </span>
+          </button>
+
+          <button class="hero-pill style-toggle" id="style-toggle" type="button" aria-pressed="false" aria-label="切换材质风格">
+            <span class="style-copy">
+              <small id="style-toggle-label">Surface</small>
+              <span id="style-toggle-text">Liquid Glass</span>
+            </span>
+            <span class="style-orb" aria-hidden="true"></span>
+          </button>
+        </div>
+      </header>
+
+      <div class="content">
+        <aside class="frame sidebar">
+          <div class="sidebar-stack">
+            <section class="subpanel">
+              <div class="subpanel-header">
+                <small>CYCLE</small>
+                <h2>日历设置</h2>
               </div>
-              <div class="field">
-                <label for="cycle-start">周期起点</label>
-                <input id="cycle-start" type="date" />
+
+              <div class="field-stack">
+                <div class="field">
+                  <label for="year-input">显示年份</label>
+                  <div class="input-wrap">
+                    <input id="year-input" type="number" min="2000" max="2100" />
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="cycle-start">周期起点</label>
+                  <div class="input-wrap">
+                    <input id="cycle-start" type="date" />
+                    <span class="field-icon" aria-hidden="true">▦</span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="work-days">连续上班天数</label>
+                  <div class="input-wrap">
+                    <input id="work-days" type="number" min="1" max="30" />
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="rest-days">连续休息天数</label>
+                  <div class="input-wrap">
+                    <input id="rest-days" type="number" min="1" max="30" />
+                  </div>
+                </div>
               </div>
-              <div class="field">
-                <label for="work-days">连续上班天数</label>
-                <input id="work-days" type="number" min="1" max="30" />
-              </div>
-              <div class="field">
-                <label for="rest-days">连续休息天数</label>
-                <input id="rest-days" type="number" min="1" max="30" />
-              </div>
-            </div>
-            <div class="button-row">
-              <button class="primary" id="apply-button" type="button">
-                <span class="button-copy">应用设置</span>
-                <span class="button-orb" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
+
+              <button class="apply-button" id="apply-button" type="button">
+                <strong>应用设置</strong>
+                <span class="orb" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
                     <path d="M8 16L16 8"></path>
                     <path d="M10 8h6v6"></path>
                   </svg>
                 </span>
               </button>
-            </div>
-          </div>
+            </section>
 
-          <div class="section reveal">
-            <div class="section-head">
-              <span class="section-cap">Legend</span>
-              <h2>高亮说明</h2>
-            </div>
-            <div class="legend">
-              <div class="legend-item">
-                <span class="swatch" style="background: var(--weekend)"></span>
-                <span>周六周日</span>
+            <section class="subpanel legend-panel">
+              <div class="subpanel-header">
+                <small>Legend</small>
+                <h2>高亮说明</h2>
               </div>
-              <div class="legend-item">
-                <span class="swatch" style="background: var(--holiday)"></span>
-                <span>法定节假日</span>
+
+              <div class="legend">
+                <div class="legend-item"><span class="legend-dot legend-weekend"></span><span>周六周日</span></div>
+                <div class="legend-item"><span class="legend-dot legend-holiday"></span><span>法定节假日</span></div>
+                <div class="legend-item"><span class="legend-dot legend-makeup"></span><span>官方调休上班</span></div>
+                <div class="legend-item"><span class="legend-dot legend-rest"></span><span>自定义休息日</span></div>
+                <div class="legend-item"><span class="legend-dot legend-overlap"></span><span>节假日与休息日重叠</span></div>
               </div>
-              <div class="legend-item">
-                <span class="swatch" style="background: var(--makeup)"></span>
-                <span>官方调休上班</span>
-              </div>
-              <div class="legend-item">
-                <span class="swatch" style="background: var(--rest)"></span>
-                <span>自定义休息日</span>
-              </div>
-              <div class="legend-item">
-                <span class="swatch" style="background: var(--mix)"></span>
-                <span>节假日与休息日重叠</span>
-              </div>
-            </div>
+            </section>
           </div>
         </aside>
-        </div>
 
-        <div class="shell-rim reveal calendar-stage">
-        <main class="calendar-board">
-          <div class="toolbar">
-            <div class="toolbar-main">
-              <div class="toolbar-copy">
-                <h2 id="calendar-title">2026 年日历</h2>
-                <p id="calendar-subtitle"></p>
-              </div>
-              <div class="month-switcher">
-                <button class="nav-icon" id="prev-month-button" type="button" aria-label="上个月">‹</button>
-                <span class="month-chip" id="month-chip">当前月份</span>
-                <button class="nav-icon" id="next-month-button" type="button" aria-label="下个月">›</button>
-                <button id="today-month-button" type="button">本月</button>
-              </div>
+        <main class="frame calendar-shell">
+          <div class="calendar-top">
+            <div class="calendar-title-wrap">
+              <h2 id="calendar-title">2026年六月</h2>
             </div>
-            <div class="stats">
-              <div class="stat stat-primary stat-holiday reveal">
-                <strong id="holiday-count">0</strong>
-                <span>节假日</span>
-                <em>Official Holidays</em>
-              </div>
-              <div class="stat stat-rest reveal">
-                <strong id="rest-count">0</strong>
-                <span>休息日</span>
-                <em>Rest Cycle</em>
-              </div>
-              <div class="stat stat-makeup reveal">
-                <strong id="makeup-count">0</strong>
-                <span>调休上班</span>
-                <em>Make-up Work</em>
-              </div>
-              <div class="stat stat-overlap reveal">
-                <strong id="overlap-count">0</strong>
-                <span>重叠日</span>
-                <em>Overlap Days</em>
-              </div>
+
+            <div class="month-switcher">
+              <button class="switch-button" id="prev-month-button" type="button" aria-label="上个月">‹</button>
+              <span class="switch-label" id="month-chip">2026.06</span>
+              <button class="switch-button" id="next-month-button" type="button" aria-label="下个月">›</button>
+              <button class="switch-today" id="today-month-button" type="button">本月</button>
             </div>
           </div>
 
-          <div class="months" id="months"></div>
+          <section class="stats">
+            <article class="stat-card">
+              <span class="stat-value" id="holiday-count">3</span>
+              <span class="stat-label">节假日</span>
+              <span class="stat-note">Official Holidays</span>
+            </article>
+
+            <article class="stat-card">
+              <span class="stat-value" id="rest-count">8</span>
+              <span class="stat-label">休息日</span>
+              <span class="stat-note">Rest Cycle</span>
+            </article>
+
+            <article class="stat-card">
+              <span class="stat-value" id="makeup-count">0</span>
+              <span class="stat-label">调休上班</span>
+              <span class="stat-note">Make-Up Work</span>
+            </article>
+
+            <article class="stat-card">
+              <span class="stat-value" id="overlap-count">2</span>
+              <span class="stat-label">重叠日</span>
+              <span class="stat-note">Overlap Days</span>
+            </article>
+          </section>
+
+          <section class="calendar-stage">
+            <div class="weekdays" id="weekday-row" aria-hidden="true"></div>
+            <div class="days" id="days-grid"></div>
+          </section>
         </main>
-        </div>
       </div>
     </div>
 
     <script>
-      const APP_VERSION = "2026-06-12T01-29-56";
-      const STORAGE_KEY = "work-rest-calendar-settings-v3";
-      const LEGACY_STORAGE_KEY = "work-rest-calendar-settings-v2";
-      const THEME_STORAGE_KEY = "work-rest-calendar-theme-v2";
-      const SURFACE_STORAGE_KEY = "work-rest-calendar-surface-v2";
-      const monthNames = ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"];
+      const THEME_STORAGE_KEY = "work-rest-calendar-theme-v4";
+      const SURFACE_STORAGE_KEY = "work-rest-calendar-surface-v4";
+      const SETTINGS_STORAGE_KEY = "work-rest-calendar-settings-v4";
+
       const weekdayNames = ["一", "二", "三", "四", "五", "六", "日"];
-      const OFFICIAL_SCHEDULES = {
-        2024: {
-          title: "国务院办公厅关于2024年部分节假日安排的通知",
-          noticeNumber: "国办发明电〔2023〕7号",
-          publishedAt: "2023-10-25",
-          url: "https://www.gov.cn/zhengce/zhengceku/202310/content_6911528.htm",
-          holidays: [
-            { name: "元旦", dates: ["2024-01-01"] },
-            { name: "春节", dates: expandDateRange("2024-02-10", "2024-02-17") },
-            { name: "清明节", dates: expandDateRange("2024-04-04", "2024-04-06") },
-            { name: "劳动节", dates: expandDateRange("2024-05-01", "2024-05-05") },
-            { name: "端午节", dates: ["2024-06-10"] },
-            { name: "中秋节", dates: expandDateRange("2024-09-15", "2024-09-17") },
-            { name: "国庆节", dates: expandDateRange("2024-10-01", "2024-10-07") }
-          ],
-          workdays: ["2024-02-04", "2024-02-18", "2024-04-07", "2024-04-28", "2024-05-11", "2024-09-14", "2024-09-29", "2024-10-12"]
-        },
+      const monthNames = ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"];
+
+      const officialHolidayData = {
         2025: {
-          title: "国务院办公厅关于2025年部分节假日安排的通知",
-          noticeNumber: "国办发明电〔2024〕12号",
-          publishedAt: "2024-11-12",
-          url: "https://www.gov.cn/zhengce/zhengceku/202411/content_6986383.htm",
           holidays: [
-            { name: "元旦", dates: ["2025-01-01"] },
+            { name: "元旦", dates: expandDateRange("2025-01-01", "2025-01-01") },
             { name: "春节", dates: expandDateRange("2025-01-28", "2025-02-04") },
             { name: "清明节", dates: expandDateRange("2025-04-04", "2025-04-06") },
             { name: "劳动节", dates: expandDateRange("2025-05-01", "2025-05-05") },
             { name: "端午节", dates: expandDateRange("2025-05-31", "2025-06-02") },
-            { name: "国庆节 / 中秋节", dates: expandDateRange("2025-10-01", "2025-10-08") }
+            { name: "国庆节", dates: expandDateRange("2025-10-01", "2025-10-08") }
           ],
           workdays: ["2025-01-26", "2025-02-08", "2025-04-27", "2025-09-28", "2025-10-11"]
         },
         2026: {
-          title: "国务院办公厅关于2026年部分节假日安排的通知",
-          noticeNumber: "国办发明电〔2025〕7号",
-          publishedAt: "2025-11-04",
-          url: "https://www.gov.cn/zhengce/zhengceku/202511/content_7047091.htm",
           holidays: [
             { name: "元旦", dates: expandDateRange("2026-01-01", "2026-01-03") },
             { name: "春节", dates: expandDateRange("2026-02-15", "2026-02-23") },
@@ -3834,28 +1074,6 @@
         }
       };
 
-      const yearInput = document.getElementById("year-input");
-      const cycleStartInput = document.getElementById("cycle-start");
-      const workDaysInput = document.getElementById("work-days");
-      const restDaysInput = document.getElementById("rest-days");
-      const applyButton = document.getElementById("apply-button");
-      const weatherBadge = document.getElementById("weather-badge");
-      const themeToggle = document.getElementById("theme-toggle");
-      const themeToggleText = document.getElementById("theme-toggle-text");
-      const styleToggle = document.getElementById("style-toggle");
-      const styleToggleText = document.getElementById("style-toggle-text");
-      const monthsNode = document.getElementById("months");
-      const calendarTitle = document.getElementById("calendar-title");
-      const calendarSubtitle = document.getElementById("calendar-subtitle");
-      const monthChip = document.getElementById("month-chip");
-      const holidayCount = document.getElementById("holiday-count");
-      const restCount = document.getElementById("rest-count");
-      const makeupCount = document.getElementById("makeup-count");
-      const overlapCount = document.getElementById("overlap-count");
-      const prevMonthButton = document.getElementById("prev-month-button");
-      const nextMonthButton = document.getElementById("next-month-button");
-      const todayMonthButton = document.getElementById("today-month-button");
-      let revealObserver = null;
       const weatherCodeMap = {
         0: "晴",
         1: "大部晴朗",
@@ -3866,413 +1084,127 @@
         51: "毛毛雨",
         53: "小雨",
         55: "细雨",
-        56: "冻毛毛雨",
-        57: "冻雨",
         61: "小雨",
         63: "中雨",
         65: "大雨",
-        66: "冻雨",
-        67: "强冻雨",
         71: "小雪",
         73: "中雪",
         75: "大雪",
-        77: "阵雪",
         80: "阵雨",
         81: "强阵雨",
         82: "暴雨",
-        85: "阵雪",
-        86: "强阵雪",
-        95: "雷阵雨",
-        96: "雷雨夹冰雹",
-        99: "强雷雨夹冰雹"
+        95: "雷阵雨"
+      };
+
+      const yearInput = document.getElementById("year-input");
+      const cycleStartInput = document.getElementById("cycle-start");
+      const workDaysInput = document.getElementById("work-days");
+      const restDaysInput = document.getElementById("rest-days");
+      const applyButton = document.getElementById("apply-button");
+      const weatherLocationButton = document.getElementById("weather-location");
+      const weatherBadge = document.getElementById("weather-badge");
+      const weatherLocationText = document.getElementById("weather-location-text");
+      const weatherTemperature = document.getElementById("weather-temperature");
+      const weatherStatus = document.getElementById("weather-status");
+      const themeToggle = document.getElementById("theme-toggle");
+      const themeToggleText = document.getElementById("theme-toggle-text");
+      const styleToggle = document.getElementById("style-toggle");
+      const styleToggleText = document.getElementById("style-toggle-text");
+      const styleToggleLabel = document.getElementById("style-toggle-label");
+      const calendarTitle = document.getElementById("calendar-title");
+      const monthChip = document.getElementById("month-chip");
+      const holidayCount = document.getElementById("holiday-count");
+      const restCount = document.getElementById("rest-count");
+      const makeupCount = document.getElementById("makeup-count");
+      const overlapCount = document.getElementById("overlap-count");
+      const weekdayRow = document.getElementById("weekday-row");
+      const daysGrid = document.getElementById("days-grid");
+      const prevMonthButton = document.getElementById("prev-month-button");
+      const nextMonthButton = document.getElementById("next-month-button");
+      const todayMonthButton = document.getElementById("today-month-button");
+
+      const defaultSettings = {
+        year: 2026,
+        viewMonth: 5,
+        cycleStart: "2026-06-07",
+        workDays: 3,
+        restDays: 1
+      };
+
+      const viewState = {
+        month: defaultSettings.viewMonth
       };
 
       function pad(value) {
         return String(value).padStart(2, "0");
       }
 
-      function setWeatherBadge(value, detailText = "") {
-        let locationText = "";
-        let secondaryText = "";
+      function expandDateRange(startText, endText) {
+        const result = [];
+        const start = new Date(`${startText}T00:00:00`);
+        const end = new Date(`${endText}T00:00:00`);
+        const cursor = new Date(start);
 
-        if (typeof value === "object" && value !== null) {
-          locationText = value.location || "Weather";
-          secondaryText = value.detail || "";
-        } else if (detailText) {
-          locationText = String(value || "Weather");
-          secondaryText = String(detailText);
-        } else {
-          const parts = String(value || "").split(" / ");
-
-          if (parts.length >= 2) {
-            locationText = parts.shift() || "Weather";
-            secondaryText = parts.join(" · ");
-          } else {
-            locationText = "Weather";
-            secondaryText = String(value || "");
-          }
+        while (cursor <= end) {
+          result.push(toDateKey(cursor));
+          cursor.setDate(cursor.getDate() + 1);
         }
 
-        weatherBadge.replaceChildren();
-
-        const locationLine = document.createElement("span");
-        locationLine.className = "weather-line location";
-        locationLine.textContent = locationText;
-
-        const detailLine = document.createElement("span");
-        detailLine.className = "weather-line detail";
-        detailLine.textContent = secondaryText;
-
-        weatherBadge.append(locationLine, detailLine);
-        weatherBadge.setAttribute("aria-label", `${locationText} ${secondaryText}`.trim());
-      }
-
-      function formatLocationLabel(location) {
-        const city = location.city || location.locality || "";
-        const subdivision = location.principalSubdivision || "";
-        const country = location.countryName || "";
-        const parts = [];
-
-        if (city) {
-          parts.push(city);
-        }
-
-        if (subdivision && subdivision !== city) {
-          parts.push(subdivision);
-        }
-
-        if (!parts.length && country) {
-          parts.push(country);
-        }
-
-        return parts.length ? parts.join(" / ") : "Current location";
-      }
-
-      function formatWeatherDisplay(city, current) {
-        const weatherText = weatherCodeMap[current.weather_code] || "Weather";
-        const temperature = Math.round(current.temperature_2m);
-        return `${city} / ${temperature}°C / ${weatherText}`;
-      }
-
-      async function fetchLocationContext(latitude, longitude) {
-        const url = new URL("https://api.bigdatacloud.net/data/reverse-geocode-client");
-        url.searchParams.set("latitude", String(latitude));
-        url.searchParams.set("longitude", String(longitude));
-        url.searchParams.set("localityLanguage", "zh");
-
-        const response = await fetch(url.toString());
-        if (!response.ok) {
-          throw new Error(`location ${response.status}`);
-        }
-
-        const payload = await response.json();
-        return formatLocationLabel(payload);
-      }
-
-      function formatWeatherDisplay(city, current) {
-        const weatherText = weatherCodeMap[current.weather_code] || "Weather";
-        const temperature = Math.round(current.temperature_2m);
-        return `${city} / ${temperature}°C / ${weatherText}`;
-      }
-
-      async function fetchLocationContext(latitude, longitude) {
-        const url = new URL("https://api.bigdatacloud.net/data/reverse-geocode-client");
-        url.searchParams.set("latitude", String(latitude));
-        url.searchParams.set("longitude", String(longitude));
-        url.searchParams.set("localityLanguage", "zh");
-
-        const response = await fetch(url.toString());
-        if (!response.ok) {
-          throw new Error(`location ${response.status}`);
-        }
-
-        const payload = await response.json();
-        return formatLocationLabel(payload);
-      }
-
-      let themeTransitionTimer = null;
-
-      function applyTheme(theme, options = {}) {
-        const { animated = false } = options;
-        const isDark = theme === "dark";
-
-        if (animated) {
-          document.body.classList.add("theme-transitioning");
-          window.clearTimeout(themeTransitionTimer);
-        }
-
-        document.body.classList.toggle("dark-theme", isDark);
-        themeToggle.setAttribute("aria-pressed", String(isDark));
-        themeToggleText.textContent = isDark ? "深色模式" : "浅色模式";
-        if (animated) {
-          themeTransitionTimer = window.setTimeout(() => {
-            document.body.classList.remove("theme-transitioning");
-          }, 720);
-        }
-      }
-
-      function loadThemePreference() {
-        const stored = localStorage.getItem(THEME_STORAGE_KEY);
-        if (stored === "light" || stored === "dark") {
-          return stored;
-        }
-
-        return "dark";
-      }
-
-      function applySurfaceStyle(style, options = {}) {
-        const { animated = false } = options;
-        const isGlass = style === "glass";
-
-        if (animated) {
-          document.body.classList.add("theme-transitioning");
-          window.clearTimeout(themeTransitionTimer);
-        }
-
-        document.body.classList.toggle("glass-style", isGlass);
-        styleToggle.setAttribute("aria-pressed", String(isGlass));
-        styleToggleText.textContent = isGlass ? "Liquid Glass" : "Graphite";
-
-        if (animated) {
-          themeTransitionTimer = window.setTimeout(() => {
-            document.body.classList.remove("theme-transitioning");
-          }, 720);
-        }
-      }
-
-      function loadSurfaceStyle() {
-        const stored = localStorage.getItem(SURFACE_STORAGE_KEY);
-        return stored === "graphite" ? "graphite" : "glass";
-      }
-
-      function toggleTheme() {
-        const nextTheme = document.body.classList.contains("dark-theme") ? "light" : "dark";
-        applyTheme(nextTheme, { animated: true });
-        localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
-      }
-
-      function toggleSurfaceStyle() {
-        const nextStyle = document.body.classList.contains("glass-style") ? "graphite" : "glass";
-        applySurfaceStyle(nextStyle, { animated: true });
-        localStorage.setItem(SURFACE_STORAGE_KEY, nextStyle);
-      }
-
-      async function ensureLatestBuild() {
-        try {
-          const response = await fetch(`./version.json?ts=${Date.now()}`, {
-            cache: "no-store"
-          });
-
-          if (!response.ok) {
-            return false;
-          }
-
-          const payload = await response.json();
-          const latestVersion = payload.version;
-          if (!latestVersion || latestVersion === APP_VERSION) {
-            return false;
-          }
-
-          const nextUrl = new URL(window.location.href);
-          if (nextUrl.searchParams.get("v") !== latestVersion) {
-            nextUrl.searchParams.set("v", latestVersion);
-            window.location.replace(nextUrl.toString());
-            return true;
-          }
-        } catch (error) {
-          // Ignore update-check failures so the calendar still loads offline or on flaky networks.
-        }
-
-        return false;
-      }
-
-      function formatWeather(city, current) {
-        const weatherText = weatherCodeMap[current.weather_code] || "天气正常";
-        const temperature = Math.round(current.temperature_2m);
-        return `${city} ${temperature}°C ${weatherText}`;
-      }
-
-      async function fetchWeather(latitude, longitude, city) {
-        const url = new URL("https://api.open-meteo.com/v1/forecast");
-        url.searchParams.set("latitude", String(latitude));
-        url.searchParams.set("longitude", String(longitude));
-        url.searchParams.set("current", "temperature_2m,weather_code");
-        url.searchParams.set("timezone", "auto");
-
-        const response = await fetch(url.toString());
-        if (!response.ok) {
-          throw new Error(`weather ${response.status}`);
-        }
-
-        const payload = await response.json();
-        if (!payload.current) {
-          throw new Error("missing current weather");
-        }
-
-        const weatherText = weatherCodeMap[payload.current.weather_code] || "晴";
-        const temperature = Math.round(payload.current.temperature_2m);
-        setWeatherBadge({
-          location: city,
-          detail: `${temperature}°C · ${weatherText}`
-        });
-      }
-
-      function getCurrentPosition() {
-        return new Promise((resolve, reject) => {
-          if (!navigator.geolocation) {
-            reject(new Error("geolocation unavailable"));
-            return;
-          }
-
-          navigator.geolocation.getCurrentPosition(resolve, reject, {
-            enableHighAccuracy: false,
-            timeout: 5000,
-            maximumAge: 15 * 60 * 1000
-          });
-        });
-      }
-
-      async function updateWeatherBadge() {
-        setWeatherBadge({ location: "天气", detail: "读取中" });
-
-        try {
-          const position = await getCurrentPosition();
-          await fetchWeather(position.coords.latitude, position.coords.longitude, "当前位置");
-          return;
-        } catch (error) {
-          // Ignore and fall back to Shanghai so the badge always shows a weather status.
-        }
-
-        try {
-          await fetchWeather(31.2304, 121.4737, "上海");
-        } catch (error) {
-          setWeatherBadge({ location: "上海", detail: "天气暂不可用" });
-        }
-      }
-
-      async function refreshWeatherBadge() {
-        setWeatherBadge({ location: "天气", detail: "定位与更新中" });
-
-        try {
-          const position = await getCurrentPosition();
-          let locationLabel = "Current location";
-
-          try {
-            locationLabel = await fetchLocationContext(position.coords.latitude, position.coords.longitude);
-          } catch (error) {
-            // Keep live weather visible even if reverse geocoding fails.
-          }
-
-          await fetchWeather(position.coords.latitude, position.coords.longitude, locationLabel);
-          return;
-        } catch (error) {
-          // Ignore and fall back to a default city so the badge always shows a usable status.
-        }
-
-        setWeatherBadge({ location: "驻马店市 / 河南省", detail: "24°C · 晴" });
-      }
-
-      async function watchLocationPermission() {
-        if (!navigator.permissions || !navigator.permissions.query) {
-          return;
-        }
-
-        try {
-          const permissionStatus = await navigator.permissions.query({ name: "geolocation" });
-          permissionStatus.onchange = () => {
-            if (permissionStatus.state === "granted") {
-              refreshWeatherBadge();
-            }
-          };
-        } catch (error) {
-          // Some browsers do not support querying geolocation permissions.
-        }
+        return result;
       }
 
       function toDateKey(date) {
         return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
       }
 
-      function expandDateRange(startText, endText) {
-        const dates = [];
-        const cursor = new Date(`${startText}T00:00:00`);
-        const end = new Date(`${endText}T00:00:00`);
-
-        while (cursor <= end) {
-          dates.push(toDateKey(cursor));
-          cursor.setDate(cursor.getDate() + 1);
-        }
-
-        return dates;
-      }
-
-      function getOfficialSchedule(year) {
-        return OFFICIAL_SCHEDULES[year] || null;
-      }
-
-      function createOfficialHolidayMap(year) {
-        const schedule = getOfficialSchedule(year);
-        const map = new Map();
-
-        if (!schedule) {
-          return map;
-        }
-
-        schedule.holidays.forEach((holiday) => {
-          holiday.dates.forEach((date) => {
-            map.set(date, holiday.name);
-          });
-        });
-
-        return map;
-      }
-
-      function createOfficialWorkdaySet(year) {
-        const schedule = getOfficialSchedule(year);
-        return new Set(schedule ? schedule.workdays : []);
-      }
-
-      function getDefaultSettings() {
-        return {
-          year: 2026,
-          viewMonth: 5,
-          cycleStart: "2026-06-07",
-          workDays: 3,
-          restDays: 1
-        };
+      function saveSettings(settings) {
+        localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
       }
 
       function loadSettings() {
-        const defaults = getDefaultSettings();
-
         try {
-          const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY);
-          if (!raw) {
-            return defaults;
+          const parsed = JSON.parse(localStorage.getItem(SETTINGS_STORAGE_KEY) || "null");
+          if (!parsed) {
+            return { ...defaultSettings };
           }
 
-          const parsed = JSON.parse(raw);
           return {
-            year: Number(parsed.year) || defaults.year,
-            viewMonth: Number.isInteger(parsed.viewMonth) ? parsed.viewMonth : defaults.viewMonth,
-            cycleStart: parsed.cycleStart || defaults.cycleStart,
-            workDays: Number(parsed.workDays) || defaults.workDays,
-            restDays: Number(parsed.restDays) || defaults.restDays
+            year: Number(parsed.year) || defaultSettings.year,
+            viewMonth: Number.isInteger(parsed.viewMonth) ? parsed.viewMonth : defaultSettings.viewMonth,
+            cycleStart: parsed.cycleStart || defaultSettings.cycleStart,
+            workDays: Number(parsed.workDays) || defaultSettings.workDays,
+            restDays: Number(parsed.restDays) || defaultSettings.restDays
           };
         } catch (error) {
-          return defaults;
+          return { ...defaultSettings };
         }
       }
 
-      function saveSettings(settings) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+      function fillInputs(settings) {
+        yearInput.value = settings.year;
+        cycleStartInput.value = settings.cycleStart;
+        workDaysInput.value = settings.workDays;
+        restDaysInput.value = settings.restDays;
       }
 
-      function getDateDiffDays(baseDate, targetDate) {
-        const millisecondsPerDay = 24 * 60 * 60 * 1000;
-        const base = Date.UTC(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate());
-        const target = Date.UTC(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
-        return Math.floor((target - base) / millisecondsPerDay);
+      function getSettingsFromInputs() {
+        return {
+          year: Number(yearInput.value),
+          viewMonth: viewState.month,
+          cycleStart: cycleStartInput.value,
+          workDays: Number(workDaysInput.value),
+          restDays: Number(restDaysInput.value)
+        };
+      }
+
+      function clampMonth(month) {
+        return Math.min(11, Math.max(0, month));
+      }
+
+      function getDateDiffDays(startDate, endDate) {
+        const start = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+        const end = Date.UTC(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+        return Math.round((end - start) / 86400000);
       }
 
       function getCyclePosition(targetDate, cycleStartText, workDays, restDays) {
@@ -4295,64 +1227,202 @@
         return position !== null && position >= workDays;
       }
 
-      function getSettingsFromInputs() {
-        return {
-          year: Number(yearInput.value),
-          viewMonth: viewState.month,
-          cycleStart: cycleStartInput.value,
-          workDays: Number(workDaysInput.value),
-          restDays: Number(restDaysInput.value)
-        };
-      }
-
-      function fillInputs(settings) {
-        yearInput.value = settings.year;
-        cycleStartInput.value = settings.cycleStart;
-        workDaysInput.value = settings.workDays;
-        restDaysInput.value = settings.restDays;
-      }
-
-      function clampMonth(month) {
-        return Math.min(11, Math.max(0, month));
-      }
-
-      function setViewMonth(month) {
-        viewState.month = clampMonth(month);
-      }
-
-      function setupRevealObserver() {
-        const revealNodes = document.querySelectorAll(".reveal");
-
-        if (!("IntersectionObserver" in window)) {
-          revealNodes.forEach((node) => node.classList.add("is-visible"));
-          return;
+      function createOfficialHolidayMap(year) {
+        const source = officialHolidayData[year];
+        const map = new Map();
+        if (!source) {
+          return map;
         }
 
-        if (revealObserver) {
-          revealObserver.disconnect();
-        }
-
-        revealObserver = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (!entry.isIntersecting) {
-                return;
-              }
-
-              entry.target.classList.add("is-visible");
-              revealObserver.unobserve(entry.target);
-            });
-          },
-          {
-            threshold: 0.14,
-            rootMargin: "0px 0px -8% 0px"
-          }
-        );
-
-        revealNodes.forEach((node, index) => {
-          node.style.setProperty("--reveal-delay", `${Math.min(index * 48, 240)}ms`);
-          revealObserver.observe(node);
+        source.holidays.forEach((holiday) => {
+          holiday.dates.forEach((dateKey) => map.set(dateKey, holiday.name));
         });
+
+        return map;
+      }
+
+      function createOfficialWorkdaySet(year) {
+        const source = officialHolidayData[year];
+        return new Set(source ? source.workdays : []);
+      }
+
+      function setWeatherBadge({ location, detail }) {
+        weatherLocationText.textContent = location;
+        const [temperature = "24°C", status = "阴"] = String(detail || "24°C / 阴")
+          .split("/")
+          .map((item) => item.trim());
+        weatherTemperature.textContent = temperature;
+        weatherStatus.textContent = status;
+      }
+
+      async function fetchLocationContext(latitude, longitude) {
+        const url = new URL("https://api.bigdatacloud.net/data/reverse-geocode-client");
+        url.searchParams.set("latitude", String(latitude));
+        url.searchParams.set("longitude", String(longitude));
+        url.searchParams.set("localityLanguage", "zh");
+
+        const response = await fetch(url.toString());
+        if (!response.ok) {
+          throw new Error(`location ${response.status}`);
+        }
+
+        const payload = await response.json();
+        const city = payload.city || payload.locality || "";
+        const subdivision = payload.principalSubdivision || "";
+        return [city, subdivision].filter(Boolean).join(" / ") || "当前位置";
+      }
+
+      async function fetchWeather(latitude, longitude, locationLabel) {
+        const url = new URL("https://api.open-meteo.com/v1/forecast");
+        url.searchParams.set("latitude", String(latitude));
+        url.searchParams.set("longitude", String(longitude));
+        url.searchParams.set("current", "temperature_2m,weather_code");
+        url.searchParams.set("timezone", "auto");
+
+        const response = await fetch(url.toString());
+        if (!response.ok) {
+          throw new Error(`weather ${response.status}`);
+        }
+
+        const payload = await response.json();
+        const current = payload.current || {};
+        const weatherText = weatherCodeMap[current.weather_code] || "晴";
+        const temperature = `${Math.round(current.temperature_2m ?? 24)}°C`;
+        setWeatherBadge({ location: locationLabel, detail: `${temperature} / ${weatherText}` });
+      }
+
+      function getCurrentPosition() {
+        return new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject, {
+            enableHighAccuracy: false,
+            timeout: 5000,
+            maximumAge: 15 * 60 * 1000
+          });
+        });
+      }
+
+      async function refreshWeatherBadge() {
+        setWeatherBadge({ location: "定位中", detail: "24°C / 阴" });
+
+        try {
+          const position = await getCurrentPosition();
+          let locationLabel = "当前位置";
+
+          try {
+            locationLabel = await fetchLocationContext(position.coords.latitude, position.coords.longitude);
+          } catch (error) {
+            // Ignore reverse geocode failures and keep fallback text.
+          }
+
+          await fetchWeather(position.coords.latitude, position.coords.longitude, locationLabel);
+          return;
+        } catch (error) {
+          // Ignore and fall back to a stable default.
+        }
+
+        setWeatherBadge({ location: "驻马店市 / 河南省", detail: "24°C / 阴" });
+      }
+
+      function renderWeekdays() {
+        weekdayRow.innerHTML = "";
+        weekdayNames.forEach((name, index) => {
+          const node = document.createElement("div");
+          node.textContent = name;
+          if (index >= 5) {
+            node.classList.add("is-weekend");
+          }
+          weekdayRow.appendChild(node);
+        });
+      }
+
+      function renderCalendar() {
+        const settings = getSettingsFromInputs();
+        const activeMonth = clampMonth(settings.viewMonth);
+        const holidayMap = createOfficialHolidayMap(settings.year);
+        const workdaySet = createOfficialWorkdaySet(settings.year);
+        const todayKey = toDateKey(new Date());
+
+        let holidayTotal = 0;
+        let restTotal = 0;
+        let makeupTotal = 0;
+        let overlapTotal = 0;
+
+        calendarTitle.textContent = `${settings.year}年${monthNames[activeMonth]}`;
+        monthChip.textContent = `${settings.year}.${pad(activeMonth + 1)}`;
+        daysGrid.innerHTML = "";
+
+        const firstDay = new Date(settings.year, activeMonth, 1);
+        const daysInMonth = new Date(settings.year, activeMonth + 1, 0).getDate();
+        const startWeekday = (firstDay.getDay() + 6) % 7;
+        const totalSlots = startWeekday + daysInMonth;
+        const weekCount = Math.ceil(totalSlots / 7);
+        daysGrid.style.setProperty("--week-count", String(weekCount));
+
+        for (let index = 0; index < startWeekday; index += 1) {
+          const empty = document.createElement("div");
+          empty.className = "day empty";
+          empty.setAttribute("aria-hidden", "true");
+          daysGrid.appendChild(empty);
+        }
+
+        for (let day = 1; day <= daysInMonth; day += 1) {
+          const currentDate = new Date(settings.year, activeMonth, day);
+          const dateKey = toDateKey(currentDate);
+          const holidayLabel = holidayMap.get(dateKey);
+          const isOfficialWorkday = workdaySet.has(dateKey);
+          const isWeekend = currentDate.getDay() === 0 || currentDate.getDay() === 6;
+          const rest = !isOfficialWorkday && isRestDay(currentDate, settings.cycleStart, settings.workDays, settings.restDays);
+          const isOverlap = rest && (isWeekend || Boolean(holidayLabel));
+          const isToday = dateKey === todayKey;
+
+          if (holidayLabel) holidayTotal += 1;
+          if (rest) restTotal += 1;
+          if (isOfficialWorkday) makeupTotal += 1;
+          if (isOverlap) overlapTotal += 1;
+
+          const node = document.createElement("article");
+          node.className = "day";
+
+          if (holidayLabel) node.classList.add("is-holiday");
+          if (rest) node.classList.add("is-rest");
+          if (isOfficialWorkday) node.classList.add("is-makeup");
+          if (isOverlap) node.classList.add("is-overlap");
+          if (isWeekend) node.classList.add("is-weekend");
+          if (currentDate.getDay() === 6) node.classList.add("is-saturday");
+          if (currentDate.getDay() === 0) node.classList.add("is-sunday");
+          if (isToday) node.classList.add("is-today");
+
+          const flag = holidayLabel
+            ? `<span class="flag holiday">假</span>`
+            : isOfficialWorkday
+              ? `<span class="flag makeup">班</span>`
+              : rest
+                ? `<span class="flag rest">休</span>`
+                : "";
+
+          node.innerHTML = `
+            <div class="day-flag-row">${flag}</div>
+            <div class="day-number">${day}</div>
+            <div class="day-label">${holidayLabel || ""}</div>
+          `;
+
+          daysGrid.appendChild(node);
+        }
+
+        const trailingSlots = weekCount * 7 - totalSlots;
+        for (let index = 0; index < trailingSlots; index += 1) {
+          const empty = document.createElement("div");
+          empty.className = "day empty";
+          empty.setAttribute("aria-hidden", "true");
+          daysGrid.appendChild(empty);
+        }
+
+        holidayCount.textContent = String(holidayTotal);
+        restCount.textContent = String(restTotal);
+        makeupCount.textContent = String(makeupTotal);
+        overlapCount.textContent = String(overlapTotal);
+
+        saveSettings(settings);
       }
 
       function shiftMonth(step) {
@@ -4368,247 +1438,65 @@
         }
 
         yearInput.value = year;
-        setViewMonth(month);
+        viewState.month = clampMonth(month);
         renderCalendar();
       }
 
-      function bindHoverBounce(root = document) {
-        if (!window.matchMedia || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-          return;
-        }
-
-        root.querySelectorAll(".hero-badge, .month-switcher, .theme-toggle, .style-toggle, .stat, .day:not(.empty)").forEach((node) => {
-          if (node.dataset.hoverBound === "true") {
-            return;
-          }
-
-          node.dataset.hoverBound = "true";
-          node.addEventListener("mouseenter", () => {
-            node.classList.remove("hover-bounce");
-            void node.offsetWidth;
-            node.classList.add("hover-bounce");
-          });
-
-          node.addEventListener("mouseleave", () => {
-            node.classList.remove("hover-bounce");
-          });
-        });
+      function applyTheme(theme) {
+        const isDark = theme !== "light";
+        document.body.classList.toggle("dark-theme", isDark);
+        document.body.classList.toggle("light-theme", !isDark);
+        themeToggle.setAttribute("aria-pressed", String(isDark));
+        themeToggleText.textContent = isDark ? "深色模式" : "浅色模式";
+        localStorage.setItem(THEME_STORAGE_KEY, isDark ? "dark" : "light");
       }
 
-      function renderCalendar() {
-        const settings = getSettingsFromInputs();
-        const holidayMap = createOfficialHolidayMap(settings.year);
-        const workdaySet = createOfficialWorkdaySet(settings.year);
-        const todayKey = toDateKey(new Date());
-        const activeMonth = clampMonth(settings.viewMonth);
-
-        let holidayTotal = 0;
-        let restTotal = 0;
-        let makeupTotal = 0;
-        let overlapTotal = 0;
-
-        calendarTitle.textContent = `${settings.year} 年 ${monthNames[activeMonth]}`;
-        calendarSubtitle.textContent = "";
-
-        monthChip.textContent = `${settings.year}.${pad(activeMonth + 1)}`;
-        monthsNode.innerHTML = "";
-
-        const firstDay = new Date(settings.year, activeMonth, 1);
-        const daysInMonth = new Date(settings.year, activeMonth + 1, 0).getDate();
-        const startWeekday = (firstDay.getDay() + 6) % 7;
-
-        const monthNode = document.createElement("section");
-        monthNode.className = "month reveal";
-
-        const monthHead = document.createElement("div");
-        monthHead.className = "month-head";
-        monthHead.innerHTML = `<h3>${monthNames[activeMonth]}</h3><span>${settings.year}.${pad(activeMonth + 1)}</span>`;
-        monthNode.appendChild(monthHead);
-
-        const weekdayRow = document.createElement("div");
-        weekdayRow.className = "weekdays";
-        weekdayNames.forEach((weekday, weekdayIndex) => {
-          const node = document.createElement("div");
-          node.textContent = weekday;
-          if (weekdayIndex === 5 || weekdayIndex === 6) {
-            node.classList.add("is-weekend");
-          }
-          weekdayRow.appendChild(node);
-        });
-        monthNode.appendChild(weekdayRow);
-
-        const daysGrid = document.createElement("div");
-        daysGrid.className = "days";
-
-        for (let day = 1; day <= daysInMonth; day += 1) {
-          const currentDate = new Date(settings.year, activeMonth, day);
-          const dateKey = toDateKey(currentDate);
-          const holidayLabel = holidayMap.get(dateKey);
-          const isOfficialWorkday = workdaySet.has(dateKey);
-          const rest = !isOfficialWorkday && isRestDay(currentDate, settings.cycleStart, settings.workDays, settings.restDays);
-          const isToday = dateKey === todayKey;
-          const isWeekend = currentDate.getDay() === 0 || currentDate.getDay() === 6;
-
-          if (holidayLabel) {
-            holidayTotal += 1;
-          }
-          if (rest) {
-            restTotal += 1;
-          }
-          if (isOfficialWorkday) {
-            makeupTotal += 1;
-          }
-          const isOverlap = rest && (Boolean(holidayLabel) || isWeekend);
-
-          if (isOverlap) {
-            overlapTotal += 1;
-          }
-
-          const dayNode = document.createElement("div");
-          dayNode.className = "day";
-
-          if (day === 1 && startWeekday > 0) {
-            dayNode.style.gridColumnStart = String(startWeekday + 1);
-          }
-
-          if (holidayLabel) {
-            dayNode.classList.add("is-holiday");
-          }
-          if (rest) {
-            dayNode.classList.add("is-rest");
-          }
-          if (isOverlap) {
-            dayNode.classList.add("is-overlap");
-          }
-          if (isOfficialWorkday) {
-            dayNode.classList.add("is-makeup");
-          }
-          if (isToday) {
-            dayNode.classList.add("is-today");
-          }
-          if (isWeekend) {
-            dayNode.classList.add("is-weekend");
-          }
-          if (currentDate.getDay() === 6) {
-            dayNode.classList.add("is-saturday");
-          }
-          if (currentDate.getDay() === 0) {
-            dayNode.classList.add("is-sunday");
-          }
-
-          const flag = holidayLabel
-            ? `<span class="flag holiday">假</span>`
-            : isOfficialWorkday
-              ? `<span class="flag makeup">班</span>`
-              : rest
-                ? `<span class="flag rest">休</span>`
-                : "";
-
-          const label = holidayLabel || (isOfficialWorkday ? "调休上班" : "");
-
-          dayNode.innerHTML = `
-            <div class="day-flag-row">
-              ${flag}
-            </div>
-            <div class="day-header">
-              <span class="day-number ${isToday ? "today-mark" : ""}">${day}</span>
-            </div>
-            <div class="day-label">${label}</div>
-          `;
-
-          daysGrid.appendChild(dayNode);
-        }
-
-        monthNode.appendChild(daysGrid);
-        monthsNode.appendChild(monthNode);
-
-        holidayCount.textContent = String(holidayTotal);
-        restCount.textContent = String(restTotal);
-        makeupCount.textContent = String(makeupTotal);
-        overlapCount.textContent = String(overlapTotal);
-
-        saveSettings(settings);
-        bindHoverBounce(monthNode);
-        requestAnimationFrame(setupRevealObserver);
+      function loadTheme() {
+        return localStorage.getItem(THEME_STORAGE_KEY) === "light" ? "light" : "dark";
       }
 
-      const initialSettings = loadSettings();
-      const viewState = {
-        month: clampMonth(Number.isInteger(initialSettings.viewMonth) ? initialSettings.viewMonth : new Date().getMonth())
-      };
+      function applySurfaceStyle(style) {
+        const isGlass = style === "glass";
+        document.body.classList.toggle("glass-style", isGlass);
+        document.body.classList.toggle("graphite-style", !isGlass);
+        styleToggle.setAttribute("aria-pressed", String(isGlass));
+        styleToggleText.textContent = isGlass ? "Liquid Glass" : "Graphite";
+        styleToggleLabel.textContent = isGlass ? "Surface" : "Graphite";
+        localStorage.setItem(SURFACE_STORAGE_KEY, isGlass ? "glass" : "graphite");
+      }
 
-      async function initializePage() {
-        const redirected = await ensureLatestBuild();
-        if (redirected) {
-          return;
-        }
+      function loadSurfaceStyle() {
+        return localStorage.getItem(SURFACE_STORAGE_KEY) === "glass" ? "glass" : "graphite";
+      }
 
-        applyTheme(loadThemePreference());
+      function initializePage() {
+        const settings = loadSettings();
+        viewState.month = clampMonth(settings.viewMonth);
+        fillInputs(settings);
+        renderWeekdays();
+        applyTheme(loadTheme());
         applySurfaceStyle(loadSurfaceStyle());
-        fillInputs(initialSettings);
         renderCalendar();
         refreshWeatherBadge();
-        watchLocationPermission();
-        bindHoverBounce(document);
-
-        if (window.matchMedia) {
-          const media = window.matchMedia("(prefers-color-scheme: dark)");
-          media.addEventListener?.("change", (event) => {
-            if (!localStorage.getItem(THEME_STORAGE_KEY)) {
-              applyTheme(event.matches ? "dark" : "light");
-            }
-          });
-        }
       }
 
-      weatherBadge.addEventListener("click", () => {
-        refreshWeatherBadge();
-      });
-
-      weatherBadge.addEventListener("keydown", (event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          refreshWeatherBadge();
-        }
-      });
-
-      themeToggle.addEventListener("click", () => {
-        toggleTheme();
-      });
-
-      styleToggle.addEventListener("click", () => {
-        toggleSurfaceStyle();
-      });
-
-      applyButton.addEventListener("click", () => {
-        renderCalendar();
-      });
-
-      yearInput.addEventListener("change", () => {
-        const nextYear = Number(yearInput.value) || new Date().getFullYear();
-        yearInput.value = nextYear;
-
-        if (!cycleStartInput.value) {
-          cycleStartInput.value = `${nextYear}-01-01`;
-        }
-
-        renderCalendar();
-      });
-
-      prevMonthButton.addEventListener("click", () => {
-        shiftMonth(-1);
-      });
-
-      nextMonthButton.addEventListener("click", () => {
-        shiftMonth(1);
-      });
-
+      applyButton.addEventListener("click", renderCalendar);
+      prevMonthButton.addEventListener("click", () => shiftMonth(-1));
+      nextMonthButton.addEventListener("click", () => shiftMonth(1));
       todayMonthButton.addEventListener("click", () => {
         const now = new Date();
         yearInput.value = now.getFullYear();
         viewState.month = now.getMonth();
         renderCalendar();
       });
+      themeToggle.addEventListener("click", () => {
+        applyTheme(document.body.classList.contains("dark-theme") ? "light" : "dark");
+      });
+      styleToggle.addEventListener("click", () => {
+        applySurfaceStyle(document.body.classList.contains("glass-style") ? "graphite" : "glass");
+      });
+      weatherBadge.addEventListener("click", refreshWeatherBadge);
+      weatherLocationButton.addEventListener("click", refreshWeatherBadge);
 
       initializePage();
     </script>
