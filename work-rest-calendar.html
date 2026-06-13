@@ -68,6 +68,9 @@
         color: var(--text);
         background: var(--body-bg);
         overflow-x: hidden;
+        transition:
+          background 520ms var(--ease),
+          color 260ms var(--ease);
       }
 
       body::before {
@@ -80,6 +83,10 @@
           radial-gradient(circle at 80% 62%, rgba(141, 178, 255, 0.08), transparent 24%);
       }
 
+      html {
+        color-scheme: dark;
+      }
+
       button,
       input {
         font: inherit;
@@ -87,6 +94,12 @@
 
       button {
         color: inherit;
+      }
+
+      button:focus-visible,
+      input:focus-visible {
+        outline: 2px solid rgba(157, 187, 255, 0.92);
+        outline-offset: 3px;
       }
 
       .app-shell {
@@ -102,6 +115,10 @@
         border: 1px solid var(--border);
         background: var(--surface);
         box-shadow: var(--shadow-panel);
+        transition:
+          background 420ms var(--ease),
+          border-color 420ms var(--ease),
+          box-shadow 420ms var(--ease);
       }
 
       .frame::before {
@@ -120,6 +137,10 @@
         grid-template-columns: minmax(0, 1fr) 380px;
         align-items: center;
         overflow: hidden;
+        transition:
+          background 420ms var(--ease),
+          border-color 420ms var(--ease),
+          box-shadow 420ms var(--ease);
       }
 
       .window-dots {
@@ -143,6 +164,22 @@
       .hero-copy {
         position: relative;
         z-index: 1;
+      }
+
+      .hero-copy::before {
+        content: "";
+        position: absolute;
+        left: -18px;
+        top: 6px;
+        width: 168px;
+        height: 132px;
+        border-radius: 36px;
+        background:
+          radial-gradient(circle at 30% 26%, rgba(139, 174, 255, 0.16), transparent 54%),
+          linear-gradient(145deg, rgba(255, 255, 255, 0.04), transparent 72%);
+        filter: blur(6px);
+        opacity: 0.72;
+        pointer-events: none;
       }
 
       .hero h1 {
@@ -180,6 +217,10 @@
           "location theme"
           "weather style";
         gap: 8px;
+        transition:
+          background 420ms var(--ease),
+          border-color 420ms var(--ease),
+          box-shadow 420ms var(--ease);
       }
 
       .hero-pill {
@@ -191,7 +232,9 @@
         transition:
           transform 260ms var(--ease),
           border-color 260ms var(--ease),
-          background 260ms var(--ease);
+          background 260ms var(--ease),
+          box-shadow 260ms var(--ease),
+          color 260ms var(--ease);
       }
 
       .hero-pill:hover {
@@ -423,6 +466,11 @@
         color: var(--text);
         background: linear-gradient(180deg, rgba(24, 31, 45, 0.92), rgba(18, 24, 35, 0.98));
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        transition:
+          background 260ms var(--ease),
+          border-color 260ms var(--ease),
+          box-shadow 260ms var(--ease),
+          color 260ms var(--ease);
       }
 
       .field input:focus {
@@ -452,7 +500,11 @@
         align-items: center;
         justify-content: space-between;
         cursor: pointer;
-        transition: transform 260ms var(--ease);
+        transition:
+          transform 260ms var(--ease),
+          background 260ms var(--ease),
+          box-shadow 260ms var(--ease),
+          color 260ms var(--ease);
       }
 
       .apply-button:hover {
@@ -601,6 +653,15 @@
         flex-direction: column;
         justify-content: center;
         gap: 3px;
+        transition:
+          background 320ms var(--ease),
+          border-color 320ms var(--ease),
+          box-shadow 320ms var(--ease),
+          transform 260ms var(--ease);
+      }
+
+      .stat-card:hover {
+        transform: translateY(-1px);
       }
 
       .stat-value {
@@ -633,6 +694,10 @@
         display: grid;
         grid-template-rows: auto minmax(0, 1fr);
         gap: 8px;
+        transition:
+          background 420ms var(--ease),
+          border-color 420ms var(--ease),
+          box-shadow 420ms var(--ease);
       }
 
       .weekdays,
@@ -679,7 +744,10 @@
         justify-items: center;
         transition:
           transform 260ms var(--ease),
-          border-color 260ms var(--ease);
+          border-color 260ms var(--ease),
+          background 320ms var(--ease),
+          box-shadow 320ms var(--ease),
+          color 260ms var(--ease);
       }
 
       .day:hover {
@@ -763,41 +831,201 @@
       }
 
       body.light-theme {
+        color-scheme: light;
         --body-bg:
-          radial-gradient(circle at 10% 12%, rgba(109, 160, 255, 0.22), transparent 22%),
-          radial-gradient(circle at 84% 12%, rgba(170, 198, 255, 0.28), transparent 20%),
-          linear-gradient(180deg, #f4f8ff 0%, #e8f0ff 44%, #d9e6fb 100%);
+          radial-gradient(circle at 10% 12%, rgba(170, 196, 255, 0.44), transparent 24%),
+          radial-gradient(circle at 86% 10%, rgba(214, 230, 255, 0.66), transparent 22%),
+          radial-gradient(circle at 76% 88%, rgba(235, 241, 255, 0.78), transparent 26%),
+          linear-gradient(180deg, #f8fbff 0%, #edf3ff 42%, #dde8fb 100%);
         --surface:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(241, 247, 255, 0.96));
+          linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(244, 248, 255, 0.98));
         --surface-soft:
-          linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(243, 247, 255, 0.98));
+          linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(246, 249, 255, 0.99));
         --surface-subtle:
-          linear-gradient(180deg, rgba(250, 252, 255, 0.96), rgba(239, 245, 255, 1));
+          linear-gradient(180deg, rgba(252, 253, 255, 0.98), rgba(241, 246, 255, 1));
         --surface-ribbon:
-          linear-gradient(180deg, rgba(237, 239, 244, 0.98), rgba(204, 208, 217, 0.96) 50%, rgba(174, 178, 188, 0.98));
-        --border: rgba(165, 187, 227, 0.42);
-        --border-soft: rgba(255, 255, 255, 0.62);
-        --text: #1f2736;
-        --text-soft: rgba(37, 46, 62, 0.82);
-        --text-mute: rgba(69, 83, 106, 0.56);
-        --text-faint: rgba(69, 83, 106, 0.3);
+          linear-gradient(180deg, rgba(245, 248, 255, 0.98), rgba(227, 233, 244, 0.96) 52%, rgba(206, 214, 230, 0.98));
+        --border: rgba(185, 202, 236, 0.58);
+        --border-soft: rgba(255, 255, 255, 0.82);
+        --text: #1e2635;
+        --text-soft: rgba(38, 47, 65, 0.82);
+        --text-mute: rgba(91, 105, 133, 0.62);
+        --text-faint: rgba(91, 105, 133, 0.34);
         --shadow-panel:
-          0 24px 54px rgba(123, 152, 214, 0.18),
-          inset 0 1px 0 rgba(255, 255, 255, 0.78);
+          0 28px 56px rgba(150, 173, 221, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.96);
         --shadow-soft:
-          0 14px 30px rgba(137, 164, 220, 0.12),
-          inset 0 1px 0 rgba(255, 255, 255, 0.68);
-        --weekend-bg: linear-gradient(180deg, rgba(229, 236, 255, 0.98), rgba(210, 220, 250, 1));
-        --holiday-bg: linear-gradient(180deg, rgba(223, 232, 255, 1), rgba(210, 220, 246, 1));
-        --rest-bg: linear-gradient(180deg, rgba(216, 244, 240, 1), rgba(203, 236, 231, 1));
-        --overlap-bg: linear-gradient(180deg, rgba(221, 229, 255, 1), rgba(208, 219, 252, 1));
-        --makeup-bg: linear-gradient(180deg, rgba(224, 234, 255, 1), rgba(213, 223, 249, 1));
-        --today-outline: rgba(119, 148, 224, 0.68);
+          0 18px 34px rgba(156, 178, 223, 0.14),
+          inset 0 1px 0 rgba(255, 255, 255, 0.84);
+        --weekend-bg: linear-gradient(180deg, rgba(234, 239, 255, 1), rgba(220, 228, 250, 1));
+        --holiday-bg: linear-gradient(180deg, rgba(226, 235, 255, 1), rgba(214, 225, 248, 1));
+        --rest-bg: linear-gradient(180deg, rgba(224, 246, 242, 1), rgba(212, 239, 235, 1));
+        --overlap-bg: linear-gradient(180deg, rgba(228, 234, 255, 1), rgba(216, 225, 251, 1));
+        --makeup-bg: linear-gradient(180deg, rgba(232, 238, 255, 1), rgba(221, 229, 250, 1));
+        --saturday: #5677e8;
+        --sunday: #dd6785;
+        --accent-green: #54c68d;
+        --accent-blue: #7396ef;
+        --today-outline: rgba(108, 137, 214, 0.84);
+      }
+
+      body.light-theme::before {
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.42), transparent 12%),
+          radial-gradient(circle at 80% 62%, rgba(162, 193, 255, 0.14), transparent 24%);
+      }
+
+      .light-theme .hero {
+        background:
+          radial-gradient(circle at 8% 22%, rgba(255, 255, 255, 0.72), transparent 22%),
+          radial-gradient(circle at 88% 18%, rgba(213, 228, 255, 0.86), transparent 24%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(241, 247, 255, 0.98));
+      }
+
+      .light-theme .hero-copy::before {
+        background:
+          radial-gradient(circle at 30% 26%, rgba(166, 190, 247, 0.24), transparent 54%),
+          linear-gradient(145deg, rgba(255, 255, 255, 0.68), transparent 72%);
+        opacity: 0.92;
+      }
+
+      .light-theme .hero h1 {
+        color: #1c2433;
+      }
+
+      .light-theme .hero-subtitle {
+        color: rgba(82, 97, 125, 0.72);
+      }
+
+      .light-theme .hero-controls {
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(244, 248, 255, 0.98));
+        box-shadow:
+          0 20px 34px rgba(156, 178, 223, 0.16),
+          inset 0 1px 0 rgba(255, 255, 255, 0.96);
+      }
+
+      .light-theme .hero-pill,
+      .light-theme .field input,
+      .light-theme .apply-button,
+      .light-theme .month-switcher,
+      .light-theme .switch-button,
+      .light-theme .switch-label,
+      .light-theme .switch-today {
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(240, 245, 255, 0.98));
+        box-shadow:
+          0 10px 18px rgba(170, 189, 228, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.94);
+      }
+
+      .light-theme .control-chip,
+      .light-theme .toggle-label,
+      .light-theme .style-copy span,
+      .light-theme .style-copy small,
+      .light-theme .subpanel-header small,
+      .light-theme .field label,
+      .light-theme .legend-item,
+      .light-theme .stat-note,
+      .light-theme .stat-label,
+      .light-theme .day-label,
+      .light-theme .weekdays div {
+        color: rgba(86, 99, 126, 0.78);
+      }
+
+      .light-theme .control-location,
+      .light-theme .calendar-title-wrap h2,
+      .light-theme .subpanel-header h2,
+      .light-theme .stat-value,
+      .light-theme .day-number,
+      .light-theme .switch-button,
+      .light-theme .switch-label,
+      .light-theme .switch-today,
+      .light-theme .apply-button strong {
+        color: #233047;
+      }
+
+      .light-theme .control-chip svg {
+        stroke: rgba(106, 125, 164, 0.74);
+      }
+
+      .light-theme .toggle-track {
+        background: rgba(130, 158, 219, 0.16);
+        border-color: rgba(156, 178, 223, 0.28);
+      }
+
+      .light-theme .toggle-thumb {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(236, 241, 250, 1));
+        box-shadow:
+          0 4px 10px rgba(125, 148, 196, 0.18),
+          inset 0 1px 0 rgba(255, 255, 255, 0.88);
+      }
+
+      .light-theme .style-orb {
+        background:
+          radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.94), transparent 18%),
+          radial-gradient(circle at 64% 66%, rgba(166, 194, 250, 0.52), transparent 46%),
+          linear-gradient(180deg, rgba(205, 216, 239, 0.94), rgba(154, 168, 202, 0.96));
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.82),
+          0 10px 20px rgba(160, 184, 230, 0.2);
+      }
+
+      .light-theme .apply-button .orb {
+        background: linear-gradient(180deg, rgba(226, 235, 252, 1), rgba(201, 216, 245, 1));
+        border-color: rgba(171, 192, 232, 0.32);
+      }
+
+      .light-theme .calendar-stage,
+      .light-theme .subpanel,
+      .light-theme .stat-card {
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(243, 247, 255, 0.99));
+      }
+
+      .light-theme .calendar-stage {
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.92),
+          0 18px 34px rgba(155, 176, 219, 0.12);
+      }
+
+      .light-theme .weekdays .is-weekend {
+        color: #7390ef;
+      }
+
+      .light-theme .day {
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 248, 255, 1));
+        box-shadow:
+          0 14px 24px rgba(183, 198, 230, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.96);
+      }
+
+      .light-theme .day.is-today {
+        box-shadow:
+          0 0 0 1px rgba(120, 147, 218, 0.2),
+          0 14px 24px rgba(183, 198, 230, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.96);
+      }
+
+      .light-theme .flag {
+        color: #ffffff;
+        border-color: rgba(255, 255, 255, 0.48);
+      }
+
+      .light-theme .legend-dot {
+        border-color: rgba(179, 197, 235, 0.36);
       }
 
       .light-theme .window-dots span:nth-child(1) { box-shadow: 0 2px 6px rgba(255, 96, 87, 0.22); }
       .light-theme .window-dots span:nth-child(2) { box-shadow: 0 2px 6px rgba(255, 189, 46, 0.22); }
       .light-theme .window-dots span:nth-child(3) { box-shadow: 0 2px 6px rgba(40, 202, 66, 0.22); }
+
+      .light-theme .frame::before,
+      .light-theme .subpanel::before,
+      .light-theme .calendar-stage::before {
+        border-color: rgba(255, 255, 255, 0.72);
+      }
 
       @media (max-width: 1280px) {
         .hero {
@@ -937,14 +1165,14 @@
                 <div class="field">
                   <label for="year-input">显示年份</label>
                   <div class="input-wrap">
-                    <input id="year-input" type="number" min="2000" max="2100" />
+                    <input id="year-input" name="display-year" autocomplete="off" inputmode="numeric" type="number" min="2000" max="2100" />
                   </div>
                 </div>
 
                 <div class="field">
                   <label for="cycle-start">周期起点</label>
                   <div class="input-wrap">
-                    <input id="cycle-start" type="date" />
+                    <input id="cycle-start" name="cycle-start" autocomplete="off" type="date" />
                     <span class="field-icon" aria-hidden="true">▦</span>
                   </div>
                 </div>
@@ -952,14 +1180,14 @@
                 <div class="field">
                   <label for="work-days">连续上班天数</label>
                   <div class="input-wrap">
-                    <input id="work-days" type="number" min="1" max="30" />
+                    <input id="work-days" name="work-days" autocomplete="off" inputmode="numeric" type="number" min="1" max="30" />
                   </div>
                 </div>
 
                 <div class="field">
                   <label for="rest-days">连续休息天数</label>
                   <div class="input-wrap">
-                    <input id="rest-days" type="number" min="1" max="30" />
+                    <input id="rest-days" name="rest-days" autocomplete="off" inputmode="numeric" type="number" min="1" max="30" />
                   </div>
                 </div>
               </div>
@@ -1452,6 +1680,11 @@
       }
 
       function loadTheme() {
+        const search = new URLSearchParams(window.location.search);
+        const queryTheme = search.get("theme");
+        if (queryTheme === "light" || queryTheme === "dark") {
+          return queryTheme;
+        }
         return localStorage.getItem(THEME_STORAGE_KEY) === "light" ? "light" : "dark";
       }
 
@@ -1466,6 +1699,11 @@
       }
 
       function loadSurfaceStyle() {
+        const search = new URLSearchParams(window.location.search);
+        const queryStyle = search.get("surface");
+        if (queryStyle === "glass" || queryStyle === "graphite") {
+          return queryStyle;
+        }
         return localStorage.getItem(SURFACE_STORAGE_KEY) === "glass" ? "glass" : "graphite";
       }
 
