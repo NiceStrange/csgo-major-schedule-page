@@ -213,12 +213,10 @@
     }
 
     .mini-month p,
-    .hero p,
     .agenda-item p,
     .agenda-item time,
     .detail p,
     .upcoming p,
-    .metric span,
     .share-hint,
     .agenda-empty {
       margin: 0;
@@ -487,6 +485,18 @@
       box-shadow: inset 0 0 0 1px rgba(79, 126, 255, 0.18);
     }
 
+    .day.is-rest-day {
+      background:
+        linear-gradient(180deg, rgba(243, 247, 255, 0.98), rgba(232, 240, 255, 0.98));
+      box-shadow:
+        inset 0 0 0 1px rgba(96, 129, 214, 0.18),
+        0 10px 24px rgba(104, 126, 182, 0.08);
+    }
+
+    .day.is-rest-day .day-number {
+      color: #4f69c8;
+    }
+
     .day-number {
       font-size: 16px;
       font-weight: 700;
@@ -531,12 +541,36 @@
       color: var(--green-strong);
     }
 
+    .tag-rest {
+      background: rgba(92, 124, 216, 0.14);
+      color: #4c66bf;
+    }
+
     .day-note {
       position: absolute;
       right: 14px;
       bottom: 12px;
       font-size: 12px;
       color: #97a1b7;
+    }
+
+    .rest-pill {
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      height: 22px;
+      padding: 0 9px;
+      border-radius: 999px;
+      background: rgba(87, 118, 208, 0.14);
+      color: #4f69c8;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
     }
 
     .detail {
@@ -579,7 +613,6 @@
     }
 
     .upcoming,
-    .metric,
     .share-menu,
     .modal-shell {
       padding: 18px;
@@ -626,19 +659,57 @@
       font-weight: 700;
     }
 
-    .metric-label {
+    .rest-summary {
+      display: grid;
+      gap: 10px;
+      padding: 20px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(246, 249, 255, 0.76));
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 22px;
+      box-shadow: 0 16px 34px rgba(88, 99, 128, 0.08);
+    }
+
+    .rest-summary-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .rest-summary-label {
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: #8993a8;
-      margin-bottom: 8px;
     }
 
-    .metric strong {
+    .rest-summary-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: rgba(79, 126, 255, 0.1);
+      color: #4f69c8;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .rest-summary strong {
       display: block;
       font-size: 28px;
-      margin-bottom: 4px;
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      color: #293043;
+    }
+
+    .rest-summary p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #75809a;
     }
 
     .share-wrap {
@@ -679,6 +750,12 @@
       min-height: 20px;
       font-size: 12px;
       color: var(--muted);
+    }
+
+    .event-form-grid .inline-split {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
     }
 
     .modal {
@@ -841,6 +918,10 @@
       .event-form-grid {
         grid-template-columns: 1fr;
       }
+
+      .event-form-grid .inline-split {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -900,7 +981,6 @@
           <div class="hero">
             <div>
               <h1 id="heroTitle">June 2026</h1>
-              <p id="heroSubtitle">一个仿 macOS Calendar 的玻璃拟态月视图网页。</p>
             </div>
             <div class="hero-actions">
               <button class="icon-btn" type="button" data-nav="-1" aria-label="Previous period">‹</button>
@@ -935,22 +1015,18 @@
             <div class="avatars" id="upcomingAttendees"></div>
           </section>
 
-          <section class="metrics">
-            <section class="metric">
-              <div class="metric-label">Availability</div>
-              <strong id="availabilityValue">0 free hours</strong>
-              <span id="availabilityHint">暂无安排。</span>
-            </section>
-
-            <section class="metric">
-              <div class="metric-label">Moodboard</div>
-              <strong id="moodboardValue">Soft glass UI</strong>
-              <span id="moodboardHint">Warm reds, cool periwinkle shadows, and crisp calendar hierarchy.</span>
-            </section>
+          <section class="rest-summary">
+            <div class="rest-summary-head">
+              <span class="rest-summary-label">Rest Cycle</span>
+              <span class="rest-summary-badge" id="restCycleBadge">3 / 1</span>
+            </div>
+            <strong id="availabilityValue">0 free hours</strong>
+            <p id="availabilityHint">暂无安排。</p>
           </section>
 
           <section class="quick-actions">
             <button class="quick-action" type="button" id="openEventModal">Add event</button>
+            <button class="quick-action" type="button" id="openRestModal">Custom rest days</button>
             <button class="quick-action" type="button" id="clearSelectedEvents">Clear selected day events</button>
             <div class="status-line" id="statusLine" aria-live="polite"></div>
           </section>
@@ -1012,6 +1088,35 @@
     </div>
   </div>
 
+  <div class="modal" id="restModal" aria-hidden="true">
+    <div class="modal-shell">
+      <h3>Custom rest days</h3>
+      <p>设置工作与休息周期，默认按照上 3 天休息 1 天循环。</p>
+      <form id="restForm">
+        <div class="event-form-grid">
+          <div class="inline-split full">
+            <label>
+              Work days
+              <input id="restWorkDays" name="work-days" type="number" min="1" max="30" required value="3">
+            </label>
+            <label>
+              Rest days
+              <input id="restRestDays" name="rest-days" type="number" min="1" max="30" required value="1">
+            </label>
+          </div>
+          <label class="full">
+            Cycle start date
+            <input id="restStartDate" name="rest-start-date" type="date" required>
+          </label>
+        </div>
+        <div class="event-form-actions">
+          <button type="button" id="cancelRestButton">Cancel</button>
+          <button class="primary" type="submit">Save cycle</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <template id="agendaItemTemplate">
     <article class="agenda-item">
       <span class="dot"></span>
@@ -1025,7 +1130,7 @@
   </template>
 
   <script>
-    const STORAGE_KEY = "mac-calendar-web-state-v1";
+    const STORAGE_KEY = "mac-calendar-web-state-v2";
 
     const calendarTypes = {
       personal: { label: "Personal", color: "#ff645d", tagClass: "tag-red" },
@@ -1057,6 +1162,11 @@
       view: "month",
       activeCalendars: { personal: true, work: true, family: true },
       events: structuredClone(seedEvents),
+      restCycle: {
+        workDays: 3,
+        restDays: 1,
+        startDate: "2026-06-15",
+      },
       editingEventId: null,
       dragEventId: null,
     };
@@ -1074,6 +1184,10 @@
           view: parsed.view || "month",
           activeCalendars: { ...initialState.activeCalendars, ...(parsed.activeCalendars || {}) },
           events: Array.isArray(parsed.events) ? parsed.events : structuredClone(seedEvents),
+          restCycle: {
+            ...initialState.restCycle,
+            ...(parsed.restCycle || {}),
+          },
         };
       } catch (error) {
         return null;
@@ -1088,7 +1202,6 @@
 
     const refs = {
       heroTitle: document.getElementById("heroTitle"),
-      heroSubtitle: document.getElementById("heroSubtitle"),
       miniMonthLabel: document.getElementById("miniMonthLabel"),
       miniMonthSubLabel: document.getElementById("miniMonthSubLabel"),
       miniGrid: document.getElementById("miniGrid"),
@@ -1109,8 +1222,7 @@
       upcomingAttendees: document.getElementById("upcomingAttendees"),
       availabilityValue: document.getElementById("availabilityValue"),
       availabilityHint: document.getElementById("availabilityHint"),
-      moodboardValue: document.getElementById("moodboardValue"),
-      moodboardHint: document.getElementById("moodboardHint"),
+      restCycleBadge: document.getElementById("restCycleBadge"),
       statusLine: document.getElementById("statusLine"),
       shareMenu: document.getElementById("shareMenu"),
       shareButton: document.querySelector('[data-action="share"]'),
@@ -1118,6 +1230,7 @@
       navButtons: Array.from(document.querySelectorAll("[data-nav]")),
       todayButton: document.getElementById("todayButton"),
       openEventModal: document.getElementById("openEventModal"),
+      openRestModal: document.getElementById("openRestModal"),
       clearSelectedEvents: document.getElementById("clearSelectedEvents"),
       agendaTemplate: document.getElementById("agendaItemTemplate"),
       eventModal: document.getElementById("eventModal"),
@@ -1135,6 +1248,12 @@
       eventNote: document.getElementById("eventNote"),
       cancelEventButton: document.getElementById("cancelEventButton"),
       deleteEventButton: document.getElementById("deleteEventButton"),
+      restModal: document.getElementById("restModal"),
+      restForm: document.getElementById("restForm"),
+      restWorkDays: document.getElementById("restWorkDays"),
+      restRestDays: document.getElementById("restRestDays"),
+      restStartDate: document.getElementById("restStartDate"),
+      cancelRestButton: document.getElementById("cancelRestButton"),
     };
 
     const monthFormatter = new Intl.DateTimeFormat("en-US", { month: "long", year: "numeric" });
@@ -1148,6 +1267,7 @@
         view: state.view,
         activeCalendars: state.activeCalendars,
         events: state.events,
+        restCycle: state.restCycle,
       };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
     }
@@ -1172,6 +1292,26 @@
       const result = cloneDate(date);
       result.setDate(result.getDate() + amount);
       return result;
+    }
+
+    function toDateFromKey(key) {
+      const [year, month, day] = key.split("-").map(Number);
+      return new Date(year, month - 1, day);
+    }
+
+    function differenceInDays(a, b) {
+      const oneDay = 24 * 60 * 60 * 1000;
+      return Math.round((cloneDate(a).getTime() - cloneDate(b).getTime()) / oneDay);
+    }
+
+    function isRestDay(date) {
+      const workDays = Math.max(1, Number(state.restCycle.workDays || 0));
+      const restDays = Math.max(1, Number(state.restCycle.restDays || 0));
+      const cycleLength = workDays + restDays;
+      const startDate = toDateFromKey(state.restCycle.startDate);
+      const offset = differenceInDays(date, startDate);
+      const normalized = ((offset % cycleLength) + cycleLength) % cycleLength;
+      return normalized >= workDays;
     }
 
     function getVisibleEvents() {
@@ -1306,6 +1446,39 @@
       refs.eventModal.setAttribute("aria-hidden", "true");
       refs.eventForm.reset();
       state.editingEventId = null;
+    }
+
+    function openRestModal() {
+      refs.restWorkDays.value = String(state.restCycle.workDays);
+      refs.restRestDays.value = String(state.restCycle.restDays);
+      refs.restStartDate.value = state.restCycle.startDate;
+      refs.restModal.classList.add("is-open");
+      refs.restModal.setAttribute("aria-hidden", "false");
+      refs.restWorkDays.focus();
+    }
+
+    function closeRestModal() {
+      refs.restModal.classList.remove("is-open");
+      refs.restModal.setAttribute("aria-hidden", "true");
+      refs.restForm.reset();
+    }
+
+    function saveRestCycle(event) {
+      event.preventDefault();
+      const workDays = Math.max(1, Number(refs.restWorkDays.value));
+      const restDays = Math.max(1, Number(refs.restRestDays.value));
+      const startDate = refs.restStartDate.value;
+
+      if (!startDate) {
+        setStatus("Cycle start date is required.");
+        return;
+      }
+
+      state.restCycle = { workDays, restDays, startDate };
+      persistState();
+      closeRestModal();
+      render();
+      setStatus(`Rest cycle updated to work ${workDays} day(s), rest ${restDays} day(s).`);
     }
 
     function saveEventFromForm(event) {
@@ -1480,9 +1653,6 @@
 
     function renderHero() {
       refs.heroTitle.textContent = monthFormatter.format(state.currentDate);
-      refs.heroSubtitle.textContent = state.view === "month"
-        ? "一个仿 macOS Calendar 的玻璃拟态月视图网页。"
-        : "周视图会聚焦当前选中周，适合快速检查每日负载。";
     }
 
     function renderGrid() {
@@ -1504,13 +1674,29 @@
         if (isSameDay(date, state.selectedDate)) {
           button.classList.add("is-selected");
         }
+        if (isRestDay(date)) {
+          button.classList.add("is-rest-day");
+        }
 
         const number = document.createElement("div");
         number.className = "day-number";
         number.textContent = String(date.getDate());
         button.appendChild(number);
 
+        if (isRestDay(date)) {
+          const restPill = document.createElement("span");
+          restPill.className = "rest-pill";
+          restPill.textContent = "Rest";
+          button.appendChild(restPill);
+        }
+
         const events = getEventsForDate(date);
+        if (!events.length && isRestDay(date)) {
+          const restTag = document.createElement("div");
+          restTag.className = "event-tag tag-rest";
+          restTag.textContent = "Cycle rest day";
+          button.appendChild(restTag);
+        }
         events.slice(0, state.view === "week" ? 3 : 2).forEach((entry) => {
           const tag = document.createElement("div");
           tag.className = `event-tag ${calendarTypes[entry.calendar].tagClass}`;
@@ -1560,10 +1746,7 @@
       refs.availabilityHint.textContent = events.length
         ? `Visible calendars contribute ${events.length} scheduled item${events.length === 1 ? "" : "s"}.`
         : "暂无安排。";
-      refs.moodboardValue.textContent = state.view === "month" ? "Soft glass UI" : "Focused weekly flow";
-      refs.moodboardHint.textContent = state.view === "month"
-        ? "Warm reds, cool periwinkle shadows, and crisp calendar hierarchy."
-        : "Week mode compresses noise and surfaces just the active runway.";
+      refs.restCycleBadge.textContent = `${state.restCycle.workDays} / ${state.restCycle.restDays}`;
 
       const upcoming = events[0];
       if (upcoming) {
@@ -1663,10 +1846,13 @@
       });
 
       refs.openEventModal.addEventListener("click", () => openEventModal());
+      refs.openRestModal.addEventListener("click", openRestModal);
       refs.clearSelectedEvents.addEventListener("click", clearSelectedDayEvents);
       refs.eventForm.addEventListener("submit", saveEventFromForm);
       refs.cancelEventButton.addEventListener("click", closeEventModal);
       refs.deleteEventButton.addEventListener("click", deleteEditingEvent);
+      refs.restForm.addEventListener("submit", saveRestCycle);
+      refs.cancelRestButton.addEventListener("click", closeRestModal);
 
       refs.eventModal.addEventListener("click", (event) => {
         if (event.target === refs.eventModal) {
@@ -1674,9 +1860,18 @@
         }
       });
 
+      refs.restModal.addEventListener("click", (event) => {
+        if (event.target === refs.restModal) {
+          closeRestModal();
+        }
+      });
+
       document.addEventListener("keydown", (event) => {
         if (event.key === "Escape" && refs.eventModal.classList.contains("is-open")) {
           closeEventModal();
+        }
+        if (event.key === "Escape" && refs.restModal.classList.contains("is-open")) {
+          closeRestModal();
         }
       });
     }
