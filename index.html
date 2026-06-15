@@ -1130,7 +1130,7 @@
   </template>
 
   <script>
-    const STORAGE_KEY = "mac-calendar-web-state-v2";
+    const STORAGE_KEY = "mac-calendar-web-state-v3";
 
     const calendarTypes = {
       personal: { label: "Personal", color: "#ff645d", tagClass: "tag-red" },
@@ -1138,18 +1138,7 @@
       family: { label: "Family", color: "#4fb684", tagClass: "tag-green" },
     };
 
-    const seedEvents = [
-      { id: "evt-1", date: "2026-06-01", title: "Sprint kickoff", calendar: "work", time: "10:00", duration: 1.5, location: "Project Hub", attendees: ["AL", "MK", "SJ"], note: "Kick off the next sprint and align feature owners." },
-      { id: "evt-2", date: "2026-06-04", title: "Parents night", calendar: "family", time: "18:30", duration: 2, location: "City School Hall", attendees: ["LY", "XM"], note: "Family evening at school with teachers and parents." },
-      { id: "evt-3", date: "2026-06-08", title: "Roadmap review", calendar: "personal", time: "11:00", duration: 1, location: "Focus Studio", attendees: ["AL"], note: "Personal quarterly planning and roadmap refinement." },
-      { id: "evt-4", date: "2026-06-15", title: "Design critique", calendar: "personal", time: "09:30", duration: 1.5, location: "Studio A", attendees: ["AL", "MK"], note: "Review current mockups and interaction polish." },
-      { id: "evt-5", date: "2026-06-15", title: "Release Checkpoint", calendar: "work", time: "13:00", duration: 1, location: "Engineering Room", attendees: ["AL", "MK", "SJ", "+3"], note: "Review crash reports, final QA notes, and launch messaging before weekend rollout." },
-      { id: "evt-6", date: "2026-06-15", title: "Dinner Reservation", calendar: "family", time: "19:30", duration: 1.5, location: "Jade Terrace", attendees: ["LY", "XM"], note: "Family dinner reservation downtown." },
-      { id: "evt-7", date: "2026-06-16", title: "Yoga class", calendar: "family", time: "07:30", duration: 1, location: "Harbor Wellness", attendees: ["LY"], note: "Morning recovery class." },
-      { id: "evt-8", date: "2026-06-19", title: "Board flight", calendar: "work", time: "16:20", duration: 2, location: "Airport T2", attendees: ["SJ"], note: "Flight to the offsite venue." },
-      { id: "evt-9", date: "2026-06-23", title: "Quarterly demo", calendar: "personal", time: "14:00", duration: 2, location: "Showcase Room", attendees: ["AL", "MK", "SJ"], note: "Demo key wins and gather stakeholder feedback." },
-      { id: "evt-10", date: "2026-06-30", title: "Team offsite", calendar: "family", time: "09:00", duration: 6, location: "Lake Retreat", attendees: ["Team"], note: "Full-day offsite with workshops and dinner." },
-    ];
+    const seedEvents = [];
 
     function cloneDate(date) {
       return new Date(date.getFullYear(), date.getMonth(), date.getDate());
