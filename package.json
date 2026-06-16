@@ -4,8 +4,9 @@
   "private": true,
   "description": "Android wrapper project for the Eunice calendar web experience.",
   "scripts": {
+    "prepare:web-release": "powershell -ExecutionPolicy Bypass -File ./tools/prepare-web-release.ps1",
     "sync:mobile-web": "powershell -ExecutionPolicy Bypass -File ./tools/sync-mobile-web.ps1",
-    "android:sync": "npm run sync:mobile-web && npx cap sync android",
+    "android:sync": "npm run prepare:web-release && npm run sync:mobile-web && npx cap sync android",
     "android:open": "npx cap open android"
   },
   "devDependencies": {

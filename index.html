@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <title>macOS 风格日历</title>
+  <title>macOS 椋庢牸鏃ュ巻</title>
   <style>
     :root {
       --bg-top: #f7f8fc;
@@ -481,10 +481,7 @@
 
     .day-head {
       position: relative;
-      min-height: 34px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      min-height: 42px;
       flex: 0 0 auto;
     }
 
@@ -513,17 +510,21 @@
     .day-number {
       font-size: 16px;
       font-weight: 700;
-      width: 34px;
-      height: 34px;
-      text-align: center;
+      width: 36px;
+      height: 36px;
       display: grid;
       place-items: center;
       line-height: 1;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 1;
+      transform: translate(-50%, -50%);
     }
 
     .day.is-today .day-number {
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       display: grid;
       place-items: center;
@@ -580,25 +581,72 @@
     .rest-pill {
       position: absolute;
       right: 0;
-      top: 50%;
+      top: 0;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 54px;
-      height: 24px;
-      padding: 0 10px;
+      min-width: 58px;
+      height: 26px;
+      padding: 0 12px;
       border-radius: 999px;
-      background: linear-gradient(180deg, #ff8f9d, #ff6f83);
-      border: 1px solid rgba(255, 255, 255, 0.68);
-      color: #fff7f8;
+      background:
+        linear-gradient(180deg, rgba(255, 214, 222, 0.9), rgba(255, 152, 173, 0.95) 56%, rgba(246, 112, 139, 0.98));
+      border: 1px solid rgba(255, 255, 255, 0.78);
+      color: rgba(255, 251, 252, 0.98);
       font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.04em;
+      font-weight: 700;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       box-shadow:
-        0 10px 18px rgba(255, 111, 131, 0.22),
-        inset 0 1px 0 rgba(255, 255, 255, 0.26);
-      transform: translateY(-50%);
+        0 10px 20px rgba(243, 111, 141, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.55),
+        inset 0 -1px 0 rgba(206, 79, 109, 0.14);
+      text-shadow: 0 1px 1px rgba(167, 53, 84, 0.14);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .rest-pill::before {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: inherit;
+      background:
+        radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.5), transparent 28%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0) 68%);
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    .rest-pill > span {
+      position: relative;
+      z-index: 1;
+    }
+
+    button,
+    .mini-grid button,
+    .day,
+    .calendar-toggle {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .chip:focus-visible,
+    .icon-btn:focus-visible,
+    .today-btn:focus-visible,
+    .quick-action:focus-visible,
+    .calendar-toggle:focus-visible,
+    .share-menu button:focus-visible,
+    .event-form-actions button:focus-visible,
+    .mini-grid button:focus-visible,
+    .day:focus-visible,
+    .event-form-grid input:focus-visible,
+    .event-form-grid select:focus-visible,
+    .event-form-grid textarea:focus-visible {
+      outline: none;
+      box-shadow:
+        0 0 0 3px rgba(255, 255, 255, 0.92),
+        0 0 0 5px rgba(255, 112, 138, 0.28);
     }
 
     .detail {
@@ -943,12 +991,26 @@
         border: 1px solid rgba(120, 132, 160, 0.12);
       }
 
+      .day-head {
+        min-height: 40px;
+      }
+
       .event-form-grid {
         grid-template-columns: 1fr;
       }
 
       .event-form-grid .inline-split {
         grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
       }
     }
   </style>
@@ -971,7 +1033,7 @@
             <button type="button" data-share="summary">Copy day summary</button>
             <button type="button" data-share="month">Copy month overview</button>
             <button type="button" data-share="ics">Copy event list</button>
-            <p class="share-hint">复制当前视图的摘要到剪贴板。</p>
+            <p class="share-hint">澶嶅埗褰撳墠瑙嗗浘鐨勬憳瑕佸埌鍓创鏉裤€?/p>
           </div>
         </div>
       </div>
@@ -992,7 +1054,7 @@
             <span id="agendaCount">0 events</span>
           </div>
           <div class="agenda-list" id="agendaList"></div>
-          <p class="agenda-empty" id="agendaEmpty" hidden>所选日期暂无日程。</p>
+          <p class="agenda-empty" id="agendaEmpty" hidden>鎵€閫夋棩鏈熸殏鏃犳棩绋嬨€?/p>
         </section>
 
         <section class="section">
@@ -1011,8 +1073,8 @@
               <h1 id="heroTitle">Current month</h1>
             </div>
             <div class="hero-actions">
-              <button class="icon-btn" type="button" data-nav="-1" aria-label="Previous period">‹</button>
-              <button class="icon-btn" type="button" data-nav="1" aria-label="Next period">›</button>
+              <button class="icon-btn" type="button" data-nav="-1" aria-label="Previous period">鈥?/button>
+              <button class="icon-btn" type="button" data-nav="1" aria-label="Next period">鈥?/button>
               <button class="today-btn" type="button" id="todayButton">Today</button>
             </div>
           </div>
@@ -1032,14 +1094,14 @@
 
           <div>
             <h2 id="detailHeading">Focused day view</h2>
-            <p id="detailDescription">保留 macOS 日历的层级感、浅色玻璃材质和留白节奏，适合直接作为展示页或原型稿。</p>
+            <p id="detailDescription">淇濈暀 macOS 鏃ュ巻鐨勫眰绾ф劅銆佹祬鑹茬幓鐠冩潗璐ㄥ拰鐣欑櫧鑺傚锛岄€傚悎鐩存帴浣滀负灞曠ず椤垫垨鍘熷瀷绋裤€?/p>
           </div>
 
           <section class="upcoming">
             <div class="badge">Next up</div>
             <h3 id="upcomingTitle">No upcoming event</h3>
             <div class="meta" id="upcomingMeta">Select a day to inspect its schedule.</div>
-            <p id="upcomingDescription">当前日期没有待办会议时，这里会提示你留出整块专注时间。</p>
+            <p id="upcomingDescription">褰撳墠鏃ユ湡娌℃湁寰呭姙浼氳鏃讹紝杩欓噷浼氭彁绀轰綘鐣欏嚭鏁村潡涓撴敞鏃堕棿銆?/p>
             <div class="avatars" id="upcomingAttendees"></div>
           </section>
 
@@ -1049,7 +1111,7 @@
               <span class="rest-summary-badge" id="restCycleBadge">3 / 1</span>
             </div>
             <strong id="availabilityValue">0 free hours</strong>
-            <p id="availabilityHint">暂无安排。</p>
+            <p id="availabilityHint">鏆傛棤瀹夋帓銆?/p>
           </section>
 
           <section class="quick-actions">
@@ -1066,7 +1128,7 @@
   <div class="modal" id="eventModal" aria-hidden="true">
     <div class="modal-shell">
       <h3 id="modalTitle">Add event</h3>
-      <p id="modalSubtitle">为当前选中日期新增一条日程。</p>
+      <p id="modalSubtitle">涓哄綋鍓嶉€変腑鏃ユ湡鏂板涓€鏉℃棩绋嬨€?/p>
       <form id="eventForm">
         <input class="visually-hidden" type="text" id="eventId">
         <div class="event-form-grid">
@@ -1119,7 +1181,7 @@
   <div class="modal" id="restModal" aria-hidden="true">
     <div class="modal-shell">
       <h3>Custom rest days</h3>
-      <p>设置工作与休息周期，默认按照上 3 天休息 1 天循环。</p>
+      <p>璁剧疆宸ヤ綔涓庝紤鎭懆鏈燂紝榛樿鎸夌収涓?3 澶╀紤鎭?1 澶╁惊鐜€?/p>
       <form id="restForm">
         <div class="event-form-grid">
           <div class="inline-split full">
@@ -1153,13 +1215,15 @@
         <p></p>
       </div>
       <time></time>
-      <span class="drag-handle" draggable="true" title="Drag to move">⋮⋮</span>
+      <span class="drag-handle" draggable="true" title="Drag to move">鈰嫯</span>
     </article>
   </template>
 
   <script>
     const STORAGE_KEY = "mac-calendar-web-state-v4";
     const LEGACY_STORAGE_KEYS = ["mac-calendar-web-state-v3"];
+    const EMBEDDED_BUILD_VERSION = "1781586159331";
+    const VERSION_ENDPOINT = "./version.json";
 
     const calendarTypes = {
       personal: { label: "Personal", color: "#ff645d", tagClass: "tag-red" },
@@ -1195,6 +1259,48 @@
       const utcA = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
       const utcB = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
       return Math.round((utcA - utcB) / msPerDay);
+    }
+
+    function setBuildVersionInUrl(version, shouldReload) {
+      if (!version) {
+        return false;
+      }
+      const url = new URL(window.location.href);
+      if (url.searchParams.get("v") === version) {
+        return false;
+      }
+      url.searchParams.set("v", version);
+      if (shouldReload) {
+        window.location.replace(url.toString());
+      } else {
+        window.history.replaceState({}, "", url.toString());
+      }
+      return true;
+    }
+
+    async function syncBuildVersion() {
+      setBuildVersionInUrl(EMBEDDED_BUILD_VERSION, false);
+
+      try {
+        const response = await fetch(`${VERSION_ENDPOINT}?ts=${Date.now()}`, {
+          cache: "no-store",
+          headers: { "cache-control": "no-cache" },
+        });
+        if (!response.ok) {
+          return false;
+        }
+        const payload = await response.json();
+        const latestVersion = typeof payload.version === "string" ? payload.version : EMBEDDED_BUILD_VERSION;
+        const currentVersion = new URL(window.location.href).searchParams.get("v");
+        if (latestVersion && currentVersion !== latestVersion) {
+          setBuildVersionInUrl(latestVersion, true);
+          return true;
+        }
+      } catch (error) {
+        return false;
+      }
+
+      return false;
     }
 
     const liveToday = createTodayDate();
@@ -1428,16 +1534,16 @@
 
     function describeSelectedDay(events) {
       if (!events.length) {
-        return "当前日期没有安排，适合留给长时间专注工作。";
+        return "褰撳墠鏃ユ湡娌℃湁瀹夋帓锛岄€傚悎鐣欑粰闀挎椂闂翠笓娉ㄥ伐浣溿€?;
       }
       if (events.length === 1) {
-        return `今天安排了 1 个事项：${events[0].title}。`;
+        return `浠婂ぉ瀹夋帓浜?1 涓簨椤癸細${events[0].title}銆俙;
       }
-      return `今天安排了 ${events.length} 个事项，优先处理第一个开始的事件。`;
+      return `浠婂ぉ瀹夋帓浜?${events.length} 涓簨椤癸紝浼樺厛澶勭悊绗竴涓紑濮嬬殑浜嬩欢銆俙;
     }
 
     function formatEventMeta(event) {
-      return `${event.time} · ${event.location || "No location"} · ${calendarTypes[event.calendar].label}`;
+      return `${event.time} 路 ${event.location || "No location"} 路 ${calendarTypes[event.calendar].label}`;
     }
 
     function getFreeHours(events) {
@@ -1494,8 +1600,8 @@
       state.editingEventId = event ? event.id : null;
       refs.modalTitle.textContent = event ? "Edit event" : "Add event";
       refs.modalSubtitle.textContent = event
-        ? "更新当前事件的日期、时间与说明。"
-        : "为当前选中日期新增一条日程。";
+        ? "鏇存柊褰撳墠浜嬩欢鐨勬棩鏈熴€佹椂闂翠笌璇存槑銆?
+        : "涓哄綋鍓嶉€変腑鏃ユ湡鏂板涓€鏉℃棩绋嬨€?;
       refs.eventId.value = event?.id || "";
       refs.eventTitle.value = event?.title || "";
       refs.eventDate.value = event?.date || toDateKey(state.selectedDate);
@@ -1699,7 +1805,7 @@
         node.dataset.eventId = entry.id;
         node.querySelector(".dot").style.background = calendarTypes[entry.calendar].color;
         node.querySelector("h4").textContent = entry.title;
-        node.querySelector("p").textContent = `${calendarTypes[entry.calendar].label} · ${entry.location || "No location"}`;
+        node.querySelector("p").textContent = `${calendarTypes[entry.calendar].label} 路 ${entry.location || "No location"}`;
         node.querySelector("time").textContent = entry.time;
         node.addEventListener("dblclick", () => openEventModal(entry));
 
@@ -1759,7 +1865,9 @@
         if (isRestDay(date)) {
           const restPill = document.createElement("span");
           restPill.className = "rest-pill";
-          restPill.textContent = "Rest";
+          const restLabel = document.createElement("span");
+          restLabel.textContent = "Rest";
+          restPill.appendChild(restLabel);
           head.appendChild(restPill);
         }
 
@@ -1820,7 +1928,7 @@
       refs.availabilityValue.textContent = `${getFreeHours(events)} free hours`;
       refs.availabilityHint.textContent = events.length
         ? `Visible calendars contribute ${events.length} scheduled item${events.length === 1 ? "" : "s"}.`
-        : "暂无安排。";
+        : "鏆傛棤瀹夋帓銆?;
       refs.restCycleBadge.textContent = `${state.restCycle.workDays} / ${state.restCycle.restDays}`;
 
       const upcoming = events[0];
@@ -1840,7 +1948,7 @@
       } else {
         refs.upcomingTitle.textContent = "No upcoming event";
         refs.upcomingMeta.textContent = "Select a day to inspect its schedule.";
-        refs.upcomingDescription.textContent = "当前日期没有待办会议时，这里会提示你留出整块专注时间。";
+        refs.upcomingDescription.textContent = "褰撳墠鏃ユ湡娌℃湁寰呭姙浼氳鏃讹紝杩欓噷浼氭彁绀轰綘鐣欏嚭鏁村潡涓撴敞鏃堕棿銆?;
         refs.upcomingAttendees.innerHTML = "";
       }
     }
@@ -1960,8 +2068,18 @@
       renderDetail();
     }
 
-    bindEvents();
-    render();
+    async function bootstrap() {
+      const redirected = await syncBuildVersion();
+      if (redirected) {
+        return;
+      }
+      bindEvents();
+      render();
+    }
+
+    bootstrap();
   </script>
 </body>
 </html>
+
+
