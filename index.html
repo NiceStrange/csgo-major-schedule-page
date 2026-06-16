@@ -480,6 +480,10 @@
       overflow: hidden;
     }
 
+    .day.is-number-centered {
+      justify-content: center;
+    }
+
     .day-head {
       position: relative;
       min-height: 52px;
@@ -511,6 +515,15 @@
       align-items: center;
       justify-content: center;
       padding-top: 8px;
+    }
+
+    .day.is-number-centered .day-head {
+      min-height: 0;
+      flex: 1 1 auto;
+    }
+
+    .day.is-number-centered .day-number-wrap {
+      padding-top: 0;
     }
 
     .day.is-other-month {
@@ -1219,7 +1232,7 @@
   <script>
     const STORAGE_KEY = "mac-calendar-web-state-v4";
     const LEGACY_STORAGE_KEYS = ["mac-calendar-web-state-v3"];
-    const EMBEDDED_BUILD_VERSION = "1781590160186";
+    const EMBEDDED_BUILD_VERSION = "1781590479978";
     const VERSION_ENDPOINT = "./version.json";
 
     const calendarTypes = {
@@ -1838,6 +1851,10 @@
         button.type = "button";
         button.className = "day";
         button.dataset.date = toDateKey(date);
+        const events = getEventsForDate(date);
+        if (events.length === 0) {
+          button.classList.add("is-number-centered");
+        }
         if (!inCurrentMonth) {
           button.classList.add("is-other-month");
         }
@@ -1880,7 +1897,6 @@
 
         button.appendChild(head);
 
-        const events = getEventsForDate(date);
         const eventsWrap = document.createElement("div");
         eventsWrap.className = "day-events";
         events.slice(0, state.view === "week" ? 3 : 2).forEach((entry) => {
