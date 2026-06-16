@@ -482,14 +482,14 @@
 
     .day-head {
       position: relative;
-      min-height: 46px;
+      min-height: 52px;
       flex: 0 0 auto;
     }
 
     .day-head-slot {
       position: absolute;
       top: 6px;
-      min-width: 44px;
+      min-width: 50px;
       min-height: 20px;
     }
 
@@ -498,7 +498,7 @@
     }
 
     .day-head-slot.is-end {
-      right: 6px;
+      right: 2px;
       display: flex;
       justify-content: flex-end;
       align-items: center;
@@ -510,6 +510,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      padding-top: 8px;
     }
 
     .day.is-other-month {
@@ -983,11 +984,11 @@
       }
 
       .day-head {
-        min-height: 44px;
+        min-height: 50px;
       }
 
       .day-head-slot {
-        min-width: 40px;
+        min-width: 46px;
         top: 6px;
       }
 
@@ -1218,7 +1219,7 @@
   <script>
     const STORAGE_KEY = "mac-calendar-web-state-v4";
     const LEGACY_STORAGE_KEYS = ["mac-calendar-web-state-v3"];
-    const EMBEDDED_BUILD_VERSION = "1781589175319";
+    const EMBEDDED_BUILD_VERSION = "1781590160186";
     const VERSION_ENDPOINT = "./version.json";
 
     const calendarTypes = {
@@ -1870,7 +1871,7 @@
           const restPill = document.createElement("span");
           restPill.className = "rest-pill";
           const restLabel = document.createElement("span");
-          restLabel.textContent = "OFF";
+          restLabel.textContent = "REST";
           restPill.appendChild(restLabel);
           endSlot.appendChild(restPill);
         }
