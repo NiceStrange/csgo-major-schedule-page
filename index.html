@@ -1135,59 +1135,12 @@
       z-index: 1;
     }
 
-    .mobile-statusbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 6px 8px 10px;
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: #1e2b49;
-    }
-
-    .mobile-status-right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .mobile-battery {
-      width: 28px;
-      height: 14px;
-      border-radius: 4px;
-      border: 1.5px solid rgba(30, 43, 73, 0.74);
-      position: relative;
-    }
-
-    .mobile-battery::before {
-      content: "";
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      right: 4px;
-      bottom: 2px;
-      border-radius: 2px;
-      background: rgba(30, 43, 73, 0.9);
-    }
-
-    .mobile-battery::after {
-      content: "";
-      position: absolute;
-      top: 3px;
-      right: -3px;
-      width: 2px;
-      height: 6px;
-      border-radius: 999px;
-      background: rgba(30, 43, 73, 0.74);
-    }
-
     .mobile-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      padding: 18px 4px 14px;
+      padding: 10px 4px 14px;
     }
 
     .mobile-header-copy {
@@ -1512,6 +1465,7 @@
       background: rgba(255, 255, 255, 0.9);
       display: grid;
       place-items: center;
+      padding-top: 8px;
       color: #1f2f4b;
       font-size: 15px;
       font-weight: 600;
@@ -1530,14 +1484,14 @@
 
     .mobile-rest-pill {
       position: absolute;
-      top: 6px;
-      right: 6px;
-      width: 17px;
-      height: 17px;
+      top: 4px;
+      right: 4px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
       background: rgba(238, 242, 255, 0.96);
       color: #5f7dd6;
-      font-size: 10px;
+      font-size: 8px;
       font-weight: 700;
       display: grid;
       place-items: center;
@@ -1703,7 +1657,7 @@
       .mobile-header {
         flex-direction: column;
         align-items: stretch;
-        padding: 24px 4px 20px;
+        padding: 10px 4px 18px;
       }
 
       .mobile-weather-pill {
@@ -1727,10 +1681,10 @@
       }
 
       .mobile-rest-pill {
-        top: 6px;
-        right: 6px;
-        width: 18px;
-        height: 18px;
+        top: 4px;
+        right: 4px;
+        width: 14px;
+        height: 14px;
       }
 
       .mobile-action-card {
@@ -1773,14 +1727,6 @@
 <body>
   <div class="mobile-app">
     <div class="mobile-shell">
-      <div class="mobile-statusbar" aria-hidden="true">
-        <span>9:41</span>
-        <div class="mobile-status-right">
-          <span>5G</span>
-          <span class="mobile-battery"></span>
-        </div>
-      </div>
-
       <section class="mobile-header">
         <div class="mobile-header-copy">
           <div class="mobile-avatar">E</div>
@@ -2027,7 +1973,7 @@
 
   <script>
     const STORAGE_KEY = "rest-calendar-state-v1";
-    const EMBEDDED_BUILD_VERSION = "1781627165680";
+    const EMBEDDED_BUILD_VERSION = "1781629276477";
     const VERSION_ENDPOINT = "./version.json";
 
     function cloneDate(date) {
