@@ -481,31 +481,35 @@
     }
 
     .day-head {
+      position: relative;
       min-height: 46px;
-      display: grid;
-      grid-template-columns: 56px minmax(0, 1fr) 56px;
-      align-items: center;
       flex: 0 0 auto;
     }
 
     .day-head-slot {
-      width: 56px;
-      min-width: 56px;
+      position: absolute;
+      top: 0;
+      min-width: 52px;
       min-height: 24px;
     }
 
+    .day-head-slot.is-start {
+      left: 0;
+    }
+
     .day-head-slot.is-end {
+      right: 0;
       display: flex;
       justify-content: flex-end;
       align-items: center;
     }
 
     .day-number-wrap {
+      position: absolute;
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-width: 0;
-      min-height: 36px;
     }
 
     .day.is-other-month {
@@ -981,12 +985,10 @@
 
       .day-head {
         min-height: 44px;
-        grid-template-columns: 52px minmax(0, 1fr) 52px;
       }
 
       .day-head-slot {
-        width: 52px;
-        min-width: 52px;
+        min-width: 48px;
       }
 
       .event-form-grid {
