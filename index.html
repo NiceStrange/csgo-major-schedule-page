@@ -488,9 +488,9 @@
 
     .day-head-slot {
       position: absolute;
-      top: 0;
-      min-width: 52px;
-      min-height: 24px;
+      top: 6px;
+      min-width: 44px;
+      min-height: 20px;
     }
 
     .day-head-slot.is-start {
@@ -498,7 +498,7 @@
     }
 
     .day-head-slot.is-end {
-      right: 0;
+      right: 6px;
       display: flex;
       justify-content: flex-end;
       align-items: center;
@@ -595,17 +595,16 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 48px;
-      height: 22px;
-      padding: 0 9px;
+      min-width: 28px;
+      height: 18px;
+      padding: 0 7px;
       border-radius: 999px;
       background: rgba(255, 100, 93, 0.1);
       border: 1px solid rgba(226, 82, 73, 0.14);
       color: #cf615e;
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      letter-spacing: 0.02em;
       pointer-events: none;
       z-index: 1;
     }
@@ -988,7 +987,8 @@
       }
 
       .day-head-slot {
-        min-width: 48px;
+        min-width: 40px;
+        top: 6px;
       }
 
       .event-form-grid {
@@ -1218,7 +1218,7 @@
   <script>
     const STORAGE_KEY = "mac-calendar-web-state-v4";
     const LEGACY_STORAGE_KEYS = ["mac-calendar-web-state-v3"];
-    const EMBEDDED_BUILD_VERSION = "1781587446079";
+    const EMBEDDED_BUILD_VERSION = "1781589175319";
     const VERSION_ENDPOINT = "./version.json";
 
     const calendarTypes = {
