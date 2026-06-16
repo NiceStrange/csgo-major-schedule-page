@@ -469,10 +469,14 @@
     .day {
       min-height: 124px;
       background: rgba(255, 255, 255, 0.82);
-      padding: 14px;
+      padding: 14px 14px 12px;
       position: relative;
       border: 0;
       text-align: left;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
     }
 
     .day.is-other-month {
@@ -487,19 +491,24 @@
 
     .day.is-rest-day {
       background:
-        linear-gradient(180deg, rgba(243, 247, 255, 0.98), rgba(232, 240, 255, 0.98));
+        linear-gradient(180deg, rgba(245, 248, 255, 0.98), rgba(237, 242, 252, 0.98));
       box-shadow:
-        inset 0 0 0 1px rgba(96, 129, 214, 0.18),
-        0 10px 24px rgba(104, 126, 182, 0.08);
+        inset 0 0 0 1px rgba(120, 138, 176, 0.16),
+        0 12px 26px rgba(108, 122, 154, 0.09);
     }
 
     .day.is-rest-day .day-number {
-      color: #4f69c8;
+      color: #55698c;
     }
 
     .day-number {
       font-size: 16px;
       font-weight: 700;
+      min-width: 34px;
+      text-align: center;
+      align-self: center;
+      display: grid;
+      place-items: center;
     }
 
     .day.is-today .day-number {
@@ -514,8 +523,7 @@
     }
 
     .event-tag {
-      width: fit-content;
-      margin-top: 12px;
+      width: 100%;
       padding: 7px 10px;
       border-radius: 12px;
       font-size: 12px;
@@ -524,6 +532,7 @@
       overflow: hidden;
       max-width: 100%;
       text-overflow: ellipsis;
+      text-align: left;
     }
 
     .tag-red {
@@ -541,11 +550,6 @@
       color: var(--green-strong);
     }
 
-    .tag-rest {
-      background: rgba(92, 124, 216, 0.14);
-      color: #4c66bf;
-    }
-
     .day-note {
       position: absolute;
       right: 14px;
@@ -557,20 +561,32 @@
     .rest-pill {
       position: absolute;
       right: 12px;
-      top: 12px;
+      top: 11px;
       display: inline-flex;
       align-items: center;
+      gap: 6px;
       justify-content: center;
-      min-width: 34px;
-      height: 22px;
-      padding: 0 9px;
+      min-width: 48px;
+      height: 24px;
+      padding: 0 10px 0 8px;
       border-radius: 999px;
-      background: rgba(87, 118, 208, 0.14);
-      color: #4f69c8;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(232, 238, 248, 0.92));
+      border: 1px solid rgba(132, 148, 179, 0.2);
+      color: #667892;
       font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.06em;
+      font-weight: 700;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
+      box-shadow: 0 8px 18px rgba(106, 120, 148, 0.12);
+    }
+
+    .rest-pill::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #a8b8d3, #7f93b6);
+      box-shadow: 0 0 0 3px rgba(151, 168, 199, 0.14);
     }
 
     .detail {
@@ -1728,17 +1744,11 @@
         if (isRestDay(date)) {
           const restPill = document.createElement("span");
           restPill.className = "rest-pill";
-          restPill.textContent = "Rest";
+          restPill.textContent = "Off";
           button.appendChild(restPill);
         }
 
         const events = getEventsForDate(date);
-        if (!events.length && isRestDay(date)) {
-          const restTag = document.createElement("div");
-          restTag.className = "event-tag tag-rest";
-          restTag.textContent = "Cycle rest day";
-          button.appendChild(restTag);
-        }
         events.slice(0, state.view === "week" ? 3 : 2).forEach((entry) => {
           const tag = document.createElement("div");
           tag.className = `event-tag ${calendarTypes[entry.calendar].tagClass}`;
