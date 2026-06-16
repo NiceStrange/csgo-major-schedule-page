@@ -104,7 +104,7 @@
 
     .layout {
       display: grid;
-      grid-template-columns: 320px minmax(0, 1fr) 286px;
+      grid-template-columns: 320px minmax(0, 1fr) 320px;
       min-height: calc(100vh - 126px);
     }
 
@@ -277,29 +277,49 @@
 
     .weather-card {
       min-height: 100%;
-      padding: 24px 22px;
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(244, 247, 255, 0.84)),
-        radial-gradient(circle at top right, rgba(255, 205, 160, 0.2), transparent 36%);
+      padding: 22px;
       display: grid;
-      grid-template-rows: auto auto 1fr auto;
-      gap: 18px;
+      grid-template-rows: auto auto auto auto auto 1fr;
+      gap: 16px;
+      overflow: hidden;
+      position: relative;
+      background:
+        radial-gradient(circle at top right, rgba(255, 206, 133, 0.3), transparent 24%),
+        radial-gradient(circle at bottom left, rgba(127, 156, 255, 0.18), transparent 28%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(242, 246, 255, 0.9));
     }
 
-    .weather-card-head {
+    .weather-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.26), transparent 36%),
+        radial-gradient(circle at 82% 16%, rgba(255, 215, 159, 0.34), transparent 18%);
+      pointer-events: none;
+    }
+
+    .weather-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .weather-card-head,
+    .weather-forecast-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
+      gap: 12px;
     }
 
-    .weather-chip {
+    .weather-chip,
+    .weather-live-badge {
       display: inline-flex;
       align-items: center;
       min-height: 28px;
       padding: 0 12px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.74);
+      background: rgba(255, 255, 255, 0.7);
       border: 1px solid rgba(132, 148, 183, 0.18);
       color: #76819a;
       font-size: 11px;
@@ -314,7 +334,7 @@
       height: 34px;
       border-radius: 50%;
       border: 1px solid rgba(132, 148, 183, 0.18);
-      background: rgba(255, 255, 255, 0.74);
+      background: rgba(255, 255, 255, 0.76);
       color: #707c95;
       display: grid;
       place-items: center;
@@ -331,48 +351,222 @@
       gap: 6px;
     }
 
-    .weather-copy h3 {
+    .weather-copy h3,
+    .weather-section-title {
       margin: 0;
-      font-size: 18px;
+      font-size: 17px;
       letter-spacing: -0.03em;
-      color: #64708a;
+      color: #6f7b96;
       font-weight: 600;
     }
 
     .weather-location {
       margin: 0;
-      font-size: 28px;
-      line-height: 1.08;
-      letter-spacing: -0.05em;
+      font-size: 34px;
+      line-height: 1.04;
+      letter-spacing: -0.07em;
       color: #22304a;
       font-weight: 700;
     }
 
+    .weather-updated {
+      color: #7f8aa4;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
     .weather-hero {
+      min-height: 252px;
+      padding: 18px;
+      border-radius: 30px;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(239, 245, 255, 0.8)),
+        linear-gradient(140deg, rgba(182, 201, 255, 0.24), rgba(255, 233, 194, 0.22));
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.56),
+        0 18px 34px rgba(121, 137, 181, 0.08);
+    }
+
+    .weather-visual {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .weather-aura,
+    .weather-orb,
+    .weather-cloud,
+    .weather-stars,
+    .weather-rain {
+      position: absolute;
+    }
+
+    .weather-aura {
+      width: 220px;
+      height: 220px;
+      top: -26px;
+      right: -18px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 214, 138, 0.72), rgba(255, 214, 138, 0));
+      filter: blur(12px);
+      animation: weatherDrift 12s ease-in-out infinite;
+    }
+
+    .weather-orb {
+      width: 82px;
+      height: 82px;
+      top: 44px;
+      right: 26px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 36% 34%, #ffe3a3, #ffb85e 72%, #ff9850);
+      box-shadow: 0 18px 36px rgba(255, 183, 98, 0.28);
+      animation: weatherPulse 5s ease-in-out infinite;
+    }
+
+    .weather-cloud {
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(222, 232, 255, 0.96));
+      box-shadow:
+        inset -10px -8px 18px rgba(186, 204, 246, 0.34),
+        0 10px 22px rgba(122, 142, 192, 0.12);
+    }
+
+    .weather-cloud::before,
+    .weather-cloud::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: inherit;
+    }
+
+    .weather-cloud.one {
+      right: 18px;
+      bottom: 28px;
+      width: 128px;
+      height: 50px;
+      animation: weatherCloudFloat 9s ease-in-out infinite;
+    }
+
+    .weather-cloud.one::before {
+      width: 58px;
+      height: 58px;
+      left: 18px;
+      top: -24px;
+    }
+
+    .weather-cloud.one::after {
+      width: 72px;
+      height: 72px;
+      right: 18px;
+      top: -34px;
+    }
+
+    .weather-cloud.two {
+      right: 118px;
+      bottom: 62px;
+      width: 92px;
+      height: 38px;
+      opacity: 0.78;
+      animation: weatherCloudFloat 11s ease-in-out infinite reverse;
+    }
+
+    .weather-cloud.two::before {
+      width: 42px;
+      height: 42px;
+      left: 12px;
+      top: -18px;
+    }
+
+    .weather-cloud.two::after {
+      width: 48px;
+      height: 48px;
+      right: 12px;
+      top: -20px;
+    }
+
+    .weather-stars {
+      inset: 26px 28px auto auto;
+      width: 90px;
+      height: 44px;
+      opacity: 0;
+    }
+
+    .weather-stars i {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+      animation: weatherTwinkle 3s ease-in-out infinite;
+    }
+
+    .weather-stars i:nth-child(1) { top: 0; right: 12px; }
+    .weather-stars i:nth-child(2) { top: 18px; right: 42px; animation-delay: 1s; }
+    .weather-stars i:nth-child(3) { top: 8px; right: 70px; animation-delay: 2s; }
+
+    .weather-rain {
+      right: 22px;
+      bottom: 18px;
+      width: 114px;
+      height: 84px;
+      opacity: 0;
+    }
+
+    .weather-rain i {
+      position: absolute;
+      top: 0;
+      width: 2px;
+      height: 22px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(120, 171, 255, 0), rgba(120, 171, 255, 0.9));
+      animation: weatherRain 1.2s linear infinite;
+    }
+
+    .weather-rain i:nth-child(1) { left: 8px; animation-delay: 0.1s; }
+    .weather-rain i:nth-child(2) { left: 30px; animation-delay: 0.6s; }
+    .weather-rain i:nth-child(3) { left: 54px; animation-delay: 0.2s; }
+    .weather-rain i:nth-child(4) { left: 78px; animation-delay: 0.8s; }
+    .weather-rain i:nth-child(5) { left: 98px; animation-delay: 0.35s; }
+
+    .weather-hero-copy {
+      position: relative;
+      z-index: 1;
       display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
       gap: 12px;
+      margin-top: 112px;
+    }
+
+    .weather-temp-line {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .weather-temperature {
-      font-size: 62px;
-      line-height: 0.9;
-      letter-spacing: -0.08em;
+      font-size: 78px;
+      line-height: 0.88;
+      letter-spacing: -0.1em;
       font-weight: 700;
-      color: #1f2a41;
+      color: #21304a;
     }
 
-    .weather-icon {
-      width: 98px;
-      height: 98px;
-      filter: drop-shadow(0 12px 24px rgba(108, 125, 167, 0.16));
+    .weather-feels-like,
+    .weather-range {
+      color: #6f7c99;
+      font-size: 18px;
+      line-height: 1.3;
     }
 
-    .weather-meta {
-      align-self: end;
-      display: grid;
-      gap: 8px;
+    .weather-hero-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .weather-status {
@@ -382,18 +576,235 @@
       padding: 0 14px;
       width: fit-content;
       border-radius: 999px;
-      background: rgba(104, 132, 201, 0.1);
+      background: rgba(255, 255, 255, 0.72);
       color: #5e73ae;
       font-size: 13px;
       font-weight: 700;
       letter-spacing: 0.02em;
+      box-shadow: inset 0 0 0 1px rgba(132, 148, 183, 0.14);
+    }
+
+    .weather-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .weather-metric {
+      padding: 14px 12px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.66);
+      box-shadow: inset 0 0 0 1px rgba(132, 148, 183, 0.14);
+      display: grid;
+      gap: 10px;
+    }
+
+    .weather-metric-label {
+      color: #8a96b0;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .weather-metric-value {
+      color: #23314b;
+      font-size: 24px;
+      letter-spacing: -0.05em;
+      font-weight: 700;
+    }
+
+    .weather-forecast-card {
+      padding: 16px;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.6);
+      box-shadow: inset 0 0 0 1px rgba(132, 148, 183, 0.14);
+      display: grid;
+      gap: 14px;
+    }
+
+    .weather-forecast {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .forecast-item {
+      padding: 12px 8px 14px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.76);
+      box-shadow: inset 0 0 0 1px rgba(132, 148, 183, 0.1);
+      text-align: center;
+      display: grid;
+      gap: 8px;
+      justify-items: center;
+    }
+
+    .forecast-time {
+      color: #31415f;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .forecast-temp {
+      color: #73809d;
+      font-size: 13px;
+      line-height: 1.2;
+    }
+
+    .forecast-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #ffd16d, #ffaf57);
+      box-shadow: 0 8px 18px rgba(255, 176, 87, 0.24);
+    }
+
+    .forecast-icon.cloudy,
+    .forecast-icon.fog {
+      background: linear-gradient(180deg, #eef5ff, #d4e1fb);
+      box-shadow: 0 8px 18px rgba(120, 143, 197, 0.14);
+    }
+
+    .forecast-icon.rain,
+    .forecast-icon.storm {
+      background: linear-gradient(180deg, #9ebaff, #6f8dff);
+      box-shadow: 0 8px 18px rgba(111, 141, 255, 0.22);
+    }
+
+    .forecast-icon.snow {
+      background: linear-gradient(180deg, #ffffff, #d9ecff);
+      box-shadow: 0 8px 18px rgba(151, 191, 255, 0.14);
+    }
+
+    .forecast-icon.night {
+      background: linear-gradient(180deg, #2d3b6f, #172344);
+      box-shadow: 0 8px 18px rgba(26, 40, 78, 0.24);
     }
 
     .weather-footnote {
       margin: 0;
-      color: #8c95aa;
+      padding: 0 2px;
+      color: #7784a0;
       font-size: 13px;
-      line-height: 1.55;
+      line-height: 1.6;
+    }
+
+    .weather-card[data-weather-tone="cloudy"] .weather-aura {
+      opacity: 0.5;
+    }
+
+    .weather-card[data-weather-tone="cloudy"] .weather-cloud.two {
+      opacity: 0.94;
+    }
+
+    .weather-card[data-weather-tone="rain"] .weather-aura,
+    .weather-card[data-weather-tone="storm"] .weather-aura,
+    .weather-card[data-weather-tone="fog"] .weather-aura {
+      opacity: 0.16;
+    }
+
+    .weather-card[data-weather-tone="rain"] .weather-orb,
+    .weather-card[data-weather-tone="storm"] .weather-orb {
+      opacity: 0.28;
+      transform: scale(0.88);
+    }
+
+    .weather-card[data-weather-tone="rain"] .weather-rain,
+    .weather-card[data-weather-tone="storm"] .weather-rain {
+      opacity: 1;
+    }
+
+    .weather-card[data-weather-tone="storm"] .weather-hero {
+      background:
+        linear-gradient(180deg, rgba(226, 234, 255, 0.54), rgba(211, 221, 248, 0.9)),
+        linear-gradient(140deg, rgba(111, 141, 255, 0.18), rgba(153, 171, 216, 0.18));
+    }
+
+    .weather-card[data-weather-tone="fog"] .weather-hero {
+      background:
+        linear-gradient(180deg, rgba(246, 249, 255, 0.7), rgba(228, 235, 248, 0.92)),
+        linear-gradient(140deg, rgba(208, 218, 239, 0.26), rgba(241, 245, 252, 0.24));
+    }
+
+    .weather-card[data-weather-tone="snow"] .weather-hero {
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(233, 244, 255, 0.92)),
+        linear-gradient(140deg, rgba(202, 225, 255, 0.26), rgba(255, 255, 255, 0.18));
+    }
+
+    .weather-card[data-weather-tone="night"] {
+      background:
+        radial-gradient(circle at top right, rgba(119, 140, 210, 0.16), transparent 24%),
+        radial-gradient(circle at bottom left, rgba(80, 101, 162, 0.12), transparent 28%),
+        linear-gradient(180deg, rgba(246, 248, 255, 0.96), rgba(237, 241, 252, 0.92));
+    }
+
+    .weather-card[data-weather-tone="night"] .weather-hero {
+      background:
+        linear-gradient(180deg, rgba(58, 74, 129, 0.9), rgba(28, 42, 82, 0.96)),
+        linear-gradient(140deg, rgba(104, 128, 211, 0.18), rgba(16, 24, 48, 0.36));
+    }
+
+    .weather-card[data-weather-tone="night"] .weather-aura {
+      opacity: 0;
+    }
+
+    .weather-card[data-weather-tone="night"] .weather-orb {
+      width: 64px;
+      height: 64px;
+      top: 40px;
+      right: 32px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 38% 34%, #f8f1bf, #d5d2fb 72%, #a3addd);
+      box-shadow: 0 18px 36px rgba(166, 181, 238, 0.24);
+    }
+
+    .weather-card[data-weather-tone="night"] .weather-stars {
+      opacity: 1;
+    }
+
+    .weather-card[data-weather-tone="night"] .weather-cloud {
+      background: linear-gradient(180deg, rgba(241, 245, 255, 0.82), rgba(161, 179, 226, 0.72));
+    }
+
+    .weather-card[data-weather-tone="night"] .weather-temperature,
+    .weather-card[data-weather-tone="night"] .weather-status,
+    .weather-card[data-weather-tone="night"] .weather-range,
+    .weather-card[data-weather-tone="night"] .weather-feels-like {
+      color: #f4f7ff;
+    }
+
+    .weather-card[data-weather-tone="night"] .weather-status {
+      background: rgba(255, 255, 255, 0.12);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    }
+
+    @keyframes weatherPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes weatherCloudFloat {
+      0%, 100% { transform: translate3d(0, 0, 0); }
+      50% { transform: translate3d(8px, -4px, 0); }
+    }
+
+    @keyframes weatherDrift {
+      0%, 100% { transform: translate3d(0, 0, 0); }
+      50% { transform: translate3d(-8px, 6px, 0); }
+    }
+
+    @keyframes weatherRain {
+      0% { transform: translate3d(0, 0, 0); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translate3d(-14px, 48px, 0); opacity: 0; }
+    }
+
+    @keyframes weatherTwinkle {
+      0%, 100% { opacity: 0.4; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.1); }
     }
 
     .main {
@@ -828,28 +1239,50 @@
           <div class="weather-copy">
             <h3>当前位置</h3>
             <p class="weather-location" id="weatherLocation">定位中...</p>
+            <div class="weather-updated" id="weatherUpdatedAt">正在同步实时天气</div>
           </div>
           <div class="weather-hero">
-            <div class="weather-temperature" id="weatherTemperature">--°</div>
-            <svg class="weather-icon" id="weatherIcon" viewBox="0 0 120 120" aria-hidden="true">
-              <defs>
-                <linearGradient id="weatherSun" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#ffd676"></stop>
-                  <stop offset="100%" stop-color="#ff9f53"></stop>
-                </linearGradient>
-                <linearGradient id="weatherCloud" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#f8fbff"></stop>
-                  <stop offset="100%" stop-color="#d7e3fb"></stop>
-                </linearGradient>
-              </defs>
-              <circle cx="70" cy="42" r="20" fill="url(#weatherSun)"></circle>
-              <path d="M34 73c0-10 8-18 18-18 3 0 6 1 9 2 5-7 13-11 22-11 15 0 28 12 28 27v1c7 1 13 7 13 15 0 9-7 16-16 16H49c-12 0-22-10-22-22 0-5 2-8 7-10Z" fill="url(#weatherCloud)"></path>
-            </svg>
+            <div class="weather-visual" aria-hidden="true">
+              <div class="weather-aura"></div>
+              <div class="weather-orb"></div>
+              <div class="weather-stars"><i></i><i></i><i></i></div>
+              <div class="weather-cloud one"></div>
+              <div class="weather-cloud two"></div>
+              <div class="weather-rain"><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+            <div class="weather-hero-copy">
+              <div class="weather-temp-line">
+                <div class="weather-temperature" id="weatherTemperature">--°</div>
+                <div class="weather-feels-like" id="weatherFeelsLike">体感 --°</div>
+              </div>
+              <div class="weather-hero-meta">
+                <div class="weather-status" id="weatherStatus">等待定位</div>
+                <div class="weather-range" id="weatherRange">H --° · L --°</div>
+              </div>
+            </div>
           </div>
-          <div class="weather-meta">
-            <div class="weather-status" id="weatherStatus">等待定位</div>
-            <p class="weather-footnote" id="weatherFootnote">允许定位后会自动刷新，也可以手动重新获取。</p>
+          <div class="weather-metrics">
+            <div class="weather-metric">
+              <div class="weather-metric-label">Rain</div>
+              <div class="weather-metric-value" id="weatherRainChance">--%</div>
+            </div>
+            <div class="weather-metric">
+              <div class="weather-metric-label">Wind</div>
+              <div class="weather-metric-value" id="weatherWindSpeed">-- km/h</div>
+            </div>
+            <div class="weather-metric">
+              <div class="weather-metric-label">Humidity</div>
+              <div class="weather-metric-value" id="weatherHumidity">--%</div>
+            </div>
           </div>
+          <div class="weather-forecast-card">
+            <div class="weather-forecast-head">
+              <h4 class="weather-section-title">Next 5 Hours</h4>
+              <span class="weather-live-badge">Live</span>
+            </div>
+            <div class="weather-forecast" id="weatherForecast"></div>
+          </div>
+          <p class="weather-footnote" id="weatherFootnote">允许定位后会自动刷新，也可以手动重新获取。</p>
         </section>
       </aside>
     </div>
@@ -886,7 +1319,7 @@
 
   <script>
     const STORAGE_KEY = "rest-calendar-state-v1";
-    const EMBEDDED_BUILD_VERSION = "1781595136976";
+    const EMBEDDED_BUILD_VERSION = "1781605155237";
     const VERSION_ENDPOINT = "./version.json";
 
     function cloneDate(date) {
@@ -1012,9 +1445,17 @@
       restSummaryText: document.getElementById("restSummaryText"),
       statusLine: document.getElementById("statusLine"),
       weatherLocation: document.getElementById("weatherLocation"),
+      weatherUpdatedAt: document.getElementById("weatherUpdatedAt"),
       weatherTemperature: document.getElementById("weatherTemperature"),
+      weatherFeelsLike: document.getElementById("weatherFeelsLike"),
       weatherStatus: document.getElementById("weatherStatus"),
+      weatherRange: document.getElementById("weatherRange"),
+      weatherRainChance: document.getElementById("weatherRainChance"),
+      weatherWindSpeed: document.getElementById("weatherWindSpeed"),
+      weatherHumidity: document.getElementById("weatherHumidity"),
+      weatherForecast: document.getElementById("weatherForecast"),
       weatherFootnote: document.getElementById("weatherFootnote"),
+      weatherCard: document.getElementById("weatherCard"),
       weatherRefreshButton: document.getElementById("weatherRefreshButton"),
       navButtons: Array.from(document.querySelectorAll("[data-nav]")),
       todayButton: document.getElementById("todayButton"),
@@ -1030,26 +1471,28 @@
     const monthFormatter = new Intl.DateTimeFormat("en-US", { month: "long", year: "numeric" });
     const fullFormatter = new Intl.DateTimeFormat("en-US", { weekday: "long", month: "long", day: "numeric" });
     const weatherCodeMap = {
-      0: "晴朗",
-      1: "大部晴朗",
-      2: "局部多云",
-      3: "阴天",
-      45: "有雾",
-      48: "冻雾",
-      51: "毛毛雨",
-      53: "小雨",
-      55: "细雨",
-      61: "小雨",
-      63: "中雨",
-      65: "大雨",
-      71: "小雪",
-      73: "中雪",
-      75: "大雪",
-      80: "阵雨",
-      81: "强阵雨",
-      82: "暴雨",
-      95: "雷阵雨",
+      0: { label: "晴朗", tone: "sunny", icon: "sunny" },
+      1: { label: "大部晴朗", tone: "sunny", icon: "sunny" },
+      2: { label: "局部多云", tone: "cloudy", icon: "cloudy" },
+      3: { label: "阴天", tone: "cloudy", icon: "cloudy" },
+      45: { label: "有雾", tone: "fog", icon: "fog" },
+      48: { label: "冻雾", tone: "fog", icon: "fog" },
+      51: { label: "毛毛雨", tone: "rain", icon: "rain" },
+      53: { label: "小雨", tone: "rain", icon: "rain" },
+      55: { label: "细雨", tone: "rain", icon: "rain" },
+      61: { label: "小雨", tone: "rain", icon: "rain" },
+      63: { label: "中雨", tone: "rain", icon: "rain" },
+      65: { label: "大雨", tone: "storm", icon: "storm" },
+      71: { label: "小雪", tone: "snow", icon: "snow" },
+      73: { label: "中雪", tone: "snow", icon: "snow" },
+      75: { label: "大雪", tone: "snow", icon: "snow" },
+      80: { label: "阵雨", tone: "rain", icon: "rain" },
+      81: { label: "强阵雨", tone: "storm", icon: "storm" },
+      82: { label: "暴雨", tone: "storm", icon: "storm" },
+      95: { label: "雷阵雨", tone: "storm", icon: "storm" },
     };
+    const fallbackWeather = { label: "天气稳定", tone: "sunny", icon: "sunny" };
+    const timeFormatter = new Intl.DateTimeFormat("zh-CN", { hour: "2-digit", minute: "2-digit", hour12: false });
 
     function persistState() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
@@ -1248,11 +1691,73 @@
       render();
     }
 
-    function setWeatherCard({ location, temperature, status, note }) {
+    function getWeatherMeta(code, timestampText) {
+      const base = weatherCodeMap[code] || fallbackWeather;
+      const hour = timestampText ? new Date(timestampText).getHours() : new Date().getHours();
+      const isNight = Number.isFinite(hour) && (hour >= 19 || hour < 6) && (base.tone === "sunny" || base.tone === "cloudy");
+      return {
+        ...base,
+        tone: isNight ? "night" : base.tone,
+        icon: isNight ? "night" : base.icon,
+      };
+    }
+
+    function setWeatherTone(tone) {
+      refs.weatherCard.dataset.weatherTone = tone;
+    }
+
+    function createForecastItem({ time, temperature, icon }) {
+      const item = document.createElement("div");
+      item.className = "forecast-item";
+
+      const timeNode = document.createElement("div");
+      timeNode.className = "forecast-time";
+      timeNode.textContent = time;
+
+      const iconNode = document.createElement("div");
+      iconNode.className = `forecast-icon ${icon}`;
+
+      const tempNode = document.createElement("div");
+      tempNode.className = "forecast-temp";
+      tempNode.textContent = temperature;
+
+      item.append(timeNode, iconNode, tempNode);
+      return item;
+    }
+
+    function renderForecast(items) {
+      refs.weatherForecast.innerHTML = "";
+      items.slice(0, 5).forEach((item) => {
+        refs.weatherForecast.appendChild(createForecastItem(item));
+      });
+    }
+
+    function setWeatherCard({
+      location,
+      updatedAt,
+      temperature,
+      feelsLike,
+      status,
+      range,
+      rainChance,
+      windSpeed,
+      humidity,
+      note,
+      tone,
+      forecast,
+    }) {
       refs.weatherLocation.textContent = location;
+      refs.weatherUpdatedAt.textContent = updatedAt;
       refs.weatherTemperature.textContent = temperature;
+      refs.weatherFeelsLike.textContent = feelsLike;
       refs.weatherStatus.textContent = status;
+      refs.weatherRange.textContent = range;
+      refs.weatherRainChance.textContent = rainChance;
+      refs.weatherWindSpeed.textContent = windSpeed;
+      refs.weatherHumidity.textContent = humidity;
       refs.weatherFootnote.textContent = note;
+      setWeatherTone(tone);
+      renderForecast(forecast);
     }
 
     async function reverseGeocode(latitude, longitude) {
@@ -1276,7 +1781,9 @@
       const url = new URL("https://api.open-meteo.com/v1/forecast");
       url.searchParams.set("latitude", String(latitude));
       url.searchParams.set("longitude", String(longitude));
-      url.searchParams.set("current", "temperature_2m,weather_code");
+      url.searchParams.set("current", "temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m");
+      url.searchParams.set("hourly", "temperature_2m,weather_code,precipitation_probability");
+      url.searchParams.set("daily", "temperature_2m_max,temperature_2m_min");
       url.searchParams.set("timezone", "auto");
 
       const response = await fetch(url.toString(), { cache: "no-store" });
@@ -1286,9 +1793,39 @@
 
       const payload = await response.json();
       const current = payload.current || {};
+      const daily = payload.daily || {};
+      const hourly = payload.hourly || {};
+      const meta = getWeatherMeta(current.weather_code, current.time);
+      const timeList = Array.isArray(hourly.time) ? hourly.time : [];
+      const tempList = Array.isArray(hourly.temperature_2m) ? hourly.temperature_2m : [];
+      const codeList = Array.isArray(hourly.weather_code) ? hourly.weather_code : [];
+      const rainList = Array.isArray(hourly.precipitation_probability) ? hourly.precipitation_probability : [];
+      const currentIndex = Math.max(0, timeList.findIndex((entry) => entry === current.time));
+      const forecast = Array.from({ length: Math.min(5, Math.max(0, timeList.length - currentIndex)) }, (_, offset) => {
+        const index = currentIndex + offset;
+        const hourMeta = getWeatherMeta(codeList[index], timeList[index]);
+        return {
+          time: offset === 0 ? "现在" : timeFormatter.format(new Date(timeList[index])),
+          temperature: `${Math.round(tempList[index] ?? current.temperature_2m ?? 24)}°`,
+          icon: hourMeta.icon,
+        };
+      });
+
       return {
         temperature: `${Math.round(current.temperature_2m ?? 24)}°`,
-        status: weatherCodeMap[current.weather_code] || "天气稳定",
+        feelsLike: `体感 ${Math.round(current.apparent_temperature ?? current.temperature_2m ?? 24)}°`,
+        humidity: `${Math.round(current.relative_humidity_2m ?? 55)}%`,
+        windSpeed: `${Math.round(current.wind_speed_10m ?? 8)} km/h`,
+        rainChance: `${Math.round(rainList[currentIndex] ?? 0)}%`,
+        range: `H ${Math.round((daily.temperature_2m_max || [current.temperature_2m ?? 24])[0])}° · L ${Math.round((daily.temperature_2m_min || [current.temperature_2m ?? 24])[0])}°`,
+        status: meta.label,
+        tone: meta.tone,
+        forecast: forecast.length ? forecast : [{
+          time: "现在",
+          temperature: `${Math.round(current.temperature_2m ?? 24)}°`,
+          icon: meta.icon,
+        }],
+        updatedAt: `更新于 ${timeFormatter.format(new Date(current.time || Date.now()))}`,
       };
     }
 
@@ -1310,9 +1847,21 @@
     async function refreshWeather() {
       setWeatherCard({
         location: "定位中...",
+        updatedAt: "正在同步实时天气",
         temperature: "--°",
+        feelsLike: "体感 --°",
         status: "正在获取天气",
+        range: "H --° · L --°",
+        rainChance: "--%",
+        windSpeed: "-- km/h",
+        humidity: "--%",
         note: "允许定位后会自动刷新，也可以手动重新获取。",
+        tone: "sunny",
+        forecast: Array.from({ length: 5 }, (_, index) => ({
+          time: index === 0 ? "现在" : `0${index}:00`.slice(-5),
+          temperature: "--°",
+          icon: "sunny",
+        })),
       });
 
       try {
@@ -1326,17 +1875,39 @@
 
         setWeatherCard({
           location,
+          updatedAt: weather.updatedAt,
           temperature: weather.temperature,
+          feelsLike: weather.feelsLike,
           status: weather.status,
+          range: weather.range,
+          rainChance: weather.rainChance,
+          windSpeed: weather.windSpeed,
+          humidity: weather.humidity,
           note: "天气已按当前位置同步。",
+          tone: weather.tone,
+          forecast: weather.forecast,
         });
         return;
       } catch (error) {
         setWeatherCard({
           location: "天气暂不可用",
+          updatedAt: "未获取到实时天气",
           temperature: "24°",
+          feelsLike: "体感 25°",
           status: "请重新尝试",
+          range: "H 28° · L 23°",
+          rainChance: "12%",
+          windSpeed: "7 km/h",
+          humidity: "58%",
           note: "定位未开启或网络暂时不可用，稍后可再次刷新。",
+          tone: "cloudy",
+          forecast: [
+            { time: "现在", temperature: "24°", icon: "cloudy" },
+            { time: "14:00", temperature: "25°", icon: "cloudy" },
+            { time: "15:00", temperature: "26°", icon: "sunny" },
+            { time: "16:00", temperature: "26°", icon: "sunny" },
+            { time: "17:00", temperature: "25°", icon: "cloudy" },
+          ],
         });
       }
     }
