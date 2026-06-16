@@ -104,14 +104,27 @@
 
     .layout {
       display: grid;
-      grid-template-columns: 320px minmax(0, 1fr);
+      grid-template-columns: 320px minmax(0, 1fr) 286px;
       min-height: calc(100vh - 126px);
     }
 
-    .sidebar {
+    .sidebar,
+    .rightbar {
       padding: 28px 24px;
-      border-right: 1px solid rgba(120, 132, 160, 0.14);
       background: linear-gradient(180deg, rgba(248, 250, 255, 0.72), rgba(243, 246, 253, 0.5));
+    }
+
+    .sidebar {
+      border-right: 1px solid rgba(120, 132, 160, 0.14);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .rightbar {
+      border-left: 1px solid rgba(120, 132, 160, 0.14);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
     }
 
     .card,
@@ -129,6 +142,10 @@
 
     .section + .section {
       margin-top: 24px;
+    }
+
+    .rest-cycle-section {
+      margin-top: 52px;
     }
 
     .eyebrow,
@@ -256,6 +273,127 @@
     .status-line {
       min-height: 20px;
       font-size: 12px;
+    }
+
+    .weather-card {
+      min-height: 100%;
+      padding: 24px 22px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(244, 247, 255, 0.84)),
+        radial-gradient(circle at top right, rgba(255, 205, 160, 0.2), transparent 36%);
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 18px;
+    }
+
+    .weather-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .weather-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.74);
+      border: 1px solid rgba(132, 148, 183, 0.18);
+      color: #76819a;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      backdrop-filter: blur(16px);
+    }
+
+    .weather-refresh {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid rgba(132, 148, 183, 0.18);
+      background: rgba(255, 255, 255, 0.74);
+      color: #707c95;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 10px 18px rgba(86, 97, 127, 0.08);
+    }
+
+    .weather-refresh:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 26px rgba(86, 97, 127, 0.12);
+    }
+
+    .weather-copy {
+      display: grid;
+      gap: 6px;
+    }
+
+    .weather-copy h3 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: -0.03em;
+      color: #64708a;
+      font-weight: 600;
+    }
+
+    .weather-location {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.08;
+      letter-spacing: -0.05em;
+      color: #22304a;
+      font-weight: 700;
+    }
+
+    .weather-hero {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .weather-temperature {
+      font-size: 62px;
+      line-height: 0.9;
+      letter-spacing: -0.08em;
+      font-weight: 700;
+      color: #1f2a41;
+    }
+
+    .weather-icon {
+      width: 98px;
+      height: 98px;
+      filter: drop-shadow(0 12px 24px rgba(108, 125, 167, 0.16));
+    }
+
+    .weather-meta {
+      align-self: end;
+      display: grid;
+      gap: 8px;
+    }
+
+    .weather-status {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 14px;
+      width: fit-content;
+      border-radius: 999px;
+      background: rgba(104, 132, 201, 0.1);
+      color: #5e73ae;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .weather-footnote {
+      margin: 0;
+      color: #8c95aa;
+      font-size: 13px;
+      line-height: 1.55;
     }
 
     .main {
@@ -530,6 +668,7 @@
     .pill-btn:focus-visible,
     .icon-btn:focus-visible,
     .today-btn:focus-visible,
+    .weather-refresh:focus-visible,
     .mini-grid button:focus-visible,
     .day:focus-visible,
     .rest-form-grid input:focus-visible,
@@ -548,6 +687,11 @@
       .sidebar {
         border-right: 0;
         border-bottom: 1px solid rgba(120, 132, 160, 0.14);
+      }
+
+      .rightbar {
+        border-left: 0;
+        border-top: 1px solid rgba(120, 132, 160, 0.14);
       }
 
       .title {
@@ -576,12 +720,26 @@
 
       .sidebar,
       .main,
+      .rightbar,
       .panel {
         padding: 18px;
       }
 
       .hero {
         flex-direction: column;
+      }
+
+      .weather-card {
+        min-height: auto;
+      }
+
+      .weather-hero {
+        grid-template-columns: 1fr;
+      }
+
+      .weather-icon {
+        width: 82px;
+        height: 82px;
       }
 
       .weekdays {
@@ -624,14 +782,14 @@
           <div class="mini-grid" id="miniGrid"></div>
         </section>
 
-        <section class="section">
+        <section class="section rest-cycle-section">
           <div class="card rest-card">
             <div class="rest-summary-head">
               <span class="section-head">Rest Cycle</span>
               <span class="rest-summary-badge" id="restCycleBadge">3 / 1</span>
             </div>
             <h3 id="restSummaryTitle">按上 3 休 1 循环</h3>
-            <p id="restSummaryText">当前高亮仅显示自定义休息日，普通日期不再附带其他日程信息。</p>
+            <p id="restSummaryText">当前高亮仅显示自定义休息日，日历保持更干净的月视图展示。</p>
             <div class="button-row">
               <button class="pill-btn" type="button" id="openRestModal">设置休息日</button>
               <div class="status-line" id="statusLine" aria-live="polite"></div>
@@ -647,8 +805,8 @@
               <h1 id="heroTitle">Current month</h1>
             </div>
             <div class="hero-actions">
-              <button class="icon-btn" type="button" data-nav="-1" aria-label="Previous month">‹</button>
-              <button class="icon-btn" type="button" data-nav="1" aria-label="Next month">›</button>
+              <button class="icon-btn" type="button" data-nav="-1" aria-label="Previous month">&#8249;</button>
+              <button class="icon-btn" type="button" data-nav="1" aria-label="Next month">&#8250;</button>
               <button class="today-btn" type="button" id="todayButton">Today</button>
             </div>
           </div>
@@ -660,6 +818,40 @@
           <div class="month-grid" id="calendarGrid"></div>
         </section>
       </main>
+
+      <aside class="rightbar">
+        <section class="card weather-card" id="weatherCard">
+          <div class="weather-card-head">
+            <span class="weather-chip">Weather</span>
+            <button class="weather-refresh" type="button" id="weatherRefreshButton" aria-label="刷新天气">&#8635;</button>
+          </div>
+          <div class="weather-copy">
+            <h3>当前位置</h3>
+            <p class="weather-location" id="weatherLocation">定位中...</p>
+          </div>
+          <div class="weather-hero">
+            <div class="weather-temperature" id="weatherTemperature">--°</div>
+            <svg class="weather-icon" id="weatherIcon" viewBox="0 0 120 120" aria-hidden="true">
+              <defs>
+                <linearGradient id="weatherSun" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#ffd676"></stop>
+                  <stop offset="100%" stop-color="#ff9f53"></stop>
+                </linearGradient>
+                <linearGradient id="weatherCloud" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#f8fbff"></stop>
+                  <stop offset="100%" stop-color="#d7e3fb"></stop>
+                </linearGradient>
+              </defs>
+              <circle cx="70" cy="42" r="20" fill="url(#weatherSun)"></circle>
+              <path d="M34 73c0-10 8-18 18-18 3 0 6 1 9 2 5-7 13-11 22-11 15 0 28 12 28 27v1c7 1 13 7 13 15 0 9-7 16-16 16H49c-12 0-22-10-22-22 0-5 2-8 7-10Z" fill="url(#weatherCloud)"></path>
+            </svg>
+          </div>
+          <div class="weather-meta">
+            <div class="weather-status" id="weatherStatus">等待定位</div>
+            <p class="weather-footnote" id="weatherFootnote">允许定位后会自动刷新，也可以手动重新获取。</p>
+          </div>
+        </section>
+      </aside>
     </div>
   </div>
 
@@ -694,7 +886,7 @@
 
   <script>
     const STORAGE_KEY = "rest-calendar-state-v1";
-    const EMBEDDED_BUILD_VERSION = "1781592384276";
+    const EMBEDDED_BUILD_VERSION = "1781595136976";
     const VERSION_ENDPOINT = "./version.json";
 
     function cloneDate(date) {
@@ -819,6 +1011,11 @@
       restSummaryTitle: document.getElementById("restSummaryTitle"),
       restSummaryText: document.getElementById("restSummaryText"),
       statusLine: document.getElementById("statusLine"),
+      weatherLocation: document.getElementById("weatherLocation"),
+      weatherTemperature: document.getElementById("weatherTemperature"),
+      weatherStatus: document.getElementById("weatherStatus"),
+      weatherFootnote: document.getElementById("weatherFootnote"),
+      weatherRefreshButton: document.getElementById("weatherRefreshButton"),
       navButtons: Array.from(document.querySelectorAll("[data-nav]")),
       todayButton: document.getElementById("todayButton"),
       openRestModal: document.getElementById("openRestModal"),
@@ -832,6 +1029,27 @@
 
     const monthFormatter = new Intl.DateTimeFormat("en-US", { month: "long", year: "numeric" });
     const fullFormatter = new Intl.DateTimeFormat("en-US", { weekday: "long", month: "long", day: "numeric" });
+    const weatherCodeMap = {
+      0: "晴朗",
+      1: "大部晴朗",
+      2: "局部多云",
+      3: "阴天",
+      45: "有雾",
+      48: "冻雾",
+      51: "毛毛雨",
+      53: "小雨",
+      55: "细雨",
+      61: "小雨",
+      63: "中雨",
+      65: "大雨",
+      71: "小雪",
+      73: "中雪",
+      75: "大雪",
+      80: "阵雨",
+      81: "强阵雨",
+      82: "暴雨",
+      95: "雷阵雨",
+    };
 
     function persistState() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
@@ -1030,6 +1248,99 @@
       render();
     }
 
+    function setWeatherCard({ location, temperature, status, note }) {
+      refs.weatherLocation.textContent = location;
+      refs.weatherTemperature.textContent = temperature;
+      refs.weatherStatus.textContent = status;
+      refs.weatherFootnote.textContent = note;
+    }
+
+    async function reverseGeocode(latitude, longitude) {
+      const url = new URL("https://api.bigdatacloud.net/data/reverse-geocode-client");
+      url.searchParams.set("latitude", String(latitude));
+      url.searchParams.set("longitude", String(longitude));
+      url.searchParams.set("localityLanguage", "zh");
+
+      const response = await fetch(url.toString(), { cache: "no-store" });
+      if (!response.ok) {
+        throw new Error(`geocode ${response.status}`);
+      }
+
+      const payload = await response.json();
+      const city = payload.city || payload.locality || "";
+      const admin = payload.principalSubdivision || payload.countryName || "";
+      return [city, admin].filter(Boolean).join(" · ") || "当前位置";
+    }
+
+    async function fetchWeather(latitude, longitude) {
+      const url = new URL("https://api.open-meteo.com/v1/forecast");
+      url.searchParams.set("latitude", String(latitude));
+      url.searchParams.set("longitude", String(longitude));
+      url.searchParams.set("current", "temperature_2m,weather_code");
+      url.searchParams.set("timezone", "auto");
+
+      const response = await fetch(url.toString(), { cache: "no-store" });
+      if (!response.ok) {
+        throw new Error(`weather ${response.status}`);
+      }
+
+      const payload = await response.json();
+      const current = payload.current || {};
+      return {
+        temperature: `${Math.round(current.temperature_2m ?? 24)}°`,
+        status: weatherCodeMap[current.weather_code] || "天气稳定",
+      };
+    }
+
+    function getCurrentPosition() {
+      return new Promise((resolve, reject) => {
+        if (!navigator.geolocation) {
+          reject(new Error("geolocation unavailable"));
+          return;
+        }
+
+        navigator.geolocation.getCurrentPosition(resolve, reject, {
+          enableHighAccuracy: false,
+          timeout: 8000,
+          maximumAge: 15 * 60 * 1000,
+        });
+      });
+    }
+
+    async function refreshWeather() {
+      setWeatherCard({
+        location: "定位中...",
+        temperature: "--°",
+        status: "正在获取天气",
+        note: "允许定位后会自动刷新，也可以手动重新获取。",
+      });
+
+      try {
+        const position = await getCurrentPosition();
+        const { latitude, longitude } = position.coords;
+
+        const [location, weather] = await Promise.all([
+          reverseGeocode(latitude, longitude).catch(() => "当前位置"),
+          fetchWeather(latitude, longitude),
+        ]);
+
+        setWeatherCard({
+          location,
+          temperature: weather.temperature,
+          status: weather.status,
+          note: "天气已按当前位置同步。",
+        });
+        return;
+      } catch (error) {
+        setWeatherCard({
+          location: "天气暂不可用",
+          temperature: "24°",
+          status: "请重新尝试",
+          note: "定位未开启或网络暂时不可用，稍后可再次刷新。",
+        });
+      }
+    }
+
     function bindEvents() {
       refs.navButtons.forEach((button) => {
         button.addEventListener("click", () => shiftMonth(Number(button.dataset.nav)));
@@ -1046,6 +1357,7 @@
       refs.openRestModal.addEventListener("click", openRestModal);
       refs.restForm.addEventListener("submit", saveRestCycle);
       refs.cancelRestButton.addEventListener("click", closeRestModal);
+      refs.weatherRefreshButton.addEventListener("click", refreshWeather);
 
       refs.restModal.addEventListener("click", (event) => {
         if (event.target === refs.restModal) {
@@ -1069,6 +1381,7 @@
     function bootstrap() {
       bindEvents();
       render();
+      refreshWeather();
       syncBuildVersion();
     }
 
