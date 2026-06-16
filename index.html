@@ -1103,6 +1103,521 @@
       padding: 0 18px;
     }
 
+    .mobile-app {
+      display: none;
+    }
+
+    .mobile-shell {
+      width: min(362px, 100%);
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      border-radius: 40px;
+      padding: 14px 14px 18px;
+      background: rgba(255, 255, 255, 0.48);
+      border: 1px solid rgba(255, 255, 255, 0.64);
+      box-shadow: 0 34px 92px rgba(58, 72, 112, 0.22);
+      backdrop-filter: blur(22px) saturate(126%);
+    }
+
+    .mobile-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 82% 12%, rgba(255, 221, 173, 0.3), transparent 24%),
+        radial-gradient(circle at 80% 86%, rgba(181, 204, 255, 0.32), transparent 28%);
+      pointer-events: none;
+    }
+
+    .mobile-shell > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .mobile-statusbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 8px 10px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #1e2b49;
+    }
+
+    .mobile-status-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mobile-battery {
+      width: 28px;
+      height: 14px;
+      border-radius: 4px;
+      border: 1.5px solid rgba(30, 43, 73, 0.74);
+      position: relative;
+    }
+
+    .mobile-battery::before {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      right: 4px;
+      bottom: 2px;
+      border-radius: 2px;
+      background: rgba(30, 43, 73, 0.9);
+    }
+
+    .mobile-battery::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      right: -3px;
+      width: 2px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(30, 43, 73, 0.74);
+    }
+
+    .mobile-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px 4px 14px;
+    }
+
+    .mobile-header-copy {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    .mobile-avatar {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg, #9db6ff, #4f74ff);
+      color: #fff;
+      font-size: 30px;
+      font-weight: 700;
+      box-shadow: 0 18px 32px rgba(83, 112, 229, 0.24);
+      flex: 0 0 auto;
+    }
+
+    .mobile-heading {
+      min-width: 0;
+    }
+
+    .mobile-heading p {
+      margin: 0 0 6px;
+      color: #7988a9;
+      font-size: 13px;
+      letter-spacing: -0.02em;
+    }
+
+    .mobile-heading h1 {
+      margin: 0;
+      color: #20304d;
+      font-size: clamp(24px, 6vw, 36px);
+      line-height: 1.05;
+      letter-spacing: -0.07em;
+    }
+
+    .mobile-weather-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.82);
+      box-shadow: 0 14px 30px rgba(129, 143, 178, 0.12);
+      color: #2c3956;
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+
+    .mobile-weather-icon {
+      width: 28px;
+      height: 28px;
+      color: #f6b34c;
+      display: grid;
+      place-items: center;
+    }
+
+    .mobile-summary-card,
+    .mobile-calendar-card,
+    .mobile-action-card {
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.84);
+      box-shadow: 0 22px 48px rgba(94, 108, 144, 0.12);
+    }
+
+    .mobile-summary-card {
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .mobile-summary-main {
+      display: grid;
+      gap: 12px;
+      padding: 10px 8px 10px 10px;
+    }
+
+    .mobile-summary-kicker {
+      margin: 0;
+      color: #7e8db0;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    .mobile-summary-date {
+      margin: 0;
+      color: #1d2d49;
+      font-size: clamp(24px, 5.6vw, 34px);
+      line-height: 1.02;
+      letter-spacing: -0.06em;
+    }
+
+    .mobile-summary-divider {
+      height: 1px;
+      background: rgba(128, 142, 173, 0.18);
+    }
+
+    .mobile-summary-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .mobile-summary-stat {
+      display: grid;
+      gap: 6px;
+    }
+
+    .mobile-summary-stat + .mobile-summary-stat {
+      padding-left: 14px;
+      border-left: 1px solid rgba(128, 142, 173, 0.18);
+    }
+
+    .mobile-summary-stat-label {
+      color: #7e8db0;
+      font-size: 14px;
+      letter-spacing: -0.02em;
+    }
+
+    .mobile-summary-stat-value {
+      color: #1d2d49;
+      font-size: 22px;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      font-weight: 700;
+    }
+
+    .mobile-summary-stat-value small {
+      font-size: 16px;
+      font-weight: 600;
+      margin-left: 4px;
+    }
+
+    .mobile-quote-panel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 26px;
+      padding: 24px 24px 18px;
+      background:
+        linear-gradient(180deg, rgba(248, 250, 255, 0.94), rgba(234, 240, 253, 0.88)),
+        linear-gradient(145deg, rgba(210, 225, 255, 0.24), rgba(255, 227, 208, 0.18));
+      display: flex;
+      align-items: flex-end;
+      min-height: 154px;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.72);
+    }
+
+    .mobile-quote-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 72% 86%, rgba(255, 255, 255, 0.92), transparent 16%),
+        radial-gradient(circle at 90% 14%, rgba(255, 255, 255, 0.74), transparent 18%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent 50%);
+      pointer-events: none;
+    }
+
+    .mobile-cloudbank {
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 56%;
+      background:
+        radial-gradient(circle at 10% 100%, rgba(221, 232, 251, 0.96) 0 18%, transparent 19%),
+        radial-gradient(circle at 28% 100%, rgba(211, 224, 247, 0.98) 0 20%, transparent 21%),
+        radial-gradient(circle at 48% 100%, rgba(202, 218, 245, 0.98) 0 24%, transparent 25%),
+        radial-gradient(circle at 72% 100%, rgba(212, 224, 247, 0.96) 0 20%, transparent 21%),
+        radial-gradient(circle at 92% 100%, rgba(229, 236, 251, 0.94) 0 18%, transparent 19%);
+      opacity: 0.95;
+    }
+
+    .mobile-feather {
+      position: absolute;
+      right: 30px;
+      top: 24px;
+      width: 108px;
+      height: 108px;
+      transform: rotate(26deg);
+      opacity: 0.92;
+    }
+
+    .mobile-feather::before,
+    .mobile-feather::after {
+      content: "";
+      position: absolute;
+      border-radius: 100% 0 100% 0;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 247, 232, 0.92));
+      box-shadow: 0 18px 32px rgba(148, 164, 201, 0.12);
+    }
+
+    .mobile-feather::before {
+      inset: 0 18px 10px 18px;
+      transform: skewX(-18deg);
+    }
+
+    .mobile-feather::after {
+      width: 4px;
+      height: 112px;
+      left: 58px;
+      top: 8px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(225, 213, 191, 0.9), rgba(248, 242, 229, 0.84));
+      box-shadow: none;
+    }
+
+    .mobile-petal {
+      position: absolute;
+      border-radius: 100% 0 100% 0;
+      background: linear-gradient(180deg, rgba(255, 188, 178, 0.54), rgba(255, 214, 206, 0.18));
+      filter: blur(0.2px);
+      opacity: 0.72;
+    }
+
+    .mobile-petal.one {
+      width: 12px;
+      height: 16px;
+      right: 66px;
+      bottom: 78px;
+      transform: rotate(28deg);
+    }
+
+    .mobile-petal.two {
+      width: 10px;
+      height: 14px;
+      right: 28px;
+      bottom: 34px;
+      transform: rotate(-18deg);
+    }
+
+    .mobile-quote-text {
+      position: relative;
+      z-index: 1;
+      max-width: 192px;
+      margin: 0;
+      color: #314361;
+      font-size: 15px;
+      line-height: 1.62;
+      letter-spacing: -0.02em;
+      font-weight: 600;
+    }
+
+    .mobile-calendar-card {
+      padding: 16px 14px 14px;
+      margin-bottom: 14px;
+    }
+
+    .mobile-calendar-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .mobile-calendar-head h2 {
+      margin: 0;
+      color: #1f2f4b;
+      font-size: clamp(26px, 6vw, 34px);
+      line-height: 1;
+      letter-spacing: -0.06em;
+    }
+
+    .mobile-calendar-nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mobile-calendar-nav .icon-btn {
+      width: 40px;
+      min-height: 40px;
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: 0 10px 24px rgba(102, 118, 154, 0.1);
+      color: #2b3a58;
+    }
+
+    .mobile-weekdays,
+    .mobile-month-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+    }
+
+    .mobile-weekdays {
+      margin-bottom: 6px;
+      padding: 0 6px;
+      color: #8591aa;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .mobile-weekdays span {
+      text-align: center;
+    }
+
+    .mobile-month-grid {
+      gap: 1px;
+      border-radius: 22px;
+      overflow: hidden;
+      background: rgba(133, 148, 182, 0.12);
+      padding: 1px;
+    }
+
+    .mobile-day {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      border: 0;
+      background: rgba(255, 255, 255, 0.9);
+      display: grid;
+      place-items: center;
+      color: #1f2f4b;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.04em;
+    }
+
+    .mobile-day.is-other-month {
+      color: #b1b8c7;
+      background: rgba(249, 250, 252, 0.84);
+    }
+
+    .mobile-day.is-today {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .mobile-rest-pill {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      background: rgba(238, 242, 255, 0.96);
+      color: #5f7dd6;
+      font-size: 10px;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      box-shadow: inset 0 0 0 1px rgba(168, 187, 236, 0.22);
+      pointer-events: none;
+    }
+
+    .mobile-legend {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+      color: #7e8db0;
+      font-size: 14px;
+      letter-spacing: -0.02em;
+    }
+
+    .mobile-legend-badge {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(238, 242, 255, 0.96);
+      color: #5f7dd6;
+      box-shadow: inset 0 0 0 1px rgba(168, 187, 236, 0.22);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .mobile-action-card {
+      width: 100%;
+      padding: 0;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 16px 18px;
+      color: #1f2f4b;
+      background: rgba(255, 255, 255, 0.94);
+      transition: transform 180ms cubic-bezier(0.32, 0.72, 0, 1), box-shadow 180ms cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    .mobile-action-card:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 28px 50px rgba(94, 108, 144, 0.16);
+    }
+
+    .mobile-action-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(236, 241, 255, 0.92), rgba(226, 233, 255, 0.88));
+      color: #5c7def;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      box-shadow: inset 0 0 0 1px rgba(179, 195, 236, 0.22);
+    }
+
+    .mobile-action-copy {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .mobile-action-title {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.2;
+      letter-spacing: -0.04em;
+      font-weight: 600;
+    }
+
+    .mobile-action-arrow {
+      font-size: 28px;
+      line-height: 1;
+      color: #7f8caa;
+      flex: 0 0 auto;
+    }
+
     button,
     .mini-grid button,
     .day {
@@ -1146,58 +1661,101 @@
 
     @media (max-width: 860px) {
       body {
-        padding: 12px;
+        display: block;
+        padding: 0;
       }
 
       .window {
-        min-height: auto;
-        border-radius: 24px;
+        display: none;
       }
 
-      .titlebar {
-        flex-wrap: wrap;
+      .mobile-app {
+        display: block;
+        min-height: 100vh;
+        padding: 12px;
+        overflow-x: hidden;
       }
 
-      .title {
-        order: 3;
-        width: 100%;
+      .mobile-calendar-head {
+        margin-bottom: 22px;
       }
 
-      .sidebar,
-      .main,
-      .rightbar,
-      .panel {
-        padding: 18px;
+      .mobile-calendar-nav .icon-btn {
+        width: 44px;
+        min-height: 44px;
       }
 
-      .hero {
-        flex-direction: column;
-      }
-
-      .day {
-        aspect-ratio: auto;
-        min-height: 108px;
-      }
-
-      .weather-card {
-        min-height: auto;
-      }
-
-      .weather-hero {
-        grid-template-columns: 1fr;
-      }
-
-      .weather-icon {
-        width: 82px;
-        height: 82px;
-      }
-
-      .weekdays {
-        padding: 0 6px 12px;
+      .mobile-action-title {
+        font-size: 20px;
       }
 
       .inline-split {
         grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .mobile-shell {
+        border-radius: 34px;
+        padding: 14px 14px 18px;
+      }
+
+      .mobile-header {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 24px 4px 20px;
+      }
+
+      .mobile-weather-pill {
+        align-self: flex-end;
+      }
+
+      .mobile-heading h1 {
+        font-size: 26px;
+      }
+
+      .mobile-summary-card {
+        grid-template-columns: 1.02fr 0.98fr;
+      }
+
+      .mobile-calendar-head h2 {
+        font-size: 30px;
+      }
+
+      .mobile-day {
+        font-size: 16px;
+      }
+
+      .mobile-rest-pill {
+        top: 6px;
+        right: 6px;
+        width: 18px;
+        height: 18px;
+      }
+
+      .mobile-action-card {
+        gap: 14px;
+        padding: 18px;
+      }
+
+      .mobile-action-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 18px;
+      }
+
+      .mobile-action-title {
+        font-size: 18px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .mobile-summary-card {
+        grid-template-columns: 1fr;
+      }
+
+      .mobile-quote-panel {
+        min-height: 164px;
       }
     }
 
@@ -1213,6 +1771,99 @@
   </style>
 </head>
 <body>
+  <div class="mobile-app">
+    <div class="mobile-shell">
+      <div class="mobile-statusbar" aria-hidden="true">
+        <span>9:41</span>
+        <div class="mobile-status-right">
+          <span>5G</span>
+          <span class="mobile-battery"></span>
+        </div>
+      </div>
+
+      <section class="mobile-header">
+        <div class="mobile-header-copy">
+          <div class="mobile-avatar">E</div>
+          <div class="mobile-heading">
+            <p>欢迎回来，Eunice</p>
+            <h1>Eunice 的休息日历</h1>
+          </div>
+        </div>
+        <div class="mobile-weather-pill">
+          <span class="mobile-weather-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="4.2" fill="currentColor" stroke="none"></circle>
+              <path d="M12 1.8v2.4M12 19.8v2.4M4.22 4.22l1.7 1.7M18.08 18.08l1.7 1.7M1.8 12h2.4M19.8 12h2.4M4.22 19.78l1.7-1.7M18.08 5.92l1.7-1.7"></path>
+            </svg>
+          </span>
+          <span id="mobileWeatherSummary">26°C Sunny</span>
+        </div>
+      </section>
+
+      <section class="mobile-summary-card">
+        <div class="mobile-summary-main">
+          <div>
+            <p class="mobile-summary-kicker" id="mobileTodayLabel">今天 · Tuesday</p>
+            <h2 class="mobile-summary-date" id="mobileTodayDate">June 16, 2026</h2>
+          </div>
+          <div class="mobile-summary-divider"></div>
+          <div class="mobile-summary-stats">
+            <div class="mobile-summary-stat">
+              <span class="mobile-summary-stat-label">本月休息</span>
+              <span class="mobile-summary-stat-value"><span id="mobileRestCount">0</span><small>天</small></span>
+            </div>
+            <div class="mobile-summary-stat">
+              <span class="mobile-summary-stat-label">本月工作</span>
+              <span class="mobile-summary-stat-value"><span id="mobileWorkCount">0</span><small>天</small></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mobile-quote-panel" aria-hidden="true">
+          <div class="mobile-cloudbank"></div>
+          <div class="mobile-feather"></div>
+          <div class="mobile-petal one"></div>
+          <div class="mobile-petal two"></div>
+          <p class="mobile-quote-text">好好休息，<br>是为了走更远的路。</p>
+        </div>
+      </section>
+
+      <section class="mobile-calendar-card">
+        <div class="mobile-calendar-head">
+          <h2 id="mobileMonthTitle">June 2026</h2>
+          <div class="mobile-calendar-nav">
+            <button class="icon-btn" type="button" data-nav="-1" aria-label="上一月">&#8249;</button>
+            <button class="icon-btn" type="button" data-nav="1" aria-label="下一月">&#8250;</button>
+          </div>
+        </div>
+
+        <div class="mobile-weekdays">
+          <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+        </div>
+
+        <div class="mobile-month-grid" id="mobileCalendarGrid"></div>
+
+        <div class="mobile-legend">
+          <span class="mobile-legend-badge">R</span>
+          <span>休息日</span>
+        </div>
+      </section>
+
+      <button class="mobile-action-card" type="button" data-open-rest-modal>
+        <span class="mobile-action-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3.5" y="4.5" width="17" height="16" rx="4"></rect>
+            <path d="M7.5 2.8v3.4M16.5 2.8v3.4M3.5 9h17M8 13h3M8 17h3M14 13h3"></path>
+          </svg>
+        </span>
+        <span class="mobile-action-copy">
+          <span class="mobile-action-title">设置自定义休息日</span>
+        </span>
+        <span class="mobile-action-arrow" aria-hidden="true">&#8250;</span>
+      </button>
+    </div>
+  </div>
+
   <div class="window">
     <header class="titlebar">
       <div class="traffic" aria-hidden="true">
@@ -1241,7 +1892,7 @@
             <h3 id="restSummaryTitle">按上 3 休 1 循环</h3>
             <p id="restSummaryText">当前高亮仅显示自定义休息日，日历保持更干净的月视图展示。</p>
             <div class="button-row">
-              <button class="pill-btn" type="button" id="openRestModal">设置休息日</button>
+              <button class="pill-btn" type="button" data-open-rest-modal>设置休息日</button>
               <div class="status-line" id="statusLine" aria-live="polite"></div>
             </div>
           </div>
@@ -1376,7 +2027,7 @@
 
   <script>
     const STORAGE_KEY = "rest-calendar-state-v1";
-    const EMBEDDED_BUILD_VERSION = "1781606143985";
+    const EMBEDDED_BUILD_VERSION = "1781627165680";
     const VERSION_ENDPOINT = "./version.json";
 
     function cloneDate(date) {
@@ -1497,6 +2148,13 @@
       miniMonthSubLabel: document.getElementById("miniMonthSubLabel"),
       miniGrid: document.getElementById("miniGrid"),
       calendarGrid: document.getElementById("calendarGrid"),
+      mobileCalendarGrid: document.getElementById("mobileCalendarGrid"),
+      mobileMonthTitle: document.getElementById("mobileMonthTitle"),
+      mobileTodayLabel: document.getElementById("mobileTodayLabel"),
+      mobileTodayDate: document.getElementById("mobileTodayDate"),
+      mobileRestCount: document.getElementById("mobileRestCount"),
+      mobileWorkCount: document.getElementById("mobileWorkCount"),
+      mobileWeatherSummary: document.getElementById("mobileWeatherSummary"),
       restCycleBadge: document.getElementById("restCycleBadge"),
       restSummaryTitle: document.getElementById("restSummaryTitle"),
       restSummaryText: document.getElementById("restSummaryText"),
@@ -1524,7 +2182,7 @@
       weatherRefreshButton: document.getElementById("weatherRefreshButton"),
       navButtons: Array.from(document.querySelectorAll("[data-nav]")),
       todayButton: document.getElementById("todayButton"),
-      openRestModal: document.getElementById("openRestModal"),
+      openRestButtons: Array.from(document.querySelectorAll("[data-open-rest-modal]")),
       restModal: document.getElementById("restModal"),
       restForm: document.getElementById("restForm"),
       restWorkDays: document.getElementById("restWorkDays"),
@@ -1535,6 +2193,8 @@
 
     const monthFormatter = new Intl.DateTimeFormat("en-US", { month: "long", year: "numeric" });
     const fullFormatter = new Intl.DateTimeFormat("en-US", { weekday: "long", month: "long", day: "numeric" });
+    const monthDateFormatter = new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric", year: "numeric" });
+    const weekdayFormatter = new Intl.DateTimeFormat("en-US", { weekday: "long" });
     const weatherCodeMap = {
       0: { label: "晴朗", tone: "sunny", icon: "sunny" },
       1: { label: "大部晴朗", tone: "sunny", icon: "sunny" },
@@ -1714,6 +2374,74 @@
       refs.restSummaryText.textContent = `周期起始日：${state.restCycle.startDate}`;
     }
 
+    function getCurrentMonthStats() {
+      const year = state.currentDate.getFullYear();
+      const month = state.currentDate.getMonth();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      let restDays = 0;
+
+      for (let day = 1; day <= daysInMonth; day += 1) {
+        if (isRestDay(new Date(year, month, day))) {
+          restDays += 1;
+        }
+      }
+
+      return {
+        restDays,
+        workDays: daysInMonth - restDays,
+      };
+    }
+
+    function renderMobileHeader() {
+      const today = state.today;
+      const stats = getCurrentMonthStats();
+      refs.mobileMonthTitle.textContent = monthFormatter.format(state.currentDate);
+      refs.mobileTodayLabel.textContent = `今天 · ${weekdayFormatter.format(today)}`;
+      refs.mobileTodayDate.textContent = monthDateFormatter.format(today);
+      refs.mobileRestCount.textContent = String(stats.restDays);
+      refs.mobileWorkCount.textContent = String(stats.workDays);
+    }
+
+    function renderMobileGrid() {
+      const days = getVisibleDays();
+      refs.mobileCalendarGrid.innerHTML = "";
+
+      days.forEach(({ date, inCurrentMonth }) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "mobile-day";
+        button.dataset.date = toDateKey(date);
+
+        if (!inCurrentMonth) {
+          button.classList.add("is-other-month");
+        }
+
+        if (isSameDay(date, state.today)) {
+          button.classList.add("is-today");
+        }
+
+        button.textContent = String(date.getDate());
+
+        if (isRestDay(date)) {
+          const badge = document.createElement("span");
+          badge.className = "mobile-rest-pill";
+          badge.textContent = "R";
+          button.appendChild(badge);
+        }
+
+        button.addEventListener("click", () => {
+          state.selectedDate = cloneDate(date);
+          if (inCurrentMonth) {
+            state.currentDate = new Date(date.getFullYear(), date.getMonth(), 1);
+          }
+          persistState();
+          render();
+        });
+
+        refs.mobileCalendarGrid.appendChild(button);
+      });
+    }
+
     function renderGrid() {
       const days = getVisibleDays();
       refs.calendarGrid.innerHTML = "";
@@ -1887,6 +2615,7 @@
       setMetricValue(refs.weatherWindSpeedValue, refs.weatherWindSpeedUnit, windSpeed, "km/h");
       setMetricValue(refs.weatherHumidityValue, refs.weatherHumidityUnit, humidity, "%");
       refs.weatherFootnote.textContent = note;
+      refs.mobileWeatherSummary.textContent = `${temperature} ${status}`;
       setWeatherTone(tone);
       renderForecast(forecast);
     }
@@ -2056,7 +2785,9 @@
         setStatus("Returned to today.");
       });
 
-      refs.openRestModal.addEventListener("click", openRestModal);
+      refs.openRestButtons.forEach((button) => {
+        button.addEventListener("click", openRestModal);
+      });
       refs.restForm.addEventListener("submit", saveRestCycle);
       refs.cancelRestButton.addEventListener("click", closeRestModal);
       refs.weatherRefreshButton.addEventListener("click", refreshWeather);
@@ -2077,7 +2808,9 @@
     function render() {
       renderHero();
       renderMiniGrid();
+      renderMobileHeader();
       renderGrid();
+      renderMobileGrid();
     }
 
     function bootstrap() {
