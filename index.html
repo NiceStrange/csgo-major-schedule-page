@@ -58,7 +58,7 @@
     }
 
     .window {
-      width: min(1320px, 100%);
+      width: min(1456px, 100%);
       min-height: calc(100vh - 48px);
       border-radius: 34px;
       overflow: hidden;
@@ -104,7 +104,7 @@
 
     .layout {
       display: grid;
-      grid-template-columns: 320px minmax(0, 1fr) 320px;
+      grid-template-columns: 320px minmax(760px, 1.18fr) 336px;
       min-height: calc(100vh - 126px);
     }
 
@@ -841,11 +841,11 @@
     }
 
     .main {
-      padding: 28px;
+      padding: 24px 26px;
     }
 
     .panel {
-      padding: 28px;
+      padding: 30px 30px 32px;
       min-height: 100%;
     }
 
@@ -916,9 +916,10 @@
     }
 
     .day {
-      min-height: 124px;
+      aspect-ratio: 1 / 1;
+      min-height: 0;
       background: rgba(255, 255, 255, 0.82);
-      padding: 14px 14px 12px;
+      padding: 12px 12px 10px;
       position: relative;
       border: 0;
       text-align: left;
@@ -933,7 +934,7 @@
 
     .day-head {
       position: relative;
-      min-height: 52px;
+      min-height: 46px;
       flex: 0 0 auto;
     }
 
@@ -984,7 +985,7 @@
     }
 
     .day-number {
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 700;
       width: 36px;
       height: 36px;
@@ -1007,7 +1008,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 28px;
+      min-width: 30px;
       height: 18px;
       padding: 0 7px;
       border-radius: 999px;
@@ -1171,6 +1172,11 @@
 
       .hero {
         flex-direction: column;
+      }
+
+      .day {
+        aspect-ratio: auto;
+        min-height: 108px;
       }
 
       .weather-card {
@@ -1370,7 +1376,7 @@
 
   <script>
     const STORAGE_KEY = "rest-calendar-state-v1";
-    const EMBEDDED_BUILD_VERSION = "1781605743197";
+    const EMBEDDED_BUILD_VERSION = "1781606143985";
     const VERSION_ENDPOINT = "./version.json";
 
     function cloneDate(date) {
