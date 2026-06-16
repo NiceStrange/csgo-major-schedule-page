@@ -953,8 +953,8 @@
       <aside class="sidebar">
         <section class="card mini-month">
           <div class="eyebrow">Overview</div>
-          <h2 id="miniMonthLabel">June 2026</h2>
-          <p id="miniMonthSubLabel">Monday, June 15</p>
+          <h2 id="miniMonthLabel">Current month</h2>
+          <p id="miniMonthSubLabel">Today</p>
           <div class="mini-grid" id="miniGrid"></div>
         </section>
 
@@ -980,7 +980,7 @@
         <section class="panel">
           <div class="hero">
             <div>
-              <h1 id="heroTitle">June 2026</h1>
+              <h1 id="heroTitle">Current month</h1>
             </div>
             <div class="hero-actions">
               <button class="icon-btn" type="button" data-nav="-1" aria-label="Previous period">‹</button>
@@ -999,7 +999,7 @@
         <aside class="detail">
           <div class="date-badge">
             <small id="badgeWeekday">Mon</small>
-            <strong id="badgeDay">15</strong>
+            <strong id="badgeDay">--</strong>
           </div>
 
           <div>
@@ -1130,7 +1130,8 @@
   </template>
 
   <script>
-    const STORAGE_KEY = "mac-calendar-web-state-v3";
+    const STORAGE_KEY = "mac-calendar-web-state-v4";
+    const LEGACY_STORAGE_KEYS = ["mac-calendar-web-state-v3"];
 
     const calendarTypes = {
       personal: { label: "Personal", color: "#ff645d", tagClass: "tag-red" },
@@ -1144,17 +1145,44 @@
       return new Date(date.getFullYear(), date.getMonth(), date.getDate());
     }
 
+    function createTodayDate() {
+      const now = new Date();
+      return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    }
+
+    function formatDateKey(date) {
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+    }
+
+    function parseStoredDate(value, fallbackDate) {
+      const parsed = new Date(value);
+      if (Number.isNaN(parsed.getTime())) {
+        return cloneDate(fallbackDate);
+      }
+      return new Date(parsed.getFullYear(), parsed.getMonth(), parsed.getDate());
+    }
+
+    function differenceInDays(a, b) {
+      const msPerDay = 24 * 60 * 60 * 1000;
+      const utcA = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+      const utcB = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+      return Math.round((utcA - utcB) / msPerDay);
+    }
+
+    const liveToday = createTodayDate();
+    let needsStorageUpgrade = false;
+
     const initialState = {
-      today: new Date("2026-06-15T10:00:00"),
-      currentDate: new Date("2026-06-15T10:00:00"),
-      selectedDate: new Date("2026-06-15T10:00:00"),
+      today: cloneDate(liveToday),
+      currentDate: cloneDate(liveToday),
+      selectedDate: cloneDate(liveToday),
       view: "month",
       activeCalendars: { personal: true, work: true, family: true },
       events: structuredClone(seedEvents),
       restCycle: {
         workDays: 3,
         restDays: 1,
-        startDate: "2026-06-15",
+        startDate: formatDateKey(liveToday),
       },
       editingEventId: null,
       dragEventId: null,
@@ -1162,22 +1190,46 @@
 
     function loadStoredState() {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) {
-          return null;
+        for (const key of [STORAGE_KEY, ...LEGACY_STORAGE_KEYS]) {
+          const raw = localStorage.getItem(key);
+          if (!raw) {
+            continue;
+          }
+          const parsed = JSON.parse(raw);
+          const isLegacySnapshot = key !== STORAGE_KEY;
+
+          if (isLegacySnapshot) {
+            needsStorageUpgrade = true;
+          }
+
+          const parsedCurrentDate = isLegacySnapshot
+            ? cloneDate(initialState.today)
+            : parseStoredDate(parsed.currentDate, initialState.today);
+          const parsedSelectedDate = isLegacySnapshot
+            ? cloneDate(initialState.today)
+            : parseStoredDate(parsed.selectedDate, initialState.today);
+          const storedToday = isLegacySnapshot
+            ? null
+            : parseStoredDate(parsed.lastSeenToday, initialState.today);
+          const shouldResetToLiveToday = !storedToday || differenceInDays(initialState.today, storedToday) !== 0;
+
+          if (shouldResetToLiveToday) {
+            needsStorageUpgrade = true;
+          }
+
+          return {
+            currentDate: shouldResetToLiveToday ? cloneDate(initialState.today) : parsedCurrentDate,
+            selectedDate: shouldResetToLiveToday ? cloneDate(initialState.today) : parsedSelectedDate,
+            view: parsed.view || "month",
+            activeCalendars: { ...initialState.activeCalendars, ...(parsed.activeCalendars || {}) },
+            events: Array.isArray(parsed.events) ? parsed.events : structuredClone(seedEvents),
+            restCycle: {
+              ...initialState.restCycle,
+              ...(parsed.restCycle || {}),
+            },
+          };
         }
-        const parsed = JSON.parse(raw);
-        return {
-          currentDate: new Date(parsed.currentDate),
-          selectedDate: new Date(parsed.selectedDate),
-          view: parsed.view || "month",
-          activeCalendars: { ...initialState.activeCalendars, ...(parsed.activeCalendars || {}) },
-          events: Array.isArray(parsed.events) ? parsed.events : structuredClone(seedEvents),
-          restCycle: {
-            ...initialState.restCycle,
-            ...(parsed.restCycle || {}),
-          },
-        };
+        return null;
       } catch (error) {
         return null;
       }
@@ -1251,6 +1303,7 @@
 
     function persistState() {
       const snapshot = {
+        lastSeenToday: state.today.toISOString(),
         currentDate: state.currentDate.toISOString(),
         selectedDate: state.selectedDate.toISOString(),
         view: state.view,
@@ -1261,8 +1314,13 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
     }
 
+    if (needsStorageUpgrade) {
+      LEGACY_STORAGE_KEYS.forEach((key) => localStorage.removeItem(key));
+      persistState();
+    }
+
     function toDateKey(date) {
-      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+      return formatDateKey(date);
     }
 
     function isSameDay(a, b) {
@@ -1286,11 +1344,6 @@
     function toDateFromKey(key) {
       const [year, month, day] = key.split("-").map(Number);
       return new Date(year, month - 1, day);
-    }
-
-    function differenceInDays(a, b) {
-      const oneDay = 24 * 60 * 60 * 1000;
-      return Math.round((cloneDate(a).getTime() - cloneDate(b).getTime()) / oneDay);
     }
 
     function isRestDay(date) {
